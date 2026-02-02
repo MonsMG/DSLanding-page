@@ -61,14 +61,16 @@ const IT = () => {
     <div className="min-h-screen bg-background relative overflow-hidden">
       <Navigation />
 
+      {/* Colorful Background Elements - Matching Production Page */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 via-accent/5 to-primary/10" />
+        <div className="absolute top-20 -left-20 w-96 h-96 bg-primary/15 rounded-full blur-3xl" />
+        <div className="absolute top-1/3 -right-20 w-80 h-80 bg-accent/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-1/4 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
+      </div>
+
       {/* Cover Section */}
       <section className="relative pt-24 pb-16 overflow-hidden">
-        <div className="absolute inset-0 hero-gradient" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background" />
-        
-        {/* Decorative Elements */}
-        <div className="absolute top-32 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute top-40 right-20 w-48 h-48 bg-accent/10 rounded-full blur-3xl" />
         
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <motion.div
