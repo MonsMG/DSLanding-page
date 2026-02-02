@@ -6,84 +6,94 @@ import { Button } from "@/components/ui/button";
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 hero-gradient" />
+      {/* Vibrant Colorful Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-amber-50 to-orange-100" />
       
-      {/* Decorative Blurred Elements */}
-      <div className="absolute top-20 left-10 w-96 h-96 bg-primary/15 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-20 right-10 w-80 h-80 bg-accent/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
+      {/* Abstract Colorful Shapes */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+        <div className="absolute top-10 left-10 w-[500px] h-[500px] bg-gradient-to-br from-primary/30 to-accent/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-gradient-to-bl from-orange-300/30 to-amber-200/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-gradient-to-tr from-primary/20 to-orange-200/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-primary/10 to-transparent rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-20 w-[300px] h-[300px] bg-gradient-to-tl from-amber-300/25 to-orange-200/20 rounded-full blur-3xl" />
+      </div>
 
-      {/* Main Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+      {/* Abstract geometric accents */}
+      <div className="absolute top-20 right-1/4 w-32 h-32 border-4 border-primary/20 rounded-full" />
+      <div className="absolute bottom-1/4 left-20 w-20 h-20 border-2 border-accent/30 rounded-lg rotate-45" />
+      <div className="absolute top-1/3 left-1/4 w-4 h-4 bg-primary/40 rounded-full" />
+      <div className="absolute bottom-1/3 right-1/3 w-6 h-6 bg-accent/30 rounded-full" />
+
+      {/* Main Content - Open layout without box */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 text-center">
+        {/* Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-card mb-10"
         >
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-card mb-10"
-          >
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-sm font-medium text-foreground">
-              DS Studio
-            </span>
-          </motion.div>
+          <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+          <span className="text-sm font-medium text-foreground">
+            DS Workspace
+          </span>
+        </motion.div>
 
-          {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-[0.95] tracking-tight mb-8 text-foreground"
+        {/* Headline with slow fade-in */}
+        <motion.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+          className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-[0.95] tracking-tight mb-8 text-foreground"
+        >
+          Digital
+          <br />
+          <motion.span 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2, delay: 0.5, ease: "easeOut" }}
+            className="text-gradient"
           >
-            Digital
-            <br />
-            <span className="text-gradient">Solution</span>
-          </motion.h1>
+            Solution
+          </motion.span>
+        </motion.h1>
 
-          {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
-          >
-            We transform ideas into stunning, functional digital products 
-            that captivate users and drive results.
-          </motion.p>
+        {/* Subheadline */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-14 leading-relaxed"
+        >
+          We transform ideas into stunning, functional digital products 
+          that captivate users and drive results.
+        </motion.p>
 
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <Link to="/it">
-              <Button 
-                size="lg" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-7 text-lg rounded-2xl shadow-glow hover:shadow-medium transition-all duration-300 group"
-              >
-                Explore IT
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-            <Link to="/production">
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="border-2 border-primary/30 text-foreground hover:bg-primary/10 hover:border-primary px-10 py-7 text-lg rounded-2xl transition-all duration-300 group"
-              >
-                Explore Production
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-          </motion.div>
+        {/* Distinct CTA Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2, duration: 0.8 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-6"
+        >
+          <Link to="/it">
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-glow hover:shadow-medium transition-all duration-300 group min-w-[220px]"
+            >
+              Explore IT
+              <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+          <Link to="/production">
+            <Button 
+              size="lg" 
+              className="bg-foreground hover:bg-foreground/90 text-background px-12 py-8 text-xl font-semibold rounded-2xl shadow-medium hover:shadow-glow transition-all duration-300 group min-w-[220px]"
+            >
+              Explore Production
+              <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
         </motion.div>
       </div>
 

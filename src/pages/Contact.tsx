@@ -1,28 +1,21 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, Facebook } from "lucide-react";
+import { Mail, Facebook } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
 import FloatingChatButton from "@/components/layout/FloatingChatButton";
 
 const contactMethods = [
   {
-    icon: Phone,
-    title: "Phone",
-    value: "+66 123 456 789",
-    href: "tel:+66123456789",
-    description: "Available Mon-Fri, 9AM-6PM",
-  },
-  {
     icon: Mail,
-    title: "Gmail",
-    value: "hello@dsworkspace.com",
-    href: "mailto:hello@dsworkspace.com",
+    title: "Email",
+    value: "ds_studio@gmail.com",
+    href: "mailto:ds_studio@gmail.com",
     description: "We reply within 24 hours",
   },
   {
     icon: Facebook,
     title: "Facebook",
     value: "DS Workspace",
-    href: "https://facebook.com/dsworkspace",
+    href: "https://www.facebook.com/share/1Aryrru3t1/?mibextid=wwXIfr",
     description: "Follow us for updates",
   },
 ];
@@ -109,18 +102,14 @@ const Contact = () => {
             <h3 className="text-2xl font-bold text-foreground mb-6">
               Office Hours
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-muted-foreground">
-              <div>
-                <p className="font-semibold text-foreground mb-1">Monday - Friday</p>
-                <p>9:00 AM - 6:00 PM</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-muted-foreground max-w-md mx-auto">
+              <div className="capsule-card p-6 bg-gradient-to-br from-primary/5 to-accent/5">
+                <p className="font-semibold text-foreground mb-2">Monday - Friday</p>
+                <p className="text-lg">08:30 AM - 16:30 PM</p>
               </div>
-              <div>
-                <p className="font-semibold text-foreground mb-1">Saturday</p>
-                <p>10:00 AM - 4:00 PM</p>
-              </div>
-              <div>
-                <p className="font-semibold text-foreground mb-1">Sunday</p>
-                <p>Closed</p>
+              <div className="capsule-card p-6 bg-gradient-to-br from-primary/5 to-accent/5">
+                <p className="font-semibold text-foreground mb-2">Saturday</p>
+                <p className="text-lg">10:00 AM - 17:00 PM</p>
               </div>
             </div>
           </motion.div>
