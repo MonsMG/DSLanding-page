@@ -40,9 +40,9 @@ const Hero = () => {
         duration: 0.5
       }} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-card mb-10">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          <span className="text-sm font-medium text-foreground">
-            DS Workspace
-          </span>
+          <span className="text-sm font-medium text-foreground">Digital 
+Solution
+        </span>
         </motion.div>
 
         {/* Headline with slow fade-in */}
