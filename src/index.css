@@ -1,38 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=SF+Pro+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* DS Workspace Design System - Premium Apple-inspired aesthetics */
+/* DS Workspace Design System - White & Orange Professional Theme */
 
 @layer base {
   :root {
-    /* Core backgrounds - warm off-white tones */
-    --background: 40 30% 98%;
-    --foreground: 220 30% 15%;
+    /* Core backgrounds - Pure white and light gray */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 20%;
 
     /* Cards with glassmorphism */
     --card: 0 0% 100%;
-    --card-foreground: 220 30% 15%;
+    --card-foreground: 0 0% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 30% 15%;
+    --popover-foreground: 0 0% 20%;
 
     /* Primary - Vibrant Orange (DS Brand) */
-    --primary: 24 95% 55%;
+    --primary: 24 95% 53%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Soft lavender accent */
-    --secondary: 250 40% 96%;
-    --secondary-foreground: 220 30% 15%;
+    /* Secondary - Light gray */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 20%;
 
     /* Muted tones */
-    --muted: 220 20% 94%;
-    --muted-foreground: 220 15% 50%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    /* Accent - warm coral */
-    --accent: 15 90% 60%;
+    /* Accent - Warm orange */
+    --accent: 24 90% 58%;
     --accent-foreground: 0 0% 100%;
 
     /* Destructive */
@@ -40,72 +40,72 @@
     --destructive-foreground: 0 0% 100%;
 
     /* Borders and inputs */
-    --border: 220 20% 90%;
-    --input: 220 20% 92%;
-    --ring: 24 95% 55%;
+    --border: 0 0% 90%;
+    --input: 0 0% 92%;
+    --ring: 24 95% 53%;
 
     --radius: 1rem;
 
     /* Custom DS colors */
-    --ds-orange: 24 95% 55%;
-    --ds-coral: 15 90% 60%;
-    --ds-cream: 40 40% 96%;
+    --ds-orange: 24 95% 53%;
+    --ds-coral: 15 90% 58%;
+    --ds-cream: 40 40% 98%;
     --ds-navy: 220 30% 15%;
-    --ds-slate: 220 15% 45%;
-    --ds-glass: 0 0% 100% / 0.7;
-    --ds-glass-border: 0 0% 100% / 0.3;
+    --ds-slate: 0 0% 45%;
+    --ds-glass: 0 0% 100% / 0.85;
+    --ds-glass-border: 0 0% 0% / 0.08;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(40 40% 98%) 0%, hsl(30 50% 96%) 50%, hsl(250 30% 97%) 100%);
-    --gradient-orange: linear-gradient(135deg, hsl(24 95% 55%) 0%, hsl(15 90% 60%) 100%);
-    --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.8) 0%, hsl(0 0% 100% / 0.4) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(40 40% 98%) 50%, hsl(24 100% 98%) 100%);
+    --gradient-orange: linear-gradient(135deg, hsl(24 95% 53%) 0%, hsl(15 90% 58%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.9) 0%, hsl(0 0% 100% / 0.7) 100%);
 
     /* Shadows */
-    --shadow-soft: 0 4px 30px hsl(220 30% 15% / 0.05);
-    --shadow-medium: 0 8px 40px hsl(220 30% 15% / 0.08);
-    --shadow-glow: 0 0 60px hsl(24 95% 55% / 0.2);
+    --shadow-soft: 0 4px 30px hsl(0 0% 0% / 0.06);
+    --shadow-medium: 0 8px 40px hsl(0 0% 0% / 0.1);
+    --shadow-glow: 0 0 60px hsl(24 95% 53% / 0.25);
 
     /* Sidebar */
-    --sidebar-background: 40 30% 98%;
-    --sidebar-foreground: 220 30% 15%;
-    --sidebar-primary: 24 95% 55%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 24 95% 53%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 20% 94%;
-    --sidebar-accent-foreground: 220 30% 15%;
-    --sidebar-border: 220 20% 90%;
-    --sidebar-ring: 24 95% 55%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 20%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 24 95% 53%;
   }
 
   .dark {
-    --background: 220 25% 8%;
-    --foreground: 40 30% 98%;
-    --card: 220 25% 12%;
-    --card-foreground: 40 30% 98%;
-    --popover: 220 25% 12%;
-    --popover-foreground: 40 30% 98%;
-    --primary: 24 95% 55%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 20%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 20%;
+    --primary: 24 95% 53%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 25% 15%;
-    --secondary-foreground: 40 30% 98%;
-    --muted: 220 25% 18%;
-    --muted-foreground: 220 15% 60%;
-    --accent: 15 90% 60%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 20%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 24 90% 58%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 25% 20%;
-    --input: 220 25% 20%;
-    --ring: 24 95% 55%;
-    --ds-glass: 220 25% 15% / 0.7;
-    --ds-glass-border: 0 0% 100% / 0.1;
-    --sidebar-background: 220 25% 10%;
-    --sidebar-foreground: 40 30% 98%;
-    --sidebar-primary: 24 95% 55%;
+    --border: 0 0% 90%;
+    --input: 0 0% 92%;
+    --ring: 24 95% 53%;
+    --ds-glass: 0 0% 100% / 0.85;
+    --ds-glass-border: 0 0% 0% / 0.08;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 24 95% 53%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 25% 15%;
-    --sidebar-accent-foreground: 40 30% 98%;
-    --sidebar-border: 220 25% 20%;
-    --sidebar-ring: 24 95% 55%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 20%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 24 95% 53%;
   }
 }
 
@@ -116,18 +116,21 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight text-foreground;
+    @apply font-bold tracking-tight text-foreground;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 }
 
 @layer components {
   /* Glassmorphism card */
   .glass-card {
-    @apply bg-card/70 backdrop-blur-xl border border-white/30 rounded-2xl shadow-soft;
+    @apply backdrop-blur-xl rounded-2xl shadow-soft;
+    background: hsl(var(--ds-glass));
+    border: 1px solid hsl(var(--ds-glass-border));
   }
 
   /* Hero gradient background */
@@ -138,6 +141,18 @@
   /* Orange gradient */
   .gradient-orange {
     background: var(--gradient-orange);
+  }
+
+  /* Capsule card style */
+  .capsule-card {
+    @apply backdrop-blur-xl rounded-[2rem] shadow-soft transition-all duration-300;
+    background: hsl(var(--ds-glass));
+    border: 1px solid hsl(var(--ds-glass-border));
+  }
+
+  .capsule-card:hover {
+    @apply shadow-medium;
+    transform: translateY(-4px);
   }
 
   /* Floating animation */
@@ -154,6 +169,33 @@
   .text-gradient {
     @apply bg-clip-text text-transparent;
     background: var(--gradient-orange);
+  }
+
+  /* Marquee animation */
+  .marquee {
+    animation: marquee 25s linear infinite;
+  }
+
+  .marquee-reverse {
+    animation: marquee-reverse 25s linear infinite;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
   }
 }
 

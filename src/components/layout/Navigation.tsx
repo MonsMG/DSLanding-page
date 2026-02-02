@@ -46,7 +46,7 @@ const Navigation = () => {
               className={`relative px-5 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                 isActive(link.path)
                   ? "text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-[#333333] hover:text-foreground"
               }`}
             >
               {isActive(link.path) && (

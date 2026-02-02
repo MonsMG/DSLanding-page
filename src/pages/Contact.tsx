@@ -1,40 +1,44 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Mail, Phone, Facebook } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
-import FloatingElements from "@/components/home/FloatingElements";
+import FloatingChatButton from "@/components/layout/FloatingChatButton";
 
 const contactMethods = [
-  {
-    icon: Mail,
-    title: "Email",
-    value: "hello@dsworkspace.com",
-    href: "mailto:hello@dsworkspace.com",
-  },
   {
     icon: Phone,
     title: "Phone",
     value: "+66 123 456 789",
     href: "tel:+66123456789",
+    description: "Available Mon-Fri, 9AM-6PM",
   },
   {
-    icon: MapPin,
-    title: "Location",
-    value: "Bangkok, Thailand",
-    href: "#",
+    icon: Mail,
+    title: "Gmail",
+    value: "hello@dsworkspace.com",
+    href: "mailto:hello@dsworkspace.com",
+    description: "We reply within 24 hours",
+  },
+  {
+    icon: Facebook,
+    title: "Facebook",
+    value: "DS Workspace",
+    href: "https://facebook.com/dsworkspace",
+    description: "Follow us for updates",
   },
 ];
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-background hero-gradient relative overflow-hidden">
-      <FloatingElements />
+    <div className="min-h-screen bg-background relative overflow-hidden">
       <Navigation />
 
+      {/* Decorative Background */}
+      <div className="absolute inset-0 hero-gradient" />
+      <div className="absolute top-32 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-32 right-10 w-56 h-56 bg-accent/10 rounded-full blur-3xl" />
+
       <main className="relative z-10 pt-32 pb-20 px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -43,150 +47,87 @@ const Contact = () => {
             className="text-center mb-16"
           >
             <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-6"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-card mb-8"
             >
-              <span className="text-sm font-medium text-muted-foreground">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <span className="text-sm font-medium text-foreground">
                 Get in Touch
               </span>
             </motion.span>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6">
               Contact Us
             </h1>
 
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Have a project in mind? We'd love to hear from you. 
-              Send us a message and we'll respond as soon as possible.
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto">
+              Have a project in mind? Reach out to us through any of the channels below.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="glass-card p-8 sm:p-10"
-            >
-              <h2 className="text-2xl font-bold text-foreground mb-6">
-                Send a Message
-              </h2>
-              
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">
-                      Name
-                    </label>
-                    <Input 
-                      placeholder="Your name" 
-                      className="bg-background/50 border-border/50 focus:border-primary"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">
-                      Email
-                    </label>
-                    <Input 
-                      type="email" 
-                      placeholder="your@email.com"
-                      className="bg-background/50 border-border/50 focus:border-primary"
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="text-sm font-medium text-foreground mb-2 block">
-                    Subject
-                  </label>
-                  <Input 
-                    placeholder="How can we help?" 
-                    className="bg-background/50 border-border/50 focus:border-primary"
-                  />
-                </div>
-                
-                <div>
-                  <label className="text-sm font-medium text-foreground mb-2 block">
-                    Message
-                  </label>
-                  <Textarea 
-                    placeholder="Tell us about your project..."
-                    rows={5}
-                    className="bg-background/50 border-border/50 focus:border-primary resize-none"
-                  />
-                </div>
-
-                <Button 
-                  size="lg"
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground group"
-                >
-                  Send Message
-                  <Send className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </form>
-            </motion.div>
-
-            {/* Contact Info */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="space-y-6"
-            >
-              <div className="glass-card p-8 sm:p-10">
-                <h2 className="text-2xl font-bold text-foreground mb-8">
-                  Contact Information
-                </h2>
-                
-                <div className="space-y-6">
-                  {contactMethods.map((method, index) => (
-                    <motion.a
-                      key={method.title}
-                      href={method.href}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 + index * 0.1 }}
-                      className="flex items-center gap-4 p-4 rounded-xl bg-background/30 hover:bg-background/50 transition-colors group"
-                    >
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                        <method.icon className="w-5 h-5 text-primary" />
-                      </div>
-                      <div>
-                        <span className="text-sm text-muted-foreground block">
-                          {method.title}
-                        </span>
-                        <span className="font-medium text-foreground">
-                          {method.value}
-                        </span>
-                      </div>
-                    </motion.a>
-                  ))}
-                </div>
-              </div>
-
-              {/* Office Hours */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
+          {/* Contact Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {contactMethods.map((method, index) => (
+              <motion.a
+                key={method.title}
+                href={method.href}
+                target={method.title === "Facebook" ? "_blank" : undefined}
+                rel={method.title === "Facebook" ? "noopener noreferrer" : undefined}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-                className="glass-card p-8"
+                transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
+                className="capsule-card p-8 text-center group"
               >
-                <h3 className="text-lg font-semibold text-foreground mb-4">
-                  Office Hours
-                </h3>
-                <div className="space-y-2 text-muted-foreground">
-                  <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                  <p>Saturday: 10:00 AM - 4:00 PM</p>
-                  <p>Sunday: Closed</p>
+                <div className="w-16 h-16 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                  <method.icon className="w-7 h-7 text-primary" />
                 </div>
-              </motion.div>
-            </motion.div>
+                
+                <h3 className="text-lg font-semibold text-foreground mb-2">
+                  {method.title}
+                </h3>
+                
+                <p className="text-primary font-medium mb-2 group-hover:underline">
+                  {method.value}
+                </p>
+                
+                <p className="text-sm text-muted-foreground">
+                  {method.description}
+                </p>
+              </motion.a>
+            ))}
           </div>
+
+          {/* Office Hours Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.6 }}
+            className="mt-12 capsule-card p-10 text-center"
+          >
+            <h3 className="text-2xl font-bold text-foreground mb-6">
+              Office Hours
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-muted-foreground">
+              <div>
+                <p className="font-semibold text-foreground mb-1">Monday - Friday</p>
+                <p>9:00 AM - 6:00 PM</p>
+              </div>
+              <div>
+                <p className="font-semibold text-foreground mb-1">Saturday</p>
+                <p>10:00 AM - 4:00 PM</p>
+              </div>
+              <div>
+                <p className="font-semibold text-foreground mb-1">Sunday</p>
+                <p>Closed</p>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </main>
+
+      <FloatingChatButton />
     </div>
   );
 };
