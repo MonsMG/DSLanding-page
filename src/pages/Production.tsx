@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import { Play, Camera, Film, Scissors, Image, Video, Mail, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Play, Camera, Film, Scissors, Image, Video } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
 import FloatingChatButton from "@/components/layout/FloatingChatButton";
 import { Button } from "@/components/ui/button";
@@ -237,35 +236,6 @@ const Production = () => {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Contact CTA Section */}
-      <section className="relative z-10 py-24 px-6">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="capsule-card p-12 text-center bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10"
-          >
-            <Mail className="w-12 h-12 text-primary mx-auto mb-6" />
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Would you like to work with us?
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-              Let's create something amazing together. Reach out to discuss your next project.
-            </p>
-            <Link to="/contact">
-              <Button 
-                size="lg" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-7 text-lg rounded-2xl shadow-glow hover:shadow-medium transition-all duration-300 group"
-              >
-                Get in Touch
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
-          </motion.div>
         </div>
       </section>
 

@@ -79,7 +79,7 @@ const Hero = () => {
           <Link to="/it">
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-glow hover:shadow-medium transition-all duration-300 group min-w-[220px]"
+              className="bg-gradient-to-r from-[hsl(199,89%,70%)] to-primary hover:from-[hsl(199,89%,65%)] hover:to-primary/90 text-white px-12 py-8 text-xl font-semibold rounded-2xl shadow-glow hover:shadow-medium transition-all duration-300 group min-w-[220px]"
             >
               Explore IT
               <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
@@ -88,7 +88,7 @@ const Hero = () => {
           <Link to="/production">
             <Button 
               size="lg" 
-              className="bg-foreground hover:bg-foreground/90 text-background px-12 py-8 text-xl font-semibold rounded-2xl shadow-medium hover:shadow-glow transition-all duration-300 group min-w-[220px]"
+              className="bg-gradient-to-r from-[hsl(199,89%,70%)] to-primary hover:from-[hsl(199,89%,65%)] hover:to-primary/90 text-white px-12 py-8 text-xl font-semibold rounded-2xl shadow-medium hover:shadow-glow transition-all duration-300 group min-w-[220px]"
             >
               Explore Production
               <ArrowRight className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />

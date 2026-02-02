@@ -60,8 +60,8 @@ const Contact = () => {
             </p>
           </motion.div>
 
-          {/* Contact Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Contact Cards - Centered */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             {contactMethods.map((method, index) => (
               <motion.a
                 key={method.title}
