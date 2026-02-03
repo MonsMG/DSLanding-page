@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Play, Camera, Film, Scissors, Image, Video, ArrowRight } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
@@ -66,11 +65,7 @@ const Production = () => {
       {/* Cover Section */}
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <div>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#333333] mb-6">
               DS Studio
             </h1>
@@ -80,48 +75,38 @@ const Production = () => {
             <p className="text-lg text-[#333333]/60 max-w-2xl mx-auto">
               Professional production services for your creative vision
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* OUR WORK Section - Masonry Grid */}
       <section className="relative z-10 py-16 px-6">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
+          <div className="text-center mb-12">
             <span className="text-sm font-semibold text-[#F16001] mb-4 block uppercase tracking-widest">
               Portfolio
             </span>
             <h2 className="text-4xl sm:text-5xl font-bold text-[#333333]">OUR WORK</h2>
-          </motion.div>
+          </div>
 
           {/* Masonry-style Grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-rows-[200px] gap-4">
-            {workItems.map((item, index) => (
-              <motion.div
+            {workItems.map((item) => (
+              <div
                 key={item.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                className={`group relative bg-white border border-gray-100 rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300 ${item.span}`}
+                className={`group relative bg-white border border-gray-100 rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-lg ${item.span}`}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#F16001]/5 via-orange-50 to-white" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/10 to-transparent opacity-0 group-hover:opacity-100" />
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
                   {item.type === "video" ? (
-                    <div className="w-16 h-16 rounded-full bg-[#F16001]/10 flex items-center justify-center group-hover:bg-[#F16001]/20 transition-colors mb-3">
+                    <div className="w-16 h-16 rounded-full bg-[#F16001]/10 flex items-center justify-center group-hover:bg-[#F16001]/20 mb-3">
                       <Play className="w-8 h-8 text-[#F16001] ml-1" />
                     </div>
                   ) : item.type === "event" ? (
-                    <Film className="w-12 h-12 text-[#F16001]/60 group-hover:text-[#F16001] transition-colors mb-3" />
+                    <Film className="w-12 h-12 text-[#F16001]/60 group-hover:text-[#F16001] mb-3" />
                   ) : (
-                    <Image className="w-12 h-12 text-[#F16001]/60 group-hover:text-[#F16001] transition-colors mb-3" />
+                    <Image className="w-12 h-12 text-[#F16001]/60 group-hover:text-[#F16001] mb-3" />
                   )}
                   <span className="text-xs font-semibold text-[#F16001] uppercase tracking-wider">
                     {item.category}
@@ -130,7 +115,7 @@ const Production = () => {
                     {item.placeholder}
                   </span>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -139,34 +124,25 @@ const Production = () => {
       {/* WE'RE CREATE / Services Section */}
       <section className="relative z-10 py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
+          <div className="text-center mb-12">
             <span className="text-sm font-semibold text-[#F16001] mb-4 block uppercase tracking-widest">
               What We Do
             </span>
             <h2 className="text-4xl sm:text-5xl font-bold text-[#333333]">WE'RE CREATE</h2>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            {services.map((service, index) => (
-              <motion.div
+            {services.map((service) => (
+              <div
                 key={service.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.15, duration: 0.5 }}
-                className="bg-white border border-gray-100 rounded-3xl p-8 text-center group hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                className="bg-white border border-gray-100 rounded-3xl p-8 text-center group hover:shadow-xl hover:-translate-y-1"
               >
-                <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-[#F16001]/10 to-orange-50 flex items-center justify-center mb-6 group-hover:from-[#F16001]/20 transition-all">
+                <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-[#F16001]/10 to-orange-50 flex items-center justify-center mb-6 group-hover:from-[#F16001]/20">
                   <service.icon className="w-10 h-10 text-[#F16001]" />
                 </div>
                 <h3 className="text-xl font-bold text-[#333333] mb-3">{service.label}</h3>
                 <p className="text-[#333333]/70">{service.description}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
 
@@ -174,7 +150,7 @@ const Production = () => {
             <Button
               variant="outline"
               size="lg"
-              className="border-[#F16001] text-[#F16001] hover:bg-[#F16001] hover:text-white px-8 py-6 text-base font-semibold rounded-xl transition-all duration-300"
+              className="border-[#F16001] text-[#F16001] hover:bg-[#F16001] hover:text-white px-8 py-6 text-base font-semibold rounded-xl"
             >
               More Details
             </Button>
@@ -185,32 +161,23 @@ const Production = () => {
       {/* BEHIND THE SCENE Section */}
       <section className="relative z-10 py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
+          <div className="text-center mb-12">
             <span className="text-sm font-semibold text-[#F16001] mb-4 block uppercase tracking-widest">
               Life at DS
             </span>
             <h2 className="text-4xl sm:text-5xl font-bold text-[#333333]">BEHIND THE SCENE</h2>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {behindScenes.map((item, index) => (
-              <motion.div
+            {behindScenes.map((item) => (
+              <div
                 key={item.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="aspect-square bg-white border border-gray-100 rounded-2xl flex flex-col items-center justify-center p-6 group cursor-pointer hover:shadow-lg transition-all duration-300"
+                className="aspect-square bg-white border border-gray-100 rounded-2xl flex flex-col items-center justify-center p-6 group cursor-pointer hover:shadow-lg"
               >
-                <Camera className="w-10 h-10 text-[#F16001]/50 group-hover:text-[#F16001] transition-colors mb-4" />
+                <Camera className="w-10 h-10 text-[#F16001]/50 group-hover:text-[#F16001] mb-4" />
                 <span className="text-base font-semibold text-[#333333] mb-1">{item.placeholder}</span>
                 <span className="text-sm text-[#333333]/60">{item.description}</span>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -219,34 +186,25 @@ const Production = () => {
       {/* Our Production Gear Section */}
       <section className="relative z-10 py-20 px-6 bg-gradient-to-r from-[#F16001]/5 via-white to-orange-50/30">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
+          <div className="text-center mb-12">
             <span className="text-sm font-semibold text-[#F16001] mb-4 block uppercase tracking-widest">
               Equipment
             </span>
             <h2 className="text-4xl sm:text-5xl font-bold text-[#333333]">Our Production Gear</h2>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
-            {productionGear.map((gear, index) => (
-              <motion.div
+            {productionGear.map((gear) => (
+              <div
                 key={gear.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08 }}
-                className="bg-white border border-gray-100 rounded-2xl p-6 text-center group hover:shadow-lg transition-all"
+                className="bg-white border border-gray-100 rounded-2xl p-6 text-center group hover:shadow-lg"
               >
-                <div className="w-14 h-14 mx-auto rounded-xl bg-[#F16001]/10 flex items-center justify-center mb-4 group-hover:bg-[#F16001]/20 transition-colors">
+                <div className="w-14 h-14 mx-auto rounded-xl bg-[#F16001]/10 flex items-center justify-center mb-4 group-hover:bg-[#F16001]/20">
                   <Video className="w-7 h-7 text-[#F16001]" />
                 </div>
                 <h4 className="font-semibold text-[#333333] text-sm mb-1">{gear.name}</h4>
                 <span className="text-xs text-[#333333]/60">{gear.category}</span>
-              </motion.div>
+              </div>
             ))}
           </div>
 
@@ -254,7 +212,7 @@ const Production = () => {
             <Button
               variant="outline"
               size="lg"
-              className="border-[#F16001] text-[#F16001] hover:bg-[#F16001] hover:text-white px-8 py-6 text-base font-semibold rounded-xl transition-all duration-300"
+              className="border-[#F16001] text-[#F16001] hover:bg-[#F16001] hover:text-white px-8 py-6 text-base font-semibold rounded-xl"
             >
               View All Gear
             </Button>
@@ -265,12 +223,7 @@ const Production = () => {
       {/* Footer CTA Section */}
       <section className="relative z-10 py-24 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <div>
             <h2 className="text-4xl sm:text-5xl font-bold text-[#333333] mb-6">
               Would you like to work with us?
             </h2>
@@ -280,13 +233,13 @@ const Production = () => {
             <Link to="/contact">
               <Button
                 size="lg"
-                className="bg-[#F16001] hover:bg-[#d95601] text-white px-10 py-7 text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-[#F16001] hover:bg-[#d95601] text-white px-10 py-7 text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl"
               >
                 Contact Us
                 <ArrowRight className="w-5 h-5 ml-3" />
               </Button>
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
 

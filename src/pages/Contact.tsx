@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Mail, Facebook, Phone } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
 import FloatingChatButton from "@/components/layout/FloatingChatButton";
@@ -41,50 +40,37 @@ const Contact = () => {
       <main className="relative z-10 pt-32 pb-20 px-6">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
+          <div className="text-center mb-16">
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#333333] mb-6">
               Contact Us
             </h1>
             <p className="text-lg sm:text-xl text-[#333333]/70 max-w-xl mx-auto">
               Have a project in mind? Reach out to us through any of the channels below.
             </p>
-          </motion.div>
+          </div>
 
           {/* Contact Cards - Centered */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
-            {contactMethods.map((method, index) => (
-              <motion.a
+            {contactMethods.map((method) => (
+              <a
                 key={method.title}
                 href={method.href}
                 target={method.title === "Facebook" ? "_blank" : undefined}
                 rel={method.title === "Facebook" ? "noopener noreferrer" : undefined}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + index * 0.1, duration: 0.6 }}
-                className="bg-white border border-gray-100 rounded-3xl p-8 text-center group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 w-full sm:w-auto sm:min-w-[200px]"
+                className="bg-white border border-gray-100 rounded-3xl p-8 text-center group hover:shadow-xl hover:-translate-y-1 w-full sm:w-auto sm:min-w-[200px]"
               >
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-[#F16001]/10 flex items-center justify-center mb-6 group-hover:bg-[#F16001]/20 transition-colors">
+                <div className="w-16 h-16 mx-auto rounded-2xl bg-[#F16001]/10 flex items-center justify-center mb-6 group-hover:bg-[#F16001]/20">
                   <method.icon className="w-7 h-7 text-[#F16001]" />
                 </div>
                 <h3 className="text-lg font-semibold text-[#333333] mb-2">{method.title}</h3>
                 <p className="text-[#F16001] font-medium mb-2 group-hover:underline">{method.value}</p>
                 <p className="text-sm text-[#333333]/60">{method.description}</p>
-              </motion.a>
+              </a>
             ))}
           </div>
 
           {/* Office Hours Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
-            className="bg-white border border-gray-100 rounded-3xl p-10 text-center shadow-sm"
-          >
+          <div className="bg-white border border-gray-100 rounded-3xl p-10 text-center shadow-sm">
             <h3 className="text-2xl font-bold text-[#333333] mb-6">Office Hours</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-[#333333]/70 max-w-md mx-auto">
               <div className="bg-gradient-to-br from-[#F16001]/5 to-orange-50/50 rounded-2xl p-6">
@@ -96,7 +82,7 @@ const Contact = () => {
                 <p className="text-lg">10:00 AM - 17:00 PM</p>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </main>
 
