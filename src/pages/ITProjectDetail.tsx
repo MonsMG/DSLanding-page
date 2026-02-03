@@ -123,7 +123,6 @@ const ITProjectDetail = () => {
           {/* Project Header */}
           <div className="mb-12">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#333333] mb-6">{project.name}</h1>
-            <p className="text-xl text-[#333333]/70 leading-relaxed">{project.description}</p>
           </div>
 
           {/* Project Details Card */}
