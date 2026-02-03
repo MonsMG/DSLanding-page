@@ -20,27 +20,66 @@ const projectsData: Record<string, Project> = {
     name: "Check-in System",
     link: "https://check-it-ouch.lovable.app/",
     description: "A streamlined check-in system for tracking attendance and achievements with real-time updates.",
-    fullDescription: "Our Check-in System is a comprehensive solution designed for organizations that need to track attendance and monitor participant achievements in real-time. Built with modern web technologies, it offers a seamless experience for both administrators and users. The system includes features like QR code scanning, automated reporting, and integration capabilities with existing HR systems.",
-    targetAudience: ["Corporate HR departments", "Educational institutions", "Event organizers", "Conference managers", "Training facilities"],
-    features: ["Real-time attendance tracking", "QR code check-in capability", "Automated achievement badges", "Comprehensive analytics dashboard", "Export reports in multiple formats"],
+    fullDescription:
+      "Our Check-in System is a comprehensive solution designed for organizations that need to track attendance and monitor participant achievements in real-time. Built with modern web technologies, it offers a seamless experience for both administrators and users. The system includes features like QR code scanning, automated reporting, and integration capabilities with existing HR systems.",
+    targetAudience: [
+      "Corporate HR departments",
+      "Educational institutions",
+      "Event organizers",
+      "Conference managers",
+      "Training facilities",
+    ],
+    features: [
+      "Real-time attendance tracking",
+      "QR code check-in capability",
+      "Automated achievement badges",
+      "Comprehensive analytics dashboard",
+      "Export reports in multiple formats",
+    ],
   },
   "2": {
     id: "2",
     name: "Freetime Matcher",
     link: "https://ft-matcher.lovable.app/",
     description: "Intelligent scheduling tool for matching availability and coordinating team meetings efficiently.",
-    fullDescription: "Freetime Matcher revolutionizes the way teams coordinate their schedules. This intelligent scheduling tool analyzes team members' availability and automatically suggests optimal meeting times. Say goodbye to endless email chains trying to find a suitable slot - our algorithm does the heavy lifting, ensuring maximum participation while respecting individual preferences and time zones.",
-    targetAudience: ["Remote and hybrid teams", "Project managers", "HR coordinators", "Academic advisors", "Freelancers and consultants"],
-    features: ["Smart availability matching algorithm", "Multi-timezone support", "Calendar integration (Google, Outlook)", "Recurring meeting optimization", "Team preference learning"],
+    fullDescription:
+      "Freetime Matcher revolutionizes the way teams coordinate their schedules. This intelligent scheduling tool analyzes team members' availability and automatically suggests optimal meeting times. Say goodbye to endless email chains trying to find a suitable slot - our algorithm does the heavy lifting, ensuring maximum participation while respecting individual preferences and time zones.",
+    targetAudience: [
+      "Remote and hybrid teams",
+      "Project managers",
+      "HR coordinators",
+      "Academic advisors",
+      "Freelancers and consultants",
+    ],
+    features: [
+      "Smart availability matching algorithm",
+      "Multi-timezone support",
+      "Calendar integration (Google, Outlook)",
+      "Recurring meeting optimization",
+      "Team preference learning",
+    ],
   },
   "3": {
     id: "3",
     name: "Messaging Hub",
-    link: "https://uni-send-broadcast.lovable.app/",
+    link: "https://tagcast-connect.lovable.app",
     description: "Unified communication platform for seamless team messaging and broadcast announcements.",
-    fullDescription: "Messaging Hub serves as your organization's central communication nerve center. This unified platform enables seamless team messaging, broadcast announcements, and targeted communication channels. With features like scheduled messages, read receipts, and department-specific channels, keeping your team informed has never been easier or more efficient.",
-    targetAudience: ["Medium to large enterprises", "Educational institutions", "Non-profit organizations", "Government agencies", "Multi-location businesses"],
-    features: ["Broadcast messaging to groups", "Scheduled message delivery", "Read receipt tracking", "Department-specific channels", "Priority message flagging"],
+    fullDescription:
+      "Messaging Hub serves as your organization's central communication nerve center. This unified platform enables seamless team messaging, broadcast announcements, and targeted communication channels. With features like scheduled messages, read receipts, and department-specific channels, keeping your team informed has never been easier or more efficient.",
+    targetAudience: [
+      "Medium to large enterprises",
+      "Educational institutions",
+      "Non-profit organizations",
+      "Government agencies",
+      "Multi-location businesses",
+    ],
+    features: [
+      "Broadcast messaging to groups",
+      "Scheduled message delivery",
+      "Read receipt tracking",
+      "Department-specific channels",
+      "Priority message flagging",
+    ],
   },
 };
 
@@ -54,9 +93,7 @@ const ITProjectDetail = () => {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-[#333333] mb-4">Project Not Found</h1>
           <Link to="/it">
-            <Button className="bg-[#F16001] hover:bg-[#d95601] text-white">
-              Back to IT Projects
-            </Button>
+            <Button className="bg-[#F16001] hover:bg-[#d95601] text-white">Back to IT Projects</Button>
           </Link>
         </div>
       </div>
@@ -85,9 +122,7 @@ const ITProjectDetail = () => {
 
           {/* Project Header */}
           <div className="mb-12">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#333333] mb-6">
-              {project.name}
-            </h1>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#333333] mb-6">{project.name}</h1>
             <p className="text-xl text-[#333333]/70 leading-relaxed">{project.description}</p>
           </div>
 
