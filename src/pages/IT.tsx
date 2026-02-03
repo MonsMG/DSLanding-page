@@ -4,7 +4,6 @@ import Navigation from "@/components/layout/Navigation";
 import FloatingChatButton from "@/components/layout/FloatingChatButton";
 import { Button } from "@/components/ui/button";
 import type { LucideIcon } from "lucide-react";
-
 interface Project {
   id: string;
   name: string;
@@ -13,30 +12,24 @@ interface Project {
 }
 
 // Filtered projects - excluding "Code Playground" and "Mobile Dashboard"
-const projects: Project[] = [
-  {
-    id: "1",
-    name: "Check-in System",
-    description: "A streamlined check-in system for tracking attendance and achievements with real-time updates.",
-    icon: BadgeCheck,
-  },
-  {
-    id: "2",
-    name: "Freetime Matcher",
-    description: "Intelligent scheduling tool for matching availability and coordinating team meetings efficiently.",
-    icon: CalendarCheck,
-  },
-  {
-    id: "3",
-    name: "Messaging Hub",
-    description: "Unified communication platform for seamless team messaging and broadcast announcements.",
-    icon: Mail,
-  },
-];
-
+const projects: Project[] = [{
+  id: "1",
+  name: "Check-in System",
+  description: "A streamlined check-in system for tracking attendance and achievements with real-time updates.",
+  icon: BadgeCheck
+}, {
+  id: "2",
+  name: "Freetime Matcher",
+  description: "Intelligent scheduling tool for matching availability and coordinating team meetings efficiently.",
+  icon: CalendarCheck
+}, {
+  id: "3",
+  name: "Messaging Hub",
+  description: "Unified communication platform for seamless team messaging and broadcast announcements.",
+  icon: Mail
+}];
 const IT = () => {
-  return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
+  return <div className="min-h-screen bg-white relative overflow-hidden">
       <Navigation />
 
       {/* Colorful Background Elements - Matching Production Page */}
@@ -65,20 +58,13 @@ const IT = () => {
       <section className="relative z-10 pb-24 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => {
-              const IconComponent = project.icon;
-              return (
-                <div key={project.id}>
-                  <Link
-                    to={`/it/project/${project.id}`}
-                    className="group block bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2"
-                  >
+            {projects.map(project => {
+            const IconComponent = project.icon;
+            return <div key={project.id}>
+                  <Link to={`/it/project/${project.id}`} className="group block bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2">
                     {/* Project Icon Cover */}
                     <div className="aspect-square bg-gradient-to-br from-[#F16001]/5 via-orange-50 to-amber-50/50 flex items-center justify-center relative overflow-hidden">
-                      <IconComponent
-                        className="w-20 h-20 text-[#F16001]/70 group-hover:text-[#F16001] group-hover:scale-110"
-                        strokeWidth={1.5}
-                      />
+                      <IconComponent className="w-20 h-20 text-[#F16001]/70 group-hover:text-[#F16001] group-hover:scale-110" strokeWidth={1.5} />
                     </div>
 
                     {/* Project Info */}
@@ -87,25 +73,21 @@ const IT = () => {
                         <h3 className="text-xl font-bold text-[#333333] group-hover:text-[#F16001]">
                           {project.name}
                         </h3>
-                        <ArrowRight className="w-5 h-5 text-[#333333]/40 group-hover:text-[#F16001] group-hover:translate-x-1 flex-shrink-0 ml-2" />
+                        
                       </div>
                       <p className="text-[#333333]/70 text-sm leading-relaxed line-clamp-3">
                         {project.description}
                       </p>
                     </div>
                   </Link>
-                </div>
-              );
-            })}
+                </div>;
+          })}
           </div>
 
           {/* View More Button */}
           <div className="flex justify-end mt-12">
             <a href="/it/archive" target="_blank" rel="noopener noreferrer">
-              <Button
-                size="lg"
-                className="bg-[#F16001] hover:bg-[#d95601] text-white px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl"
-              >
+              <Button size="lg" className="bg-[#F16001] hover:bg-[#d95601] text-white px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl">
                 View More
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
@@ -115,8 +97,6 @@ const IT = () => {
       </section>
 
       <FloatingChatButton />
-    </div>
-  );
+    </div>;
 };
-
 export default IT;
