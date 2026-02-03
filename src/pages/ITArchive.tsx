@@ -119,11 +119,9 @@ const ITArchive = () => {
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#333333] mb-4">
-              IT Project Archive
-            </h1>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#333333] mb-4">Software Project Archive</h1>
             <p className="text-lg text-[#333333]/70 max-w-2xl mx-auto">
-              Browse our complete collection of IT solutions and digital products
+              Browse our complete collection of Software solutions and Digital products
             </p>
           </div>
 
@@ -194,9 +192,7 @@ const ITArchive = () => {
                       </h3>
                       <ExternalLink className="w-4 h-4 text-[#333333]/40 group-hover:text-[#F16001] flex-shrink-0 ml-2" />
                     </div>
-                    <p className="text-[#333333]/60 text-sm leading-relaxed line-clamp-2">
-                      {project.description}
-                    </p>
+                    <p className="text-[#333333]/60 text-sm leading-relaxed line-clamp-2">{project.description}</p>
                   </div>
                 </a>
               );
