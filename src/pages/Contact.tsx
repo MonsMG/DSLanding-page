@@ -14,7 +14,7 @@ const contactMethods = [
   {
     icon: Facebook,
     title: "Facebook",
-    value: "DS Workspace",
+    value: "Digital Solution Studio",
     href: "https://www.facebook.com/share/1Aryrru3t1/?mibextid=wwXIfr",
     description: "Follow us for updates",
   },
@@ -46,14 +46,10 @@ const Contact = () => {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-card mb-8"
             >
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-sm font-medium text-foreground">
-                Get in Touch
-              </span>
+              <span className="text-sm font-medium text-foreground">Get in Touch</span>
             </motion.span>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6">
-              Contact Us
-            </h1>
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6">Contact Us</h1>
 
             <p className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto">
               Have a project in mind? Reach out to us through any of the channels below.
@@ -76,18 +72,12 @@ const Contact = () => {
                 <div className="w-16 h-16 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
                   <method.icon className="w-7 h-7 text-primary" />
                 </div>
-                
-                <h3 className="text-lg font-semibold text-foreground mb-2">
-                  {method.title}
-                </h3>
-                
-                <p className="text-primary font-medium mb-2 group-hover:underline">
-                  {method.value}
-                </p>
-                
-                <p className="text-sm text-muted-foreground">
-                  {method.description}
-                </p>
+
+                <h3 className="text-lg font-semibold text-foreground mb-2">{method.title}</h3>
+
+                <p className="text-primary font-medium mb-2 group-hover:underline">{method.value}</p>
+
+                <p className="text-sm text-muted-foreground">{method.description}</p>
               </motion.a>
             ))}
           </div>
@@ -99,9 +89,7 @@ const Contact = () => {
             transition={{ delay: 0.7, duration: 0.6 }}
             className="mt-12 capsule-card p-10 text-center"
           >
-            <h3 className="text-2xl font-bold text-foreground mb-6">
-              Office Hours
-            </h3>
+            <h3 className="text-2xl font-bold text-foreground mb-6">Office Hours</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-muted-foreground max-w-md mx-auto">
               <div className="capsule-card p-6 bg-gradient-to-br from-primary/5 to-accent/5">
                 <p className="font-semibold text-foreground mb-2">Monday - Friday</p>
