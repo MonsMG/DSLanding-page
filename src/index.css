@@ -4,35 +4,35 @@
 @tailwind components;
 @tailwind utilities;
 
-/* DS Workspace Design System - White & Orange Professional Theme */
+/* DS Workspace Design System - Retro Professional Theme */
 
 @layer base {
   :root {
-    /* Core backgrounds - Pure white and light gray */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 20%;
+    /* Core backgrounds - White and Light Beige */
+    --background: 45 33% 93%;
+    --foreground: 22 62% 24%;
 
-    /* Cards with glassmorphism */
+    /* Cards */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 20%;
+    --card-foreground: 22 62% 24%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 20%;
+    --popover-foreground: 22 62% 24%;
 
-    /* Primary - Vibrant Orange (DS Brand) */
-    --primary: 24 95% 53%;
+    /* Primary - Retro Orange */
+    --primary: 22 93% 49%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Light gray */
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 20%;
+    /* Secondary - Red Orange */
+    --secondary: 16 89% 40%;
+    --secondary-foreground: 0 0% 100%;
 
     /* Muted tones */
-    --muted: 0 0% 96%;
+    --muted: 45 33% 90%;
     --muted-foreground: 0 0% 45%;
 
-    /* Accent - Warm orange */
-    --accent: 24 90% 58%;
+    /* Accent - Retro Orange */
+    --accent: 22 93% 49%;
     --accent-foreground: 0 0% 100%;
 
     /* Destructive */
@@ -40,73 +40,73 @@
     --destructive-foreground: 0 0% 100%;
 
     /* Borders and inputs */
-    --border: 0 0% 90%;
-    --input: 0 0% 92%;
-    --ring: 24 95% 53%;
+    --border: 45 20% 85%;
+    --input: 45 20% 88%;
+    --ring: 22 93% 49%;
 
     --radius: 1rem;
 
-    /* Custom DS colors */
-    --ds-orange: 24 95% 53%;
-    --ds-coral: 15 90% 58%;
-    --ds-cream: 40 40% 98%;
-    --ds-navy: 220 30% 15%;
-    --ds-slate: 0 0% 45%;
-    --ds-baby-blue: 199 89% 70%;
-    --ds-glass: 0 0% 100% / 0.85;
-    --ds-glass-border: 0 0% 0% / 0.08;
+    /* Custom DS Retro colors */
+    --ds-retro-orange: 22 93% 49%;
+    --ds-red-orange: 16 89% 40%;
+    --ds-chocolate: 22 62% 24%;
+    --ds-beige: 45 33% 93%;
+    --ds-cream: 45 40% 96%;
+    --ds-dark-gray: 0 0% 20%;
+    --ds-glass: 0 0% 100% / 0.9;
+    --ds-glass-border: 22 62% 24% / 0.08;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(40 40% 98%) 50%, hsl(24 100% 98%) 100%);
-    --gradient-orange: linear-gradient(135deg, hsl(24 95% 53%) 0%, hsl(15 90% 58%) 100%);
-    --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.9) 0%, hsl(0 0% 100% / 0.7) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(45 33% 93%) 50%, hsl(22 93% 98%) 100%);
+    --gradient-orange: linear-gradient(135deg, hsl(22 93% 49%) 0%, hsl(16 89% 40%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.95) 0%, hsl(45 33% 93% / 0.8) 100%);
 
     /* Shadows */
-    --shadow-soft: 0 4px 30px hsl(0 0% 0% / 0.06);
-    --shadow-medium: 0 8px 40px hsl(0 0% 0% / 0.1);
-    --shadow-glow: 0 0 60px hsl(24 95% 53% / 0.25);
+    --shadow-soft: 0 4px 30px hsl(22 62% 24% / 0.06);
+    --shadow-medium: 0 8px 40px hsl(22 62% 24% / 0.1);
+    --shadow-glow: 0 0 60px hsl(22 93% 49% / 0.2);
 
     /* Sidebar */
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 0 0% 20%;
-    --sidebar-primary: 24 95% 53%;
+    --sidebar-foreground: 22 62% 24%;
+    --sidebar-primary: 22 93% 49%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 20%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 24 95% 53%;
+    --sidebar-accent: 45 33% 93%;
+    --sidebar-accent-foreground: 22 62% 24%;
+    --sidebar-border: 45 20% 85%;
+    --sidebar-ring: 22 93% 49%;
   }
 
   .dark {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 20%;
+    --background: 45 33% 93%;
+    --foreground: 22 62% 24%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 20%;
+    --card-foreground: 22 62% 24%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 20%;
-    --primary: 24 95% 53%;
+    --popover-foreground: 22 62% 24%;
+    --primary: 22 93% 49%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 20%;
-    --muted: 0 0% 96%;
+    --secondary: 16 89% 40%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 45 33% 90%;
     --muted-foreground: 0 0% 45%;
-    --accent: 24 90% 58%;
+    --accent: 22 93% 49%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 92%;
-    --ring: 24 95% 53%;
-    --ds-glass: 0 0% 100% / 0.85;
-    --ds-glass-border: 0 0% 0% / 0.08;
+    --border: 45 20% 85%;
+    --input: 45 20% 88%;
+    --ring: 22 93% 49%;
+    --ds-glass: 0 0% 100% / 0.9;
+    --ds-glass-border: 22 62% 24% / 0.08;
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 0 0% 20%;
-    --sidebar-primary: 24 95% 53%;
+    --sidebar-foreground: 22 62% 24%;
+    --sidebar-primary: 22 93% 49%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 20%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 24 95% 53%;
+    --sidebar-accent: 45 33% 93%;
+    --sidebar-accent-foreground: 22 62% 24%;
+    --sidebar-border: 45 20% 85%;
+    --sidebar-ring: 22 93% 49%;
   }
 }
 
