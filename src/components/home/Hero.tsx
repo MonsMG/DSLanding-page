@@ -14,7 +14,7 @@ const Hero = () => {
         <div className="absolute -bottom-40 left-1/3 w-[600px] h-[600px] bg-gradient-to-tr from-primary/10 to-[hsl(var(--ds-cream))] rounded-full blur-3xl" />
 
         {/* Subtle geometric accents */}
-        <div className="absolute bottom-40 left-16 w-24 h-24 border border-primary/20 rounded-lg rotate-12" />
+        
         <div className="absolute top-1/2 right-20 w-3 h-3 bg-primary/30 rounded-full" />
         
       </div>
