@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 const Hero = () => {
-  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Abstract Artistic Background - Modern Infrastructure */}
       <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--ds-beige))] via-[hsl(var(--ds-cream))] to-white" />
 
@@ -14,9 +15,6 @@ const Hero = () => {
         <div className="absolute -bottom-40 left-1/3 w-[600px] h-[600px] bg-gradient-to-tr from-primary/10 to-[hsl(var(--ds-cream))] rounded-full blur-3xl" />
 
         {/* Subtle geometric accents */}
-        
-        
-        
       </div>
 
       {/* Main Content */}
@@ -34,13 +32,19 @@ const Hero = () => {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <Link to="/it">
-            <Button size="lg" className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl min-w-[220px]">
-              Explore IT
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl min-w-[220px]"
+            >
+              Explore Software
               <ArrowRight className="w-6 h-6 ml-3" />
             </Button>
           </Link>
           <Link to="/production">
-            <Button size="lg" className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl min-w-[220px]">
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl min-w-[220px]"
+            >
               Explore Production
               <ArrowRight className="w-6 h-6 ml-3" />
             </Button>
@@ -50,6 +54,7 @@ const Hero = () => {
 
       {/* Bottom gradient fade */}
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[hsl(var(--ds-beige))] to-transparent" />
-    </section>;
+    </section>
+  );
 };
 export default Hero;
