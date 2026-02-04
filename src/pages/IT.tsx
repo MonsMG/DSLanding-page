@@ -25,24 +25,21 @@ const projects: Project[] = [
     id: "1",
     name: "Check-in System",
     link: "https://check-it-ouch.lovable.app/",
-    description:
-      "A streamlined check-in system for tracking attendance and achievements with real-time updates.",
+    description: "A streamlined check-in system for tracking attendance and achievements with real-time updates.",
     icon: BadgeCheck,
   },
   {
     id: "2",
     name: "Freetime Matcher",
     link: "https://ft-matcher.lovable.app/",
-    description:
-      "Intelligent scheduling tool for matching availability and coordinating team meetings efficiently.",
+    description: "Intelligent scheduling tool for matching availability and coordinating team meetings efficiently.",
     icon: CalendarCheck,
   },
   {
     id: "3",
     name: "Messaging Hub",
     link: "https://tagcast-connect.lovable.app",
-    description:
-      "Unified communication platform for seamless team messaging and broadcast announcements.",
+    description: "Unified communication platform for seamless team messaging and broadcast announcements.",
     icon: Mail,
   },
 ];
@@ -93,7 +90,7 @@ const IT = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-6">
-              "Designed to Solve. Built to Improve."
+              "Designed to Solve Built to Improve"
             </h1>
             <p className="text-lg sm:text-xl text-foreground/70 max-w-2xl mx-auto">
               Crafting innovative digital solutions that streamline workflows and enhance productivity.
@@ -119,12 +116,8 @@ const IT = () => {
                   <div className="w-14 h-14 mx-auto mb-4 bg-primary/10 rounded-xl flex items-center justify-center">
                     <IconComponent className="w-7 h-7 text-primary" strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-base font-bold text-[hsl(var(--ds-chocolate))] mb-2">
-                    {skill.name}
-                  </h3>
-                  <p className="text-foreground/60 text-sm leading-relaxed">
-                    {skill.description}
-                  </p>
+                  <h3 className="text-base font-bold text-[hsl(var(--ds-chocolate))] mb-2">{skill.name}</h3>
+                  <p className="text-foreground/60 text-sm leading-relaxed">{skill.description}</p>
                 </div>
               );
             })}
