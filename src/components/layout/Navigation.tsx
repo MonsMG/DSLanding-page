@@ -10,7 +10,7 @@ const Navigation = () => {
 
   const navLinks = [
     { path: "/", label: "Home" },
-    { path: "/it", label: "IT" },
+    { path: "/it", label: "Software" },
     { path: "/production", label: "Production" },
     { path: "/about", label: "About" },
     { path: "/contact", label: "Contact" },
@@ -27,9 +27,7 @@ const Navigation = () => {
       <nav className="max-w-7xl mx-auto flex items-center justify-between">
         {/* DS workspace Logo - Left */}
         <Link to="/" className="flex items-center gap-2">
-          <span className="text-xl font-bold text-[hsl(var(--ds-chocolate))] tracking-tight">
-            DS workspace
-          </span>
+          <span className="text-xl font-bold text-[hsl(var(--ds-chocolate))] tracking-tight">DS workspace</span>
         </Link>
 
         {/* Desktop Nav Links - Center/Right */}
@@ -39,9 +37,7 @@ const Navigation = () => {
               key={link.path}
               to={link.path}
               className={`relative px-5 py-2 rounded-xl text-sm font-medium ${
-                isActive(link.path)
-                  ? "text-primary-foreground bg-primary"
-                  : "text-foreground hover:text-primary"
+                isActive(link.path) ? "text-primary-foreground bg-primary" : "text-foreground hover:text-primary"
               }`}
             >
               <span className="relative z-10">{link.label}</span>
@@ -66,11 +62,7 @@ const Navigation = () => {
             className="md:hidden p-2 rounded-lg hover:bg-muted"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? (
-              <X className="w-6 h-6 text-foreground" />
-            ) : (
-              <Menu className="w-6 h-6 text-foreground" />
-            )}
+            {mobileMenuOpen ? <X className="w-6 h-6 text-foreground" /> : <Menu className="w-6 h-6 text-foreground" />}
           </button>
         </div>
       </nav>
@@ -85,9 +77,7 @@ const Navigation = () => {
                 to={link.path}
                 onClick={() => setMobileMenuOpen(false)}
                 className={`px-4 py-3 rounded-xl text-base font-medium ${
-                  isActive(link.path)
-                    ? "text-primary-foreground bg-primary"
-                    : "text-foreground hover:bg-muted"
+                  isActive(link.path) ? "text-primary-foreground bg-primary" : "text-foreground hover:bg-muted"
                 }`}
               >
                 {link.label}
