@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Search, Filter, ExternalLink, Globe } from "lucide-react";
+import { Search, Filter, Globe } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
 import FloatingChatButton from "@/components/layout/FloatingChatButton";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import ProjectCard from "@/components/it/ProjectCard";
 import type { LucideIcon } from "lucide-react";
 import { BadgeCheck, CalendarCheck, Mail, Database, Layout, Server, Cloud, Shield, Cpu } from "lucide-react";
 
@@ -36,7 +37,7 @@ const allProjects: Project[] = [
   {
     id: "3",
     name: "Messaging Hub",
-    link: "https://uni-send-broadcast.lovable.app/",
+    link: "https://tagcast-connect.lovable.app",
     description: "Unified communication platform for seamless team messaging and broadcast announcements.",
     category: "Web App",
     icon: Mail,
@@ -106,21 +107,24 @@ const ITArchive = () => {
   });
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Navigation />
 
       {/* Subtle Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 -left-20 w-[500px] h-[500px] bg-gradient-to-br from-[#F16001]/5 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-gradient-to-bl from-orange-50 to-transparent rounded-full blur-3xl" />
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 via-[hsl(var(--ds-beige))] to-[hsl(var(--ds-cream))]" />
+        <div className="absolute top-20 -left-20 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-0 w-[400px] h-[400px] bg-[hsl(var(--ds-red-orange))]/10 rounded-full blur-3xl" />
       </div>
 
       <main className="relative z-10 pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#333333] mb-4">Software Project Archive</h1>
-            <p className="text-lg text-[#333333]/70 max-w-2xl mx-auto">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-4">
+              Software Project Archive
+            </h1>
+            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
               Browse our complete collection of Software solutions and Digital products
             </p>
           </div>
@@ -129,27 +133,27 @@ const ITArchive = () => {
           <div className="mb-10">
             {/* Search Bar */}
             <div className="relative max-w-md mx-auto mb-6">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#333333]/50" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/50" />
               <Input
                 type="text"
                 placeholder="Search projects..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 py-6 text-lg border-gray-200 rounded-xl focus:border-[#F16001] focus:ring-[#F16001]"
+                className="pl-12 py-6 text-lg border-border rounded-xl focus:border-primary focus:ring-primary"
               />
             </div>
 
             {/* Category Filters */}
             <div className="flex flex-wrap items-center justify-center gap-2">
-              <Filter className="w-4 h-4 text-[#333333]/50 mr-2" />
+              <Filter className="w-4 h-4 text-foreground/50 mr-2" />
               {categories.map((category) => (
                 <Badge
                   key={category}
                   variant={activeCategory === category ? "default" : "outline"}
                   className={`cursor-pointer px-4 py-2 text-sm font-medium ${
                     activeCategory === category
-                      ? "bg-[#F16001] text-white hover:bg-[#d95601]"
-                      : "text-[#333333] hover:bg-[#F16001]/10 hover:border-[#F16001]"
+                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                      : "text-foreground hover:bg-primary/10 hover:border-primary"
                   }`}
                   onClick={() => setActiveCategory(category)}
                 >
@@ -161,50 +165,26 @@ const ITArchive = () => {
 
           {/* Projects Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProjects.map((project) => {
-              const IconComponent = project.icon;
-              return (
-                <a
-                  key={project.id}
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1"
-                >
-                  {/* Icon Area */}
-                  <div className="aspect-[4/3] bg-gradient-to-br from-[#F16001]/5 to-orange-50 flex items-center justify-center relative">
-                    <IconComponent
-                      className="w-16 h-16 text-[#F16001]/70 group-hover:text-[#F16001] group-hover:scale-110"
-                      strokeWidth={1.5}
-                    />
-                    <div className="absolute top-3 right-3">
-                      <Badge variant="secondary" className="text-xs bg-white/80">
-                        {project.category}
-                      </Badge>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-5">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-base font-semibold text-[#333333] group-hover:text-[#F16001] line-clamp-1">
-                        {project.name}
-                      </h3>
-                      <ExternalLink className="w-4 h-4 text-[#333333]/40 group-hover:text-[#F16001] flex-shrink-0 ml-2" />
-                    </div>
-                    <p className="text-[#333333]/60 text-sm leading-relaxed line-clamp-2">{project.description}</p>
-                  </div>
-                </a>
-              );
-            })}
+            {filteredProjects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                id={project.id}
+                name={project.name}
+                link={project.link}
+                description={project.description}
+                icon={project.icon}
+                category={project.category}
+                showCategory
+              />
+            ))}
           </div>
 
           {/* Empty State */}
           {filteredProjects.length === 0 && (
             <div className="text-center py-20">
-              <Globe className="w-16 h-16 text-[#333333]/20 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-[#333333] mb-2">No projects found</h3>
-              <p className="text-[#333333]/60">Try adjusting your search or filter criteria</p>
+              <Globe className="w-16 h-16 text-foreground/20 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-[hsl(var(--ds-chocolate))] mb-2">No projects found</h3>
+              <p className="text-foreground/60">Try adjusting your search or filter criteria</p>
             </div>
           )}
         </div>
