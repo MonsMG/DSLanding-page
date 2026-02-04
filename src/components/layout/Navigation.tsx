@@ -92,7 +92,7 @@ const Navigation = () => {
         )}
       </header>
 
-      <div className="h-20 w-full bg-transparent" aria-hidden="true" />
+      <div className="h-24 w-full bg-transparent" aria-hidden="true" />
     </>
   );
 };
