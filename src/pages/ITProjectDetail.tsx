@@ -121,8 +121,21 @@ const ITProjectDetail = () => {
           </div>
 
           {/* Project Header */}
-          <div className="mb-12">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#333333] mb-6">{project.name}</h1>
+          <div className="mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#333333]">{project.name}</h1>
+          </div>
+
+          {/* Visit Website CTA */}
+          <div className="mb-12 text-left">
+            <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-block">
+              <Button
+                size="lg"
+                className="bg-[#F16001] hover:bg-[#d95601] text-white px-10 py-7 text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl"
+              >
+                <Globe className="w-5 h-5 mr-3" />
+                Visit Website
+              </Button>
+            </a>
           </div>
 
           {/* Project Details Card */}
@@ -164,19 +177,6 @@ const ITProjectDetail = () => {
                 ))}
               </ul>
             </div>
-          </div>
-
-          {/* Visit Website CTA */}
-          <div className="text-center">
-            <a href={project.link} target="_blank" rel="noopener noreferrer">
-              <Button
-                size="lg"
-                className="bg-[#F16001] hover:bg-[#d95601] text-white px-10 py-7 text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl"
-              >
-                <Globe className="w-5 h-5 mr-3" />
-                Visit Website
-              </Button>
-            </a>
           </div>
         </div>
       </main>
