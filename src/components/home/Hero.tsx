@@ -15,7 +15,7 @@ const Hero = () => {
 
         {/* Subtle geometric accents */}
         
-        <div className="absolute top-1/2 right-20 w-3 h-3 bg-primary/30 rounded-full" />
+        
         
       </div>
 
