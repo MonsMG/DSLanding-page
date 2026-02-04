@@ -88,11 +88,11 @@ const IT = () => {
       {/* Hero Section with Main Slogan */}
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="text-center">
+          <div className="text-left">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-6">
               "Designed to Solve, Built to Improve"
             </h1>
-            <p className="text-lg sm:text-xl text-foreground/70 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-foreground/70 max-w-2xl">
               Crafting innovative digital solutions that streamline workflows and enhance productivity.
             </p>
           </div>
