@@ -12,6 +12,7 @@ interface ProjectCardProps {
   icon: LucideIcon;
   category?: string;
   showCategory?: boolean;
+  className?: string;
 }
 
 const ProjectCard = ({
@@ -22,6 +23,7 @@ const ProjectCard = ({
   icon: IconComponent,
   category,
   showCategory = false,
+  className = "",
 }: ProjectCardProps) => {
   const handleButtonClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -30,8 +32,8 @@ const ProjectCard = ({
   };
 
   return (
-    <Link to={`/it/project/${id}`} className="block">
-      <div className="group bg-card border border-border rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2">
+    <Link to={`/it/project/${id}`} className={`block ${className}`}>
+      <div className="group bg-card border border-border rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-2 h-full flex flex-col">
         {/* Project Icon Cover */}
         <div className="aspect-square bg-gradient-to-br from-primary/5 via-[hsl(var(--ds-cream))] to-[hsl(var(--ds-beige))] flex items-center justify-center relative overflow-hidden">
           <IconComponent
