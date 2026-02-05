@@ -50,7 +50,7 @@ const ProjectCard = ({
         </div>
 
         {/* Project Info */}
-        <div className="p-6 flex flex-col flex-grow h-full">
+        <div className="p-6">
           <div className="flex items-start justify-between mb-3">
             <h3 className="text-xl font-bold text-[hsl(var(--ds-chocolate))] group-hover:text-primary">{name}</h3>
           </div>
