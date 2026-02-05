@@ -95,6 +95,17 @@ const IT = () => {
             <p className="text-left sm:text-xl text-foreground/70 max-w-2xl">
               Crafting innovative digital solutions that streamline workflows and enhance productivity.
             </p>
+            <div className="flex justify-end mt-12 software-nav-container">
+              <Link to="/it/Software Projects">
+                <Button
+                  size="lg"
+                  className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl software-nav-btn"
+                >
+                  View Projects
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
