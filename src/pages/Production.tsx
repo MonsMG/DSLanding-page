@@ -64,13 +64,10 @@ const Production = () => {
       {/* Cover Section */}
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[hsl(var(--ds-chocolate))] mb-4">
-            DS Studio
+          <h1 className="text-left sm:text-6xl lg:text-7xl font-bold text-[hsl(var(--ds-chocolate))] mb-4">
+            DS Production
           </h1>
-          <p className="text-xl sm:text-2xl text-[hsl(var(--ds-chocolate))]/80 font-medium mb-4">
-            "We are DS Studio, Not just a simple studio"
-          </p>
-          <p className="text-foreground/60 max-w-2xl mx-auto text-lg">
+          <p className="text-left sm:text-2xl text-[hsl(var(--ds-chocolate))]/80 font-medium mb-4">
             Professional production services for your creative vision
           </p>
         </div>
@@ -80,12 +77,8 @@ const Production = () => {
       <section className="relative z-10 py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">
-              Portfolio
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-bold text-[hsl(var(--ds-chocolate))]">
-              OUR WORK
-            </h2>
+            <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">Portfolio</span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-[hsl(var(--ds-chocolate))]">OUR WORK</h2>
           </div>
 
           {/* Masonry-style Grid */}
@@ -107,9 +100,7 @@ const Production = () => {
                   ) : (
                     <Image className="w-12 h-12 text-primary/60 group-hover:text-primary mb-3" />
                   )}
-                  <span className="text-xs font-semibold text-primary uppercase tracking-wider">
-                    {item.category}
-                  </span>
+                  <span className="text-xs font-semibold text-primary uppercase tracking-wider">{item.category}</span>
                   <span className="text-base font-semibold text-[hsl(var(--ds-chocolate))] mt-2 text-center">
                     {item.placeholder}
                   </span>
@@ -124,12 +115,8 @@ const Production = () => {
       <section className="relative z-10 py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">
-              What We Do
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-bold text-[hsl(var(--ds-chocolate))]">
-              WE'RE CREATE
-            </h2>
+            <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">What We Do</span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-[hsl(var(--ds-chocolate))]">WE'RE CREATE</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
@@ -141,9 +128,7 @@ const Production = () => {
                 <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-primary/10 to-[hsl(var(--ds-cream))] flex items-center justify-center mb-6 group-hover:from-primary/20">
                   <service.icon className="w-10 h-10 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-[hsl(var(--ds-chocolate))] mb-3">
-                  {service.label}
-                </h3>
+                <h3 className="text-xl font-bold text-[hsl(var(--ds-chocolate))] mb-3">{service.label}</h3>
                 <p className="text-foreground/70">{service.description}</p>
               </div>
             ))}
@@ -165,12 +150,8 @@ const Production = () => {
       <section className="relative z-10 py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">
-              Life at DS
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-bold text-[hsl(var(--ds-chocolate))]">
-              BEHIND THE SCENE
-            </h2>
+            <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">Life at DS</span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-[hsl(var(--ds-chocolate))]">BEHIND THE SCENE</h2>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -180,9 +161,7 @@ const Production = () => {
                 className="aspect-square bg-card border border-border rounded-2xl flex flex-col items-center justify-center p-6 group cursor-pointer hover:shadow-lg"
               >
                 <Camera className="w-10 h-10 text-primary/50 group-hover:text-primary mb-4" />
-                <span className="text-base font-semibold text-[hsl(var(--ds-chocolate))] mb-1">
-                  {item.placeholder}
-                </span>
+                <span className="text-base font-semibold text-[hsl(var(--ds-chocolate))] mb-1">{item.placeholder}</span>
                 <span className="text-sm text-foreground/60">{item.description}</span>
               </div>
             ))}
@@ -194,12 +173,8 @@ const Production = () => {
       <section className="relative z-10 py-20 px-6 bg-gradient-to-r from-primary/5 via-white to-[hsl(var(--ds-cream))]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">
-              Equipment
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-bold text-[hsl(var(--ds-chocolate))]">
-              Our Production Gear
-            </h2>
+            <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">Equipment</span>
+            <h2 className="text-4xl sm:text-5xl font-bold text-[hsl(var(--ds-chocolate))]">Our Production Gear</h2>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
@@ -211,9 +186,7 @@ const Production = () => {
                 <div className="w-14 h-14 mx-auto rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20">
                   <Video className="w-7 h-7 text-primary" />
                 </div>
-                <h4 className="font-semibold text-[hsl(var(--ds-chocolate))] text-sm mb-1">
-                  {gear.name}
-                </h4>
+                <h4 className="font-semibold text-[hsl(var(--ds-chocolate))] text-sm mb-1">{gear.name}</h4>
                 <span className="text-xs text-foreground/60">{gear.category}</span>
               </div>
             ))}
