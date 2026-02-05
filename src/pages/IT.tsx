@@ -68,6 +68,12 @@ const skills: Skill[] = [
   },
 ];
 const IT = () => {
+  const scrollToProjects = () => {
+    const section = document.getElementById("software-projects");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       <Navigation />
@@ -90,17 +96,17 @@ const IT = () => {
             <p className="text-left sm:text-xl text-foreground/70 max-w-2xl">
               Crafting innovative digital solutions that streamline workflows and enhance productivity.
             </p>
-            <div className="flex justify-start mt-12 software-nav-container my-[25px]">
-              <Link to="Software Projects">
-                <Button
-                  size="lg"
-                  className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl software-nav-btn"
-                >
-                  View Projects
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </Link>
+          <div className="flex justify-start mt-12 software-nav-container my-[25px]">
+              <Button
+                onClick={scrollToProjects} // เรียกใช้ฟังก์ชันเลื่อนหน้าจอ
+                size="lg"
+                className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl software-nav-btn"
+              >
+                View Projects
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
             </div>
+            
           </div>
         </div>
       </section>
@@ -132,7 +138,7 @@ const IT = () => {
       </section>
 
       {/* Section B: Software Projects */}
-      <section className="relative z-10 pb-24 px-6">
+      <sectionid="software-projects" id="software-projects" className="relative z-10 pb-24 px-6">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))] mb-10 text-center">
             Software Projects
