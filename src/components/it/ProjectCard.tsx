@@ -50,21 +50,17 @@ const ProjectCard = ({
         </div>
 
         {/* Project Info */}
-        <div className="p-6">
+        <div className="p-6 flex flex-col flex-grow h-full">
           <div className="flex items-start justify-between mb-3">
-            <h3 className="text-xl font-bold text-[hsl(var(--ds-chocolate))] group-hover:text-primary">
-              {name}
-            </h3>
+            <h3 className="text-xl font-bold text-[hsl(var(--ds-chocolate))] group-hover:text-primary">{name}</h3>
           </div>
-          <p className="text-foreground/70 text-sm leading-relaxed line-clamp-3 mb-4">
-            {description}
-          </p>
+          <p className="text-foreground/70 text-sm leading-relaxed line-clamp-3 mb-4">{description}</p>
           {/* Visit Website Button - Opens external link */}
           <Button
             variant="outline"
             size="sm"
             onClick={handleButtonClick}
-            className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold"
+            className="w-full mt-auto border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold"
           >
             <Globe className="w-4 h-4 mr-2" />
             Visit Website
