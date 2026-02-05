@@ -51,6 +51,12 @@ const Contact = () => {
                 <a
                   key={method.title}
                   href={method.href}
+                  onClick={(e) => {
+                    if (isExternal) {
+                      e.preventDefault();
+                      window.open(method.href, "_blank", "noopener,noreferrer");
+                    }
+                  }}
                   target={isExternal ? "_blank" : undefined}
                   rel={isExternal ? "noopener noreferrer" : undefined}
                   className="bg-card border border-border rounded-3xl p-8 text-center group hover:shadow-xl hover:-translate-y-1 w-full sm:w-auto sm:min-w-[240px] cursor-pointer block transition-all"
