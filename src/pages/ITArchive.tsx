@@ -124,9 +124,6 @@ const ITArchive = () => {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-4">
               Software Project Archive
             </h1>
-            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
-              Browse our complete collection of Software solutions and Digital products
-            </p>
           </div>
 
           {/* Search and Filter */}
