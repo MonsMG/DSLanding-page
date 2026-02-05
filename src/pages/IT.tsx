@@ -95,7 +95,7 @@ const IT = () => {
             <p className="text-left sm:text-xl text-foreground/70 max-w-2xl">
               Crafting innovative digital solutions that streamline workflows and enhance productivity.
             </p>
-            <div className="flex justify-end mt-12 software-nav-container">
+            <div className="flex justify-start mt-12 software-nav-container">
               <Link to="/it/Software Projects">
                 <Button
                   size="lg"
