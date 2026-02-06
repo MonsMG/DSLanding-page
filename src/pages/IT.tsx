@@ -99,29 +99,8 @@ const IT = () => {
         </div>
       </section>
 
-      {/* Section A: Technical Skills */}
-      <section className="relative z-10 py-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))] mb-10 text-center">
-            Technical Skills
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {skills.map(skill => {
-            const IconComponent = skill.icon;
-            return <div key={skill.name} className="bg-card border border-border rounded-2xl p-6 text-center hover:shadow-lg hover:-translate-y-1">
-                  <div className="w-14 h-14 mx-auto mb-4 bg-primary/10 rounded-xl flex items-center justify-center">
-                    <IconComponent className="w-7 h-7 text-primary" strokeWidth={1.5} />
-                  </div>
-                  <h3 className="text-base font-bold text-[hsl(var(--ds-chocolate))] mb-2">{skill.name}</h3>
-                  <p className="text-foreground/60 text-sm leading-relaxed">{skill.description}</p>
-                </div>;
-          })}
-          </div>
-        </div>
-      </section>
-
-      {/* Section B: Software Projects */}
-      <section id="software-projects" className="relative z-10 pb-24 px-6">
+      {/* Section A: Software Projects */}
+      <section id="software-projects" className="relative z-10 py-16 px-6">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))] mb-10 text-center">
             Software Projects
@@ -138,6 +117,27 @@ const IT = () => {
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Section B: Technical Skills */}
+      <section className="relative z-10 pb-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))] mb-10 text-center">
+            Technical Skills
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            {skills.map(skill => {
+            const IconComponent = skill.icon;
+            return <div key={skill.name} className="bg-card border border-border rounded-2xl p-6 text-center hover:shadow-lg hover:-translate-y-1">
+                  <div className="w-14 h-14 mx-auto mb-4 bg-primary/10 rounded-xl flex items-center justify-center">
+                    <IconComponent className="w-7 h-7 text-primary" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-base font-bold text-[hsl(var(--ds-chocolate))] mb-2">{skill.name}</h3>
+                  <p className="text-foreground/60 text-sm leading-relaxed">{skill.description}</p>
+                </div>;
+          })}
           </div>
         </div>
       </section>
