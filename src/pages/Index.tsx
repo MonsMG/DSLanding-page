@@ -4,7 +4,7 @@ import Hero from "@/components/home/Hero";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="h-screen overflow-hidden bg-background">
       <Navigation />
       <Hero />
       <FloatingChatButton />

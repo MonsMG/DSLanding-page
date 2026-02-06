@@ -1,13 +1,9 @@
-import { useState } from "react";
-import { Search, Filter, Globe } from "lucide-react";
+import { Globe } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
 import FloatingChatButton from "@/components/layout/FloatingChatButton";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import ProjectCard from "@/components/it/ProjectCard";
 import type { LucideIcon } from "lucide-react";
 import { BadgeCheck, CalendarCheck, Mail, Database, Layout, Server, Cloud, Shield, Cpu } from "lucide-react";
-
 interface Project {
   id: string;
   name: string;
@@ -92,20 +88,7 @@ const allProjects: Project[] = [
   },
 ];
 
-const categories = ["All", "Web App", "Website", "Database", "Backend", "Cloud", "Security", "AI/ML"];
-
 const ITArchive = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
-
-  const filteredProjects = allProjects.filter((project) => {
-    const matchesSearch =
-      project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = activeCategory === "All" || project.category === activeCategory;
-    return matchesSearch && matchesCategory;
-  });
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -126,43 +109,9 @@ const ITArchive = () => {
             </h1>
           </div>
 
-          {/* Search and Filter */}
-          <div className="mb-10">
-            {/* Search Bar */}
-            <div className="relative max-w-md mx-auto mb-6">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground/50" />
-              <Input
-                type="text"
-                placeholder="Search projects..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 py-6 text-lg border-border rounded-xl focus:border-primary focus:ring-primary"
-              />
-            </div>
-
-            {/* Category Filters */}
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <Filter className="w-4 h-4 text-foreground/50 mr-2" />
-              {categories.map((category) => (
-                <Badge
-                  key={category}
-                  variant={activeCategory === category ? "default" : "outline"}
-                  className={`cursor-pointer px-4 py-2 text-sm font-medium ${
-                    activeCategory === category
-                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                      : "text-foreground hover:bg-primary/10 hover:border-primary"
-                  }`}
-                  onClick={() => setActiveCategory(category)}
-                >
-                  {category}
-                </Badge>
-              ))}
-            </div>
-          </div>
-
           {/* Projects Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProjects.map((project) => (
+            {allProjects.map((project) => (
               <ProjectCard
                 key={project.id}
                 id={project.id}
@@ -175,15 +124,6 @@ const ITArchive = () => {
               />
             ))}
           </div>
-
-          {/* Empty State */}
-          {filteredProjects.length === 0 && (
-            <div className="text-center py-20">
-              <Globe className="w-16 h-16 text-foreground/20 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-[hsl(var(--ds-chocolate))] mb-2">No projects found</h3>
-              <p className="text-foreground/60">Try adjusting your search or filter criteria</p>
-            </div>
-          )}
         </div>
       </main>
 
