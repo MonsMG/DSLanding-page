@@ -35,18 +35,18 @@ const ProjectCard = ({
 
   return (
     <div
-      className={`group bg-card border border-border rounded-2xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full flex flex-col ${className}`}
+      className={`bg-card border border-border rounded-2xl overflow-hidden shadow-md h-full flex flex-col ${className}`}
     >
       {/* Project Icon Cover */}
       <div
         className={`${
           compact ? "aspect-[4/3]" : "aspect-square"
-        } bg-gradient-to-br from-primary/5 via-[hsl(var(--ds-cream))] to-[hsl(var(--ds-beige))] flex items-center justify-center relative overflow-hidden`}
+        } bg-gradient-to-br from-primary/10 via-[hsl(var(--ds-cream))] to-[hsl(var(--ds-beige))] flex items-center justify-center relative overflow-hidden`}
       >
         <IconComponent
           className={`${
             compact ? "w-14 h-14" : "w-20 h-20"
-          } text-primary/70 group-hover:text-primary group-hover:scale-110 transition-all duration-300`}
+          } text-primary`}
           strokeWidth={1.5}
         />
         {showCategory && category && (
@@ -63,7 +63,7 @@ const ProjectCard = ({
         <h3
           className={`${
             compact ? "text-base" : "text-xl"
-          } font-bold text-[hsl(var(--ds-chocolate))] group-hover:text-primary transition-colors mb-2`}
+          } font-bold text-primary mb-2`}
         >
           {name}
         </h3>

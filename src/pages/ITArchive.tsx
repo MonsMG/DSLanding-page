@@ -1,9 +1,7 @@
 import { useState, useMemo } from "react";
-import { Search, X } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
 import FloatingChatButton from "@/components/layout/FloatingChatButton";
 import ProjectCard from "@/components/it/ProjectCard";
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import type { LucideIcon } from "lucide-react";
 import { BadgeCheck, CalendarCheck, Mail, Database, Layout, Server, Cloud, Shield, Cpu } from "lucide-react";
@@ -95,18 +93,13 @@ const allProjects: Project[] = [
 const categories = ["All", ...Array.from(new Set(allProjects.map((p) => p.category)))];
 
 const ITArchive = () => {
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const filteredProjects = useMemo(() => {
     return allProjects.filter((project) => {
-      const matchesSearch =
-        project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.description.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = selectedCategory === "All" || project.category === selectedCategory;
-      return matchesSearch && matchesCategory;
+      return selectedCategory === "All" || project.category === selectedCategory;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [selectedCategory]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -129,26 +122,7 @@ const ITArchive = () => {
           </div>
 
           {/* Filter Section */}
-          <div className="mb-8 space-y-4">
-            {/* Search Input */}
-            <div className="relative max-w-md mx-auto">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search projects..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-10 h-11 rounded-xl border-border bg-card/80 backdrop-blur-sm"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
-            </div>
+          <div className="mb-8">
 
             {/* Category Tags */}
             <div className="flex flex-wrap justify-center gap-2">
