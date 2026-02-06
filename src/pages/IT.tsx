@@ -100,7 +100,7 @@ const IT = () => {
       </section>
 
       {/* Section A: Software Projects */}
-      <section id="software-projects" className="relative z-10 py-16 px-6">
+      <section id="software-projects" className="relative z-10 py-0 px-[25px]">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))] mb-10 text-center">
             Software Projects
