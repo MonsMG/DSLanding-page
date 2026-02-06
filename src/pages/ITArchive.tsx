@@ -1,9 +1,13 @@
-import { Globe } from "lucide-react";
+import { useState, useMemo } from "react";
+import { Search, X } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
 import FloatingChatButton from "@/components/layout/FloatingChatButton";
 import ProjectCard from "@/components/it/ProjectCard";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import type { LucideIcon } from "lucide-react";
 import { BadgeCheck, CalendarCheck, Mail, Database, Layout, Server, Cloud, Shield, Cpu } from "lucide-react";
+
 interface Project {
   id: string;
   name: string;
@@ -88,7 +92,22 @@ const allProjects: Project[] = [
   },
 ];
 
+const categories = ["All", ...Array.from(new Set(allProjects.map((p) => p.category)))];
+
 const ITArchive = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const filteredProjects = useMemo(() => {
+    return allProjects.filter((project) => {
+      const matchesSearch =
+        project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = selectedCategory === "All" || project.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchQuery, selectedCategory]);
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -103,15 +122,56 @@ const ITArchive = () => {
       <main className="relative z-10 pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-4">
               Software Project Archive
             </h1>
           </div>
 
+          {/* Filter Section */}
+          <div className="mb-8 space-y-4">
+            {/* Search Input */}
+            <div className="relative max-w-md mx-auto">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search projects..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 pr-10 h-11 rounded-xl border-border bg-card/80 backdrop-blur-sm"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Category Tags */}
+            <div className="flex flex-wrap justify-center gap-2">
+              {categories.map((category) => (
+                <Badge
+                  key={category}
+                  variant={selectedCategory === category ? "default" : "outline"}
+                  className={`cursor-pointer px-4 py-1.5 text-sm rounded-full transition-all ${
+                    selectedCategory === category
+                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                      : "bg-card/80 hover:bg-muted border-border"
+                  }`}
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  {category}
+                </Badge>
+              ))}
+            </div>
+          </div>
+
           {/* Projects Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {allProjects.map((project) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            {filteredProjects.map((project) => (
               <ProjectCard
                 key={project.id}
                 id={project.id}
@@ -121,9 +181,17 @@ const ITArchive = () => {
                 icon={project.icon}
                 category={project.category}
                 showCategory
+                compact
               />
             ))}
           </div>
+
+          {/* No Results */}
+          {filteredProjects.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">No projects found matching your criteria.</p>
+            </div>
+          )}
         </div>
       </main>
 
