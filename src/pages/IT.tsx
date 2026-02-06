@@ -17,65 +17,56 @@ interface Skill {
   icon: LucideIcon;
   description: string;
 }
-const projects: Project[] = [
-  {
-    id: "1",
-    name: "Check-in System",
-    link: "https://check-it-ouch.lovable.app/",
-    description: "A streamlined check-in system for tracking attendance and achievements with real-time updates.",
-    icon: BadgeCheck,
-  },
-  {
-    id: "2",
-    name: "Freetime Matcher",
-    link: "https://ft-matcher.lovable.app/",
-    description: "Intelligent scheduling tool for matching availability and coordinating team meetings efficiently.",
-    icon: CalendarCheck,
-  },
-  {
-    id: "3",
-    name: "Messaging Hub",
-    link: "https://tagcast-connect.lovable.app",
-    description: "Unified communication platform for seamless team messaging and broadcast announcements.",
-    icon: Mail,
-  },
-];
-const skills: Skill[] = [
-  {
-    name: "Front-End Development",
-    icon: Code,
-    description: "React, TypeScript, Tailwind CSS, responsive design",
-  },
-  {
-    name: "Back-End Development",
-    icon: Server,
-    description: "Node.js, APIs, database integration, cloud services",
-  },
-  {
-    name: "UI/UX Design",
-    icon: Palette,
-    description: "User research, wireframing, prototyping, design systems",
-  },
-  {
-    name: "System Analyst",
-    icon: Database,
-    description: "Requirements analysis, system architecture, documentation",
-  },
-  {
-    name: "Data Science",
-    icon: LineChart,
-    description: "Data analysis, visualization, machine learning basics",
-  },
-];
+const projects: Project[] = [{
+  id: "1",
+  name: "Check-in System",
+  link: "https://check-it-ouch.lovable.app/",
+  description: "A streamlined check-in system for tracking attendance and achievements with real-time updates.",
+  icon: BadgeCheck
+}, {
+  id: "2",
+  name: "Freetime Matcher",
+  link: "https://ft-matcher.lovable.app/",
+  description: "Intelligent scheduling tool for matching availability and coordinating team meetings efficiently.",
+  icon: CalendarCheck
+}, {
+  id: "3",
+  name: "Messaging Hub",
+  link: "https://tagcast-connect.lovable.app",
+  description: "Unified communication platform for seamless team messaging and broadcast announcements.",
+  icon: Mail
+}];
+const skills: Skill[] = [{
+  name: "Front-End Development",
+  icon: Code,
+  description: "React, TypeScript, Tailwind CSS, responsive design"
+}, {
+  name: "Back-End Development",
+  icon: Server,
+  description: "Node.js, APIs, database integration, cloud services"
+}, {
+  name: "UI/UX Design",
+  icon: Palette,
+  description: "User research, wireframing, prototyping, design systems"
+}, {
+  name: "System Analyst",
+  icon: Database,
+  description: "Requirements analysis, system architecture, documentation"
+}, {
+  name: "Data Science",
+  icon: LineChart,
+  description: "Data analysis, visualization, machine learning basics"
+}];
 const IT = () => {
   const scrollToProjects = () => {
     const section = document.getElementById("software-projects");
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+      section.scrollIntoView({
+        behavior: "smooth"
+      });
     }
   };
-  return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+  return <div className="min-h-screen bg-background relative overflow-hidden">
       <Navigation />
 
       {/* Colorful Background Elements */}
@@ -87,7 +78,7 @@ const IT = () => {
       </div>
 
       {/* Hero Section with Main Slogan */}
-      <section className="relative pt-32 pb-16 overflow-hidden">
+      <section className="relative pt-32 pb-16 overflow-hidden my-0 py-[50px]">
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="text-left">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-6">
@@ -97,11 +88,8 @@ const IT = () => {
               Crafting innovative digital solutions that streamline workflows and enhance productivity.
             </p>
           <div className="flex justify-start mt-12 software-nav-container my-[25px]">
-              <Button
-                onClick={scrollToProjects} // เรียกใช้ฟังก์ชันเลื่อนหน้าจอ
-                size="lg"
-                className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl software-nav-btn"
-              >
+              <Button onClick={scrollToProjects} // เรียกใช้ฟังก์ชันเลื่อนหน้าจอ
+            size="lg" className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl software-nav-btn">
                 View Projects
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
@@ -111,33 +99,41 @@ const IT = () => {
         </div>
       </section>
 
-      {/* Section A: Software Projects (moved to top) */}
-      <section id="software-projects" className="relative z-10 py-16 px-6">
+      {/* Section A: Technical Skills */}
+      <section className="relative z-10 py-16 px-6">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))] mb-10 text-center">
+            Technical Skills
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            {skills.map(skill => {
+            const IconComponent = skill.icon;
+            return <div key={skill.name} className="bg-card border border-border rounded-2xl p-6 text-center hover:shadow-lg hover:-translate-y-1">
+                  <div className="w-14 h-14 mx-auto mb-4 bg-primary/10 rounded-xl flex items-center justify-center">
+                    <IconComponent className="w-7 h-7 text-primary" strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-base font-bold text-[hsl(var(--ds-chocolate))] mb-2">{skill.name}</h3>
+                  <p className="text-foreground/60 text-sm leading-relaxed">{skill.description}</p>
+                </div>;
+          })}
+          </div>
+        </div>
+      </section>
+
+      {/* Section B: Software Projects */}
+      <section id="software-projects" className="relative z-10 pb-24 px-6">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))] mb-10 text-center">
             Software Projects
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                id={project.id}
-                name={project.name}
-                link={project.link}
-                description={project.description}
-                icon={project.icon}
-                className="h-full"
-              />
-            ))}
+            {projects.map(project => <ProjectCard key={project.id} id={project.id} name={project.name} link={project.link} description={project.description} icon={project.icon} className="h-full" />)}
           </div>
 
           {/* View More Archive Button */}
           <div className="flex justify-end mt-12">
             <Link to="/it/archive">
-              <Button
-                size="lg"
-                className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl"
-              >
+              <Button size="lg" className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl">
                 View More
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
@@ -146,34 +142,7 @@ const IT = () => {
         </div>
       </section>
 
-      {/* Section B: Technical Skills (moved to bottom) */}
-      <section className="relative z-10 pb-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))] mb-10 text-center">
-            Technical Skills
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {skills.map((skill) => {
-              const IconComponent = skill.icon;
-              return (
-                <div
-                  key={skill.name}
-                  className="bg-card border border-border rounded-2xl p-6 text-center hover:shadow-lg hover:-translate-y-1"
-                >
-                  <div className="w-14 h-14 mx-auto mb-4 bg-primary/10 rounded-xl flex items-center justify-center">
-                    <IconComponent className="w-7 h-7 text-primary" strokeWidth={1.5} />
-                  </div>
-                  <h3 className="text-base font-bold text-[hsl(var(--ds-chocolate))] mb-2">{skill.name}</h3>
-                  <p className="text-foreground/60 text-sm leading-relaxed">{skill.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       <FloatingChatButton />
-    </div>
-  );
+    </div>;
 };
 export default IT;
