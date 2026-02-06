@@ -123,7 +123,7 @@ const IT = () => {
 
       {/* Section B: Technical Skills */}
       <section className="relative z-10 pb-24 px-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto py-[15px]">
           <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))] mb-10 text-center">
             Technical Skills
           </h2>
