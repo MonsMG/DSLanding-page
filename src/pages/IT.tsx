@@ -87,7 +87,7 @@ const IT = () => {
             <p className="text-left sm:text-xl text-foreground/70 max-w-2xl">
               Crafting innovative digital solutions that streamline workflows and enhance productivity.
             </p>
-          <div className="flex justify-start mt-12 software-nav-container my-[25px]">
+          <div className="mt-12 software-nav-container flex items-start justify-start py-0 my-[25px]">
               <Button onClick={scrollToProjects} // เรียกใช้ฟังก์ชันเลื่อนหน้าจอ
             size="lg" className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl software-nav-btn">
                 View Projects
