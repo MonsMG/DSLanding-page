@@ -27,9 +27,10 @@ const Navigation = () => {
       {/* 1. ส่วน Header ลอยตัว (Fixed) */}
       <header className="fixed top-0 left-0 right-0 z-50 w-full px-6 py-4 bg-card/95 backdrop-blur-sm border-b border-border">
         <nav className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* DS workspace Logo - Left */}
-          <Link to="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold text-[hsl(var(--ds-chocolate))] tracking-tight">DS workspace</span>
+          {/* DS Logo - Left */}
+          <Link to="/" className="flex items-center gap-1">
+            <span className="text-2xl font-bold text-[hsl(var(--ds-chocolate))] tracking-tight">DS</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-primary" />
           </Link>
 
           {/* Desktop Nav Links - Center/Right */}
