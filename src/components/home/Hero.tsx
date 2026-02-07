@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { contentData } from "@/data/content";
+
 const Hero = () => {
+  const { t } = useLanguage();
   return (
     <section className="relative h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden">
       {/* Abstract Artistic Background - Modern Infrastructure */}
@@ -36,7 +40,7 @@ const Hero = () => {
               size="lg"
               className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl min-w-[220px]"
             >
-              Explore Software
+              {t({ en: "Explore Software", th: "สำรวจซอฟต์แวร์" })}
               <ArrowRight className="w-6 h-6 ml-3" />
             </Button>
           </Link>
@@ -45,7 +49,7 @@ const Hero = () => {
               size="lg"
               className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl min-w-[220px]"
             >
-              Explore Production
+              {t({ en: "Explore Production", th: "สำรวจโปรดักชั่น" })}
               <ArrowRight className="w-6 h-6 ml-3" />
             </Button>
           </Link>

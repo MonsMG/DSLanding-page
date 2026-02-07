@@ -2,25 +2,23 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { contentData } from "@/data/content";
 
 const Navigation = () => {
   const location = useLocation();
-  const [language, setLanguage] = useState<"EN" | "TH">("EN");
+  const { language, toggleLanguage, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { path: "/", label: "Home" },
-    { path: "/it", label: "Software" },
-    { path: "/production", label: "Production" },
-    { path: "/about", label: "About" },
-    { path: "/contact", label: "Contact" },
+    { path: "/", label: t(contentData.nav.home) },
+    { path: "/it", label: t(contentData.nav.software) },
+    { path: "/production", label: t(contentData.nav.production) },
+    { path: "/about", label: t(contentData.nav.about) },
+    { path: "/contact", label: t(contentData.nav.contact) },
   ];
 
   const isActive = (path: string) => location.pathname === path;
-
-  const toggleLanguage = () => {
-    setLanguage((prev) => (prev === "EN" ? "TH" : "EN"));
-  };
 
   return (
     <>
@@ -56,7 +54,7 @@ const Navigation = () => {
               onClick={toggleLanguage}
               className="px-3 py-1 text-sm font-semibold border-border hover:bg-muted"
             >
-              {language}
+              {language.toUpperCase()}
             </Button>
 
             <button
