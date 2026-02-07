@@ -60,6 +60,17 @@ export const contentData = {
       features: { en: ["Broadcast messaging to groups", "Scheduled message delivery", "Read receipt tracking", "Department-specific channels", "Priority message flagging"], th: ["ส่งข้อความบรอดแคสต์", "ตั้งเวลาส่งข้อความ", "ติดตามการอ่านข้อความ", "ช่องทางเฉพาะแผนก", "กำหนดข้อความสำคัญ"] }
     }
   },
+  // Archive Page
+  archive: {
+    title: { en: "Software Projects Archive", th: "คลังผลงานซอฟต์แวร์ทั้งหมด" },
+    subtitle: { 
+      en: "A complete collection of digital solutions and experiments.", 
+      th: "รวบรวมโซลูชันดิจิทัลและการทดลองทั้งหมดของเรา" 
+    },
+    backButton: { en: "Back to Home", th: "กลับหน้าหลัก" },
+    noResults: { en: "No projects found matching your criteria.", th: "ไม่พบโปรเจกต์ที่ตรงกับเกณฑ์ของคุณ" },
+    allCategory: { en: "All", th: "ทั้งหมด" }
+  },
   // IT Project Detail Page
   projectDetail: {
     backToProjects: { en: "Back to Projects", th: "กลับไปหน้าโปรเจกต์" },
