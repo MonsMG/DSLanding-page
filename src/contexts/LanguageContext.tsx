@@ -1,3 +1,4 @@
+// Language Context for EN/TH switching
 import { createContext, useContext, useState, ReactNode } from "react";
 
 type Language = "en" | "th";
