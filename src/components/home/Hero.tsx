@@ -6,6 +6,8 @@ import { contentData } from "@/data/content";
 
 const Hero = () => {
   const { t } = useLanguage();
+  const { home } = contentData;
+  
   return (
     <section className="relative h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden">
       {/* Abstract Artistic Background - Modern Infrastructure */}
@@ -30,7 +32,7 @@ const Hero = () => {
 
         {/* Slogan */}
         <p className="text-xl sm:text-2xl md:text-3xl text-[hsl(var(--ds-chocolate))]/80 max-w-3xl mx-auto mb-14 leading-relaxed font-medium">
-          "From Vision to Digital Solution"
+          "{t(home.hero.slogan)}"
         </p>
 
         {/* CTA Buttons */}
@@ -40,7 +42,7 @@ const Hero = () => {
               size="lg"
               className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl min-w-[220px]"
             >
-              {t({ en: "Explore Software", th: "สำรวจซอฟต์แวร์" })}
+              {t(home.hero.exploreSoftware)}
               <ArrowRight className="w-6 h-6 ml-3" />
             </Button>
           </Link>
@@ -49,7 +51,7 @@ const Hero = () => {
               size="lg"
               className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl min-w-[220px]"
             >
-              {t({ en: "Explore Production", th: "สำรวจโปรดักชั่น" })}
+              {t(home.hero.exploreProduction)}
               <ArrowRight className="w-6 h-6 ml-3" />
             </Button>
           </Link>
