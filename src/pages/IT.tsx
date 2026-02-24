@@ -231,32 +231,6 @@ const IT = () => {
             <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))]">
               {language === "en" ? "Software Projects" : "โปรเจกต์ซอฟต์แวร์"}
             </h2>
-            <div className="flex mt-10 justify-self-end">
-              {/* 🔐 Admin Panel (เฉพาะ Login แล้ว) */}
-              {user && (
-                <div className="bg-white/80 backdrop-blur-sm p-4 rounded-xl border border-primary/20 shadow-lg flex flex-col gap-3 min-w-[200px]">
-                  <div className="text-xs font-bold text-primary uppercase tracking-widest text-center">
-                    Admin Control
-                  </div>
-                  <Button
-                    asChild
-                    variant="default"
-                    className="w-full justify-start"
-                  >
-                    <Link to="/admin/software/add">
-                      <Plus className="mr-2 h-4 w-4" /> Add Project
-                    </Link>
-                  </Button>
-                  <Button
-                    onClick={signOut}
-                    variant="destructive"
-                    className="w-full justify-start"
-                  >
-                    <LogOut className="mr-2 h-4 w-4" /> Logout
-                  </Button>
-                </div>
-              )}
-            </div>
           </div>
 
           {/* Loading State */}
@@ -344,13 +318,15 @@ const IT = () => {
                     {/* ปุ่ม: Details (Dialog) */}
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className="flex-1 border-primary/20 text-primary hover:bg-primary/5"
-                        >
-                          <Info className="mr-2 h-4 w-4" />
-                          Details
-                        </Button>
+                        <Link to={`/it/project/${project.id}`}>
+                          <Button
+                            variant="outline"
+                            className="flex-1 border-primary/20 text-primary hover:bg-primary/5"
+                          >
+                            <Info className="mr-2 h-4 w-4" />
+                            {language === "en" ? "Details" : "รายละเอียด"}
+                          </Button>
+                        </Link>
                       </DialogTrigger>
 
                       <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">

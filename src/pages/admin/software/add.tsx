@@ -148,18 +148,25 @@ export default function AddSoftware() {
             {/* — ชื่อโปรเจกต์ (EN/TH) — */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>Title (EN)</Label>
+                <Label>Software Name (EN)</Label>
                 <Input name="title_en" required onChange={handleChange} />
               </div>
               <div className="space-y-2">
-                <Label>Title (TH)</Label>
+                <Label>Software Name (TH)</Label>
                 <Input name="title_th" required onChange={handleChange} />
               </div>
             </div>
-
+            <div className="space-y-2">
+              <Label>Project URL</Label>
+              <Input
+                name="url"
+                placeholder="https://..."
+                onChange={handleChange}
+              />
+            </div>
             {/* — ข้อมูลพื้นฐาน — */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="space-y-2">
+              <div className="space-y-2 ">
                 <Label>Category</Label>
                 <Input
                   name="category"
@@ -172,14 +179,6 @@ export default function AddSoftware() {
                 <Input
                   name="status"
                   placeholder="Active, Maintenance"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Project URL</Label>
-                <Input
-                  name="url"
-                  placeholder="https://..."
                   onChange={handleChange}
                 />
               </div>

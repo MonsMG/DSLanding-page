@@ -121,24 +121,6 @@ const About = () => {
               );
             })}
           </div>
-
-          {/* Section Divider */}
-          <div className="section-divider mb-20" />
-
-          {/* Brand — gradient text */}
-          <div className="text-center animate-fade-in-up">
-            <div className="capsule-card p-16 inline-block group hover:shadow-xl transition-all duration-300">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="text-6xl sm:text-7xl font-bold text-gradient">
-                  DS
-                </span>
-                <span className="w-3 h-3 rounded-full bg-primary group-hover:scale-150 transition-transform duration-300" />
-              </div>
-              <p className="text-lg text-muted-foreground font-medium">
-                {t(about.brandName)}
-              </p>
-            </div>
-          </div>
         </div>
       </main>
 

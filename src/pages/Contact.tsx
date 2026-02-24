@@ -71,48 +71,47 @@ const Contact = () => {
                 </a>
               );
             })}
-          </div>
+            {/* Office Hours Card — entrance */}
+            <div className="flex justify-center animate-fade-in-up stagger-4">
+              <div className="bg-card border border-border rounded-3xl p-10 text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 w-full max-w-md relative overflow-hidden group">
+                {/* Decorative gradient blob */}
+                <div className="absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-bl from-primary/10 to-transparent rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500" />
+                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-tr from-[hsl(var(--ds-cream))] to-transparent rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500" />
 
-          {/* Section Divider */}
-          <div className="section-divider mb-12" />
+                <div className="relative z-10">
+                  {/* Icon */}
+                  <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-primary/10 to-[hsl(var(--ds-cream))] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <Clock className="w-7 h-7 text-primary" />
+                  </div>
 
-          {/* Office Hours Card — entrance */}
-          <div className="flex justify-center animate-fade-in-up stagger-4">
-            <div className="bg-card border border-border rounded-3xl p-10 text-center shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 w-full max-w-md relative overflow-hidden group">
-              {/* Decorative gradient blob */}
-              <div className="absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-bl from-primary/10 to-transparent rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500" />
-              <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-tr from-[hsl(var(--ds-cream))] to-transparent rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500" />
+                  {/* Title */}
+                  <h3 className="text-2xl font-bold text-[hsl(var(--ds-chocolate))] mb-2">
+                    {t(contentData.contact.officeHours)}
+                  </h3>
 
-              <div className="relative z-10">
-                {/* Icon */}
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-primary/10 to-[hsl(var(--ds-cream))] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Clock className="w-7 h-7 text-primary" />
-                </div>
+                  {/* Decorative separator */}
+                  <div className="flex items-center justify-center gap-2 mb-6">
+                    <span className="w-8 h-[2px] bg-primary/30 rounded-full" />
+                    <span className="w-2 h-2 bg-primary/40 rounded-full" />
+                    <span className="w-8 h-[2px] bg-primary/30 rounded-full" />
+                  </div>
 
-                {/* Title */}
-                <h3 className="text-2xl font-bold text-[hsl(var(--ds-chocolate))] mb-2">
-                  {t(contentData.contact.officeHours)}
-                </h3>
-
-                {/* Decorative separator */}
-                <div className="flex items-center justify-center gap-2 mb-6">
-                  <span className="w-8 h-[2px] bg-primary/30 rounded-full" />
-                  <span className="w-2 h-2 bg-primary/40 rounded-full" />
-                  <span className="w-8 h-[2px] bg-primary/30 rounded-full" />
-                </div>
-
-                {/* Hours info */}
-                <div className="bg-gradient-to-br from-primary/5 to-[hsl(var(--ds-cream))] rounded-2xl p-6 border border-primary/10">
-                  <p className="font-semibold text-[hsl(var(--ds-chocolate))] mb-2">
-                    {t(contentData.contact.weekdays)}
-                  </p>
-                  <p className="text-xl font-medium text-foreground/80 tracking-wide">
-                    08:30 – 16:30
-                  </p>
+                  {/* Hours info */}
+                  <div className="bg-gradient-to-br from-primary/5 to-[hsl(var(--ds-cream))] rounded-2xl p-6 border border-primary/10">
+                    <p className="font-semibold text-[hsl(var(--ds-chocolate))] mb-2">
+                      {t(contentData.contact.weekdays)}
+                    </p>
+                    <p className="text-xl font-medium text-foreground/80 tracking-wide">
+                      08:30 – 16:30
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Section Divider */}
+          <div className="section-divider mb-12" />
         </div>
       </main>
 

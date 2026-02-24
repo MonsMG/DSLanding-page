@@ -186,7 +186,7 @@ export default function EditSoftware() {
             {/* — ชื่อโปรเจกต์ — */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>Title (EN)</Label>
+                <Label>Software Name (EN)</Label>
                 <Input
                   name="title_en"
                   value={formData.title_en}
@@ -195,7 +195,7 @@ export default function EditSoftware() {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Title (TH)</Label>
+                <Label>Software Name (TH)</Label>
                 <Input
                   name="title_th"
                   value={formData.title_th}
