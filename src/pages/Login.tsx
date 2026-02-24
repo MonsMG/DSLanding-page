@@ -103,6 +103,7 @@ const Login = () => {
                 <Input
                   id="password"
                   type="password"
+                  placeholder="passwords"
                   className="pl-9 bg-background/50 focus:bg-background transition-colors"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
