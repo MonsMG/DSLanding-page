@@ -224,63 +224,53 @@ const Production = () => {
                         <Plus className="mr-2 h-4 w-4" /> Add Work
                       </Link>
                     </Button>
-                    <Button onClick={signOut} variant="destructive" size="sm">
-                      <LogOut className="h-4 w-4" />
-                    </Button>
                   </div>
                 )}
               </div>
 
-              {/* Grid Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {works.map((item, idx) => (
-                  <a
-                    key={item.id}
-                    href={item.media_url || "#"}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`group relative block aspect-video bg-black rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 animate-fade-in-up stagger-${Math.min(idx + 1, 6)}`}
-                  >
-                    {/* Background Image */}
-                    <img
-                      src={
-                        item.thumbnail_url ||
-                        "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=800&q=80"
-                      }
-                      alt={getLang(item.title_en, item.title_th)}
-                      className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity duration-500 group-hover:scale-105"
-                    />
+              {/* Grid Layout — Admin: image overlay / User: bento cards with thumbnails */}
+              {user ? (
+                /* 🔐 Admin View — image overlay cards + Edit/Delete */
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {works.map((item, idx) => (
+                    <a
+                      key={item.id}
+                      href={item.media_url || "#"}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`group relative block aspect-video bg-black rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 animate-fade-in-up stagger-${Math.min(idx + 1, 6)}`}
+                    >
+                      <img
+                        src={
+                          item.thumbnail_url ||
+                          "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=800&q=80"
+                        }
+                        alt={getLang(item.title_en, item.title_th)}
+                        className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                        <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300 mb-4">
+                          {item.media_type === "image" ? (
+                            <ImageIcon className="w-8 h-8 text-white" />
+                          ) : (
+                            <Play className="w-8 h-8 text-white ml-1" />
+                          )}
+                        </div>
+                        <span className="text-xs font-bold text-primary uppercase tracking-wider bg-black/50 px-3 py-1 rounded-full mb-2 backdrop-blur-md">
+                          {item.category || "Production"}
+                        </span>
+                        <h3 className="text-xl font-bold text-white text-center px-4 drop-shadow-md">
+                          {getLang(item.title_en, item.title_th)}
+                        </h3>
+                        <p className="text-white/80 text-sm mt-1 line-clamp-1 px-6 text-center">
+                          {getLang(
+                            item.short_desc_en || "",
+                            item.short_desc_th || "",
+                          )}
+                        </p>
 
-                    {/* Overlay Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
-
-                    {/* Content */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-                      {/* Play/Image Icon */}
-                      <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300 mb-4">
-                        {item.media_type === "image" ? (
-                          <ImageIcon className="w-8 h-8 text-white" />
-                        ) : (
-                          <Play className="w-8 h-8 text-white ml-1" />
-                        )}
-                      </div>
-
-                      {/* Title & Category */}
-                      <span className="text-xs font-bold text-primary uppercase tracking-wider bg-black/50 px-3 py-1 rounded-full mb-2 backdrop-blur-md">
-                        {item.category || "Production"}
-                      </span>
-                      <h3 className="text-xl font-bold text-white text-center px-4 drop-shadow-md">
-                        {getLang(item.title_en, item.title_th)}
-                      </h3>
-                      <p className="text-white/80 text-sm mt-1 line-clamp-1 px-6 text-center">
-                        {getLang(
-                          item.short_desc_en || "",
-                          item.short_desc_th || "",
-                        )}
-                      </p>
-
-                      {/* 🔐 Admin Overlay Buttons */}
-                      {user && (
+                        {/* 🔐 Admin Overlay Buttons */}
                         <div className="absolute top-2 right-2 z-50 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                           <Button
                             size="icon"
@@ -333,11 +323,69 @@ const Production = () => {
                             </AlertDialogContent>
                           </AlertDialog>
                         </div>
-                      )}
-                    </div>
-                  </a>
-                ))}
-              </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              ) : (
+                /* 👤 User View — Bento staggered cards with thumbnail images */
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto md:auto-rows-[220px]">
+                  {works.map((item, idx) => {
+                    // Bento staggered pattern (Matches the exact layout in the image)
+                    const bentoPositions = [
+                      "md:col-start-1 md:row-start-1", // Item 0: Top Left
+                      "md:col-start-2 md:row-start-1 md:row-span-2", // Item 1: Center (Tall Card - spans 2 rows)
+                      "md:col-start-3 md:row-start-1", // Item 2: Top Right
+                      "md:col-start-3 md:row-start-2", // Item 3: Middle Right
+                      "md:col-start-1 md:row-start-3", // Item 4: Bottom Left
+                      "md:col-start-2 md:row-start-3", // Item 5: Bottom Center
+                    ];
+
+                    // วนลูป pattern เดิมกรณีที่ข้อมูลมีมากกว่า 6 ตัว
+                    const posClass =
+                      bentoPositions[idx % bentoPositions.length] || "";
+
+                    return (
+                      <a
+                        key={item.id}
+                        href={item.media_url || "#"}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={`group flex flex-col bg-card border border-border rounded-[2rem] overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer animate-fade-in-up stagger-${Math.min(idx + 1, 6)} ${posClass}`}
+                      >
+                        {/* Thumbnail / Icon Area (ใช้ flex-1 เพื่อให้การ์ดตรงกลางขยายความสูงได้เต็ม) */}
+                        <div className="relative flex-1 flex flex-col items-center justify-center p-6 bg-gradient-to-br from-primary/5 to-transparent min-h-[140px]">
+                          {item.thumbnail_url ? (
+                            <img
+                              src={item.thumbnail_url}
+                              alt={getLang(item.title_en, item.title_th)}
+                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          ) : (
+                            // กรณีไม่มีรูป จะแสดง Icon สไตล์มินิมอลเหมือนในภาพตัวอย่าง
+                            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
+                              <Film
+                                className="w-8 h-8 opacity-80"
+                                strokeWidth={1.5}
+                              />
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Info Area */}
+                        <div className="p-6 text-center bg-card relative z-10 flex-shrink-0">
+                          <span className="text-[10px] font-bold text-primary uppercase tracking-widest mb-2 block">
+                            {item.category || "Production"}
+                          </span>
+                          <h3 className="text-base font-bold text-[hsl(var(--ds-chocolate))] line-clamp-2">
+                            {getLang(item.title_en, item.title_th)}
+                          </h3>
+                        </div>
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
 
               {/* ✅ Empty State */}
               {works.length === 0 && (

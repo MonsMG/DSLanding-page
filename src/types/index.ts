@@ -24,6 +24,7 @@ export interface SoftwareProject {
   image_url?: string;
   category: string;
   status: "Active" | "Maintenance" | "Coming Soon";
+  featured_slot?: number; // Slot 1, 2, 3 สำหรับ Featured Projects
 }
 
 // ==============================

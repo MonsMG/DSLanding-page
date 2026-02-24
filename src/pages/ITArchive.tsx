@@ -127,9 +127,6 @@ const ITArchive = () => {
                       <Plus className="mr-2 h-4 w-4" /> Add Project
                     </Link>
                   </Button>
-                  <Button onClick={signOut} variant="destructive" size="sm">
-                    <LogOut className="h-4 w-4" />
-                  </Button>
                 </div>
               </div>
             )}

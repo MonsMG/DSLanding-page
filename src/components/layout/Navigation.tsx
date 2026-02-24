@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { contentData } from "@/data/content";
 
 const Navigation = () => {
   const location = useLocation();
   const { language, toggleLanguage, t } = useLanguage();
+  const { user, signOut } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -68,8 +70,8 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Language Switcher + Mobile Menu */}
-          <div className="flex items-center gap-3">
+          {/* Language Switcher + Admin Logout + Mobile Menu */}
+          <div className="flex items-center gap-2 sm:gap-3">
             <Button
               variant="outline"
               size="sm"
@@ -78,6 +80,19 @@ const Navigation = () => {
             >
               {language.toUpperCase()}
             </Button>
+
+            {/* 🔐 Admin Global Logout Button */}
+            {user && (
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={signOut}
+                className="hidden sm:flex px-3 py-1 text-sm shadow-sm"
+              >
+                <LogOut className="w-4 h-4 mr-1.5" />
+                {language === "th" ? "ออกระบบ" : "Logout"}
+              </Button>
+            )}
 
             <button
               className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
@@ -110,6 +125,20 @@ const Navigation = () => {
                   {link.label}
                 </Link>
               ))}
+
+              {/* 🔐 Admin Global Logout Button (Mobile) */}
+              {user && (
+                <button
+                  onClick={() => {
+                    signOut();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="mt-2 flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-base font-medium transition-all animate-fade-in-up stagger-6 text-destructive-foreground bg-destructive hover:bg-destructive/90"
+                >
+                  <LogOut className="w-5 h-5" />
+                  {language === "th" ? "ออกจากระบบ" : "Logout"}
+                </button>
+              )}
             </div>
           </div>
         )}

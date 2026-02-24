@@ -28,6 +28,7 @@ import {
   Info,
   Pencil,
   Trash2,
+  Settings,
 } from "lucide-react";
 
 import Navigation from "@/components/layout/Navigation";
@@ -68,6 +69,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // — ข้อมูล Skills (Static) —
 const skills = [
@@ -113,6 +121,160 @@ const skills = [
   },
 ];
 
+// ==========================================
+// Sub-Component: ProjectCardItem
+// ==========================================
+import { SoftwareProject } from "@/types";
+
+interface ProjectCardItemProps {
+  project: SoftwareProject;
+  idx: number;
+  language: string;
+  getLang: (en?: string, th?: string) => string;
+  user: any;
+  deletingId: number | null;
+  handleDelete: (id: number) => void;
+  navigate: any;
+  isFeatured: boolean;
+}
+
+const ProjectCardItem = ({
+  project,
+  idx,
+  language,
+  getLang,
+  user,
+  deletingId,
+  handleDelete,
+  navigate,
+  isFeatured,
+}: ProjectCardItemProps) => {
+  return (
+    <Card
+      className={`flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-none shadow-md overflow-hidden group ${isFeatured ? "ring-2 ring-primary/50" : ""} animate-fade-in-up stagger-${Math.min(idx + 1, 6)}`}
+    >
+      {/* Project Image */}
+      <div className="h-48 bg-muted relative overflow-hidden">
+        {project.image_url ? (
+          <img
+            src={project.image_url}
+            alt="Cover"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
+            <BadgeCheck className="w-16 h-16 text-primary/20" />
+          </div>
+        )}
+        <div className="absolute top-3 right-3 flex flex-col gap-2 items-end">
+          {isFeatured && (
+            <Badge className="bg-[hsl(var(--ds-red-orange))] text-white shadow-md">
+              <BadgeCheck className="w-3 h-3 mr-1" /> Slot{" "}
+              {project.featured_slot}
+            </Badge>
+          )}
+          <Badge className="bg-white/90 text-primary hover:bg-white shadow-sm">
+            {project.category}
+          </Badge>
+        </div>
+      </div>
+
+      <CardHeader>
+        <CardTitle className="text-xl text-[hsl(var(--ds-chocolate))] line-clamp-2">
+          {getLang(project.title_en, project.title_th)}
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent className="flex-grow">
+        <p className="text-muted-foreground text-sm line-clamp-3">
+          {getLang(project.short_desc_en, project.short_desc_th)}
+        </p>
+      </CardContent>
+
+      <CardFooter className="flex flex-col gap-3 pt-5 pb-5 border-t bg-gradient-to-b from-transparent to-muted/20">
+        <div className="flex w-full gap-3">
+          {/* ปุ่ม: เปิด App */}
+          {project.url && (
+            <Button
+              asChild
+              className="flex-1 rounded-xl shadow-sm hover:shadow-md transition-all"
+              variant="default"
+            >
+              <a href={project.url} target="_blank" rel="noreferrer">
+                <Globe className="mr-2 h-4 w-4" />
+                {language === "en" ? "Visit App" : "เปิดใช้งาน"}
+              </a>
+            </Button>
+          )}
+
+          {/* ปุ่ม: Details */}
+          <Button
+            asChild
+            variant={project.url ? "outline" : "default"}
+            className={`flex-1 rounded-xl shadow-sm hover:shadow-md transition-all ${!project.url ? "" : "border-primary/20 text-primary hover:bg-primary/5"}`}
+          >
+            <Link to={`/it/project/${project.id}`}>
+              <Info className="mr-2 h-4 w-4" />
+              {language === "en" ? "View Details" : "รายละเอียด"}
+            </Link>
+          </Button>
+        </div>
+
+        {/* 🔐 Admin: Edit / Delete */}
+        {user && (
+          <div className="flex gap-2 w-full pt-2 border-t border-dashed border-primary/30">
+            <Button
+              variant="secondary"
+              className="flex-1 text-xs h-8"
+              onClick={() => navigate(`/admin/software/edit/${project.id}`)}
+            >
+              <Pencil className="mr-2 h-3 w-3" /> Edit
+            </Button>
+
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="destructive"
+                  className="flex-1 text-xs h-8"
+                  disabled={deletingId === project.id}
+                >
+                  {deletingId === project.id ? (
+                    <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                  ) : (
+                    <Trash2 className="mr-2 h-3 w-3" />
+                  )}
+                  Delete
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>ยืนยันการลบ?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    ลบ "{getLang(project.title_en, project.title_th)}" —
+                    การลบจะไม่สามารถกู้คืนได้
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => handleDelete(project.id)}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+        )}
+      </CardFooter>
+    </Card>
+  );
+};
+
+// ==========================================
+// Main Component
+// ==========================================
 const IT = () => {
   const { user, signOut } = useAuth();
   const { language } = useLanguage();
@@ -122,8 +284,99 @@ const IT = () => {
   // ✅ ใช้ custom hook แทน inline fetch (fix #5)
   const { projects: allProjects, loading, error } = useSoftwareProjects();
 
+  // State สำหรับ category filter
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+
   // กรองเฉพาะ Active projects
-  const projects = allProjects.filter((p) => p.status === "Active");
+  const activeProjects = allProjects.filter((p) => p.status === "Active");
+
+  // กรองโปรเจกต์ทั่วไป (ไม่ใช่ Featured) นำไปแสดงผลและเข้า Filter
+  const nonFeaturedProjects = activeProjects.filter((p) => !p.featured_slot);
+
+  // สร้างรายการ Category แบบไม่ซ้ำเพื่อทำปุ่ม Filter จาก **เฉพาะ Normal Projects**
+  const categories = Array.from(
+    new Set(nonFeaturedProjects.map((p) => p.category || "Other")),
+  ).sort();
+
+  // กรองโปรเจกต์ที่จะแสดง
+  const displayedProjects =
+    selectedCategory === "All"
+      ? nonFeaturedProjects
+      : nonFeaturedProjects.filter(
+          (p) => (p.category || "Other") === selectedCategory,
+        );
+
+  // ดึง 3 Slots สำหรับ Featured
+  const featuredProjects = activeProjects
+    .filter((p) => p.featured_slot && p.featured_slot > 0)
+    .sort((a, b) => (a.featured_slot || 0) - (b.featured_slot || 0));
+
+  // สถานะเปิด-ปิด Modal จัดการสล็อต
+  const [slotModalOpen, setSlotModalOpen] = useState(false);
+  const [savingSlot, setSavingSlot] = useState(false);
+
+  // ฟังก์ชันเซฟ Slot ใหม่ (Admin)
+  const handleSlotChange = async (projectId: number, targetSlot: number) => {
+    try {
+      setSavingSlot(true);
+      // 1. เคลียร์โปรเจกต์เดิมที่มี slot นี้อยู่ให้ออกเป็น null
+      const existingProject = featuredProjects.find(
+        (p) => p.featured_slot === targetSlot,
+      );
+      if (existingProject && existingProject.id !== projectId) {
+        await supabase
+          .from("software_projects")
+          .update({ featured_slot: null })
+          .eq("id", existingProject.id);
+      }
+
+      // 2. เคลียร์โปรเจกต์ที่จะตั้ง (ถ้ามันอยู่ slot อื่นอยู่ก่อนแล้ว) แต่เพื่อให้ง่าย เราแค่ยัดค่าใส่เลย
+      // 3. เซฟโปรเจกต์เป้าหมายเป็น Slot ใหม่
+      const { error } = await supabase
+        .from("software_projects")
+        .update({ featured_slot: targetSlot })
+        .eq("id", projectId);
+
+      if (error) throw error;
+      toast({
+        title: "Updated",
+        description: `Slot ${targetSlot} updated successfully.`,
+      });
+      setTimeout(() => window.location.reload(), 1000);
+    } catch (err: unknown) {
+      const e = err as Error;
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: e.message || "Failed to update slot.",
+      });
+    } finally {
+      setSavingSlot(false);
+    }
+  };
+
+  const handleClearSlot = async (projectId: number) => {
+    try {
+      setSavingSlot(true);
+      const { error } = await supabase
+        .from("software_projects")
+        .update({ featured_slot: null })
+        .eq("id", projectId);
+
+      if (error) throw error;
+      toast({ title: "Removed", description: `Featured slot removed.` });
+      setTimeout(() => window.location.reload(), 1000);
+    } catch (err: unknown) {
+      const e = err as Error;
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: e.message || "Failed to remove slot.",
+      });
+    } finally {
+      setSavingSlot(false);
+    }
+  };
 
   // State สำหรับ delete (ป้องกัน double-click)
   const [deletingId, setDeletingId] = useState<number | null>(null);
@@ -227,11 +480,116 @@ const IT = () => {
       {/* ===== Section A: Software Projects (Dynamic) ===== */}
       <section id="software-projects" className="relative z-10 py-12 px-[25px]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-10 animate-fade-in-up">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))]">
+          <div className="text-center mb-8 animate-fade-in-up md:flex md:justify-between md:items-end">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))] text-center md:text-left">
               {language === "en" ? "Software Projects" : "โปรเจกต์ซอฟต์แวร์"}
             </h2>
+
+            {/* 🔐 Admin Controls */}
+            {user && (
+              <div className="flex flex-wrap justify-center gap-2 mt-4 md:mt-0 bg-white/80 p-2 rounded-lg border border-primary/20 shadow-lg w-fit mx-auto md:mx-0">
+                {/* ปุ่ม Manage Slots */}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setSlotModalOpen(true)}
+                  className="border-primary/50 text-primary hover:bg-primary hover:text-white"
+                >
+                  <Settings className="mr-2 h-4 w-4" /> Manage Slots
+                </Button>
+              </div>
+            )}
           </div>
+
+          {/* Slot Management Modal (Admin Only) */}
+          {user && (
+            <Dialog open={slotModalOpen} onOpenChange={setSlotModalOpen}>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl flex items-center gap-2 text-[hsl(var(--ds-chocolate))]">
+                    <Settings className="w-6 h-6 text-primary" />
+                    Manage Featured Slots
+                  </DialogTitle>
+                  <DialogDescription>
+                    Select which projects should appear in Slot 1, 2, and 3 at
+                    the top of the IT frontpage.
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="space-y-6 py-4">
+                  {[1, 2, 3].map((slotNum) => {
+                    const currentProjectInSlot = featuredProjects.find(
+                      (p) => p.featured_slot === slotNum,
+                    );
+
+                    return (
+                      <div
+                        key={slotNum}
+                        className="bg-muted/30 p-4 rounded-xl border border-border flex flex-col gap-3"
+                      >
+                        <div className="flex items-center justify-between">
+                          <h4 className="font-bold text-lg text-primary flex items-center gap-2">
+                            <BadgeCheck className="w-5 h-5" />
+                            Slot {slotNum}
+                          </h4>
+                          {currentProjectInSlot && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-destructive hover:bg-destructive/10 hover:text-destructive h-8 px-2"
+                              disabled={savingSlot}
+                              onClick={() =>
+                                handleClearSlot(currentProjectInSlot.id)
+                              }
+                            >
+                              <Trash2 className="w-4 h-4 mr-1" /> Remove
+                            </Button>
+                          )}
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row gap-3">
+                          <Select
+                            disabled={savingSlot}
+                            value={
+                              currentProjectInSlot?.id.toString() || "none"
+                            }
+                            onValueChange={(val) => {
+                              if (val !== "none") {
+                                handleSlotChange(parseInt(val), slotNum);
+                              }
+                            }}
+                          >
+                            <SelectTrigger className="w-full bg-white">
+                              <SelectValue placeholder="Select a project for this slot..." />
+                            </SelectTrigger>
+                            <SelectContent className="max-h-[300px]">
+                              <SelectItem
+                                value="none"
+                                disabled
+                                className="font-medium text-muted-foreground"
+                              >
+                                {currentProjectInSlot
+                                  ? "Currently selected:"
+                                  : "-- Select a project --"}
+                              </SelectItem>
+                              {activeProjects.map((p) => (
+                                <SelectItem key={p.id} value={p.id.toString()}>
+                                  {p.featured_slot
+                                    ? `[Slot ${p.featured_slot}] `
+                                    : ""}
+                                  {p.title_en}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </DialogContent>
+            </Dialog>
+          )}
 
           {/* Loading State */}
           {loading ? (
@@ -248,7 +606,7 @@ const IT = () => {
                 Please refresh the page or try again later.
               </p>
             </div>
-          ) : projects.length === 0 ? (
+          ) : activeProjects.length === 0 ? (
             /* ✅ Empty State (fix #6) */
             <div className="text-center py-20 bg-muted/20 rounded-xl border border-border">
               <BadgeCheck className="w-16 h-16 text-muted-foreground/30 mx-auto mb-4" />
@@ -266,202 +624,71 @@ const IT = () => {
               )}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project, idx) => (
-                <Card
-                  key={project.id}
-                  className={`flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-none shadow-md overflow-hidden group animate-fade-in-up stagger-${Math.min(idx + 1, 6)}`}
-                >
-                  {/* Project Image */}
-                  <div className="h-48 bg-muted relative overflow-hidden">
-                    {project.image_url ? (
-                      <img
-                        src={project.image_url}
-                        alt="Cover"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            <>
+              {/* === FEATURED PROJECTS SECITON === */}
+              {selectedCategory === "All" && featuredProjects.length > 0 && (
+                <div className="mb-16">
+                  <h3 className="text-2xl font-bold text-[hsl(var(--ds-red-orange))] flex items-center gap-2 mb-6">
+                    <BadgeCheck className="w-6 h-6" />
+                    {language === "en"
+                      ? "Featured Projects"
+                      : "โปรเจกต์โดดเด่น"}
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {featuredProjects.map((project, idx) => (
+                      <ProjectCardItem
+                        key={project.id}
+                        project={project}
+                        idx={idx}
+                        language={language}
+                        getLang={getLang}
+                        user={user}
+                        deletingId={deletingId}
+                        handleDelete={handleDelete}
+                        navigate={navigate}
+                        isFeatured
                       />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                        <BadgeCheck className="w-16 h-16 text-primary/20" />
-                      </div>
-                    )}
-                    <div className="absolute top-3 right-3">
-                      <Badge className="bg-white/90 text-primary hover:bg-white">
-                        {project.category}
-                      </Badge>
-                    </div>
+                    ))}
                   </div>
 
-                  <CardHeader>
-                    <CardTitle className="text-xl text-[hsl(var(--ds-chocolate))]">
-                      {getLang(project.title_en, project.title_th)}
-                    </CardTitle>
-                  </CardHeader>
+                  {displayedProjects.length > 0 && (
+                    <div className="mt-12 mb-6 flex items-center">
+                      <div className="h-px bg-border flex-grow"></div>
+                      <span className="px-4 text-muted-foreground bg-background">
+                        {language === "en" ? "More Projects" : "โปรเจกต์อื่นๆ"}
+                      </span>
+                      <div className="h-px bg-border flex-grow"></div>
+                    </div>
+                  )}
+                </div>
+              )}
 
-                  <CardContent className="flex-grow">
-                    <p className="text-muted-foreground text-sm line-clamp-3">
-                      {getLang(project.short_desc_en, project.short_desc_th)}
-                    </p>
-                  </CardContent>
-
-                  <CardFooter className="flex flex-wrap gap-2 pt-4 border-t bg-muted/5">
-                    {/* ปุ่ม: เปิด App */}
-                    {project.url && (
-                      <Button asChild className="flex-1" variant="default">
-                        <a href={project.url} target="_blank" rel="noreferrer">
-                          <Globe className="mr-2 h-4 w-4" />
-                          {language === "en" ? "Open App" : "เปิดใช้งาน"}
-                        </a>
-                      </Button>
-                    )}
-
-                    {/* ปุ่ม: Details (Dialog) */}
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Link to={`/it/project/${project.id}`}>
-                          <Button
-                            variant="outline"
-                            className="flex-1 border-primary/20 text-primary hover:bg-primary/5"
-                          >
-                            <Info className="mr-2 h-4 w-4" />
-                            {language === "en" ? "Details" : "รายละเอียด"}
-                          </Button>
-                        </Link>
-                      </DialogTrigger>
-
-                      <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
-                        <DialogHeader>
-                          <DialogTitle className="text-2xl flex items-center gap-2 text-primary">
-                            {getLang(project.title_en, project.title_th)}
-                          </DialogTitle>
-                          <DialogDescription>
-                            {project.category}
-                          </DialogDescription>
-                        </DialogHeader>
-
-                        {project.image_url && (
-                          <div className="w-full h-64 bg-muted rounded-lg overflow-hidden mb-4 shadow-inner">
-                            <img
-                              src={project.image_url}
-                              alt="Cover"
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                        )}
-
-                        <div className="space-y-6">
-                          <div className="bg-primary/5 p-4 rounded-lg border border-primary/10">
-                            <p className="text-foreground leading-relaxed whitespace-pre-line">
-                              {getLang(
-                                project.full_desc_en,
-                                project.full_desc_th,
-                              ) ||
-                                getLang(
-                                  project.short_desc_en,
-                                  project.short_desc_th,
-                                )}
-                            </p>
-                          </div>
-
-                          <div>
-                            <h4 className="font-bold mb-2 text-[hsl(var(--ds-chocolate))]">
-                              🎯 Target Audience
-                            </h4>
-                            <div className="ml-2 text-sm text-muted-foreground whitespace-pre-line border-l-2 border-primary/30 pl-4">
-                              {getLang(project.target_en, project.target_th) ||
-                                "-"}
-                            </div>
-                          </div>
-
-                          <div>
-                            <h4 className="font-bold mb-2 text-[hsl(var(--ds-chocolate))]">
-                              ✨ Key Features
-                            </h4>
-                            <div className="ml-2 text-sm text-muted-foreground whitespace-pre-line border-l-2 border-primary/30 pl-4">
-                              {getLang(
-                                project.features_en,
-                                project.features_th,
-                              ) || "-"}
-                            </div>
-                          </div>
-
-                          {project.url && (
-                            <div className="pt-6 mt-4 border-t flex justify-end">
-                              <Button
-                                asChild
-                                size="lg"
-                                className="w-full sm:w-auto"
-                              >
-                                <a
-                                  href={project.url}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                >
-                                  Go to Application{" "}
-                                  <ArrowRight className="ml-2 h-4 w-4" />
-                                </a>
-                              </Button>
-                            </div>
-                          )}
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-
-                    {/* 🔐 Admin: Edit / Delete (เห็นเฉพาะ Login) */}
-                    {user && (
-                      <div className="flex gap-2 w-full pt-2 border-t border-dashed border-primary/30">
-                        <Button
-                          variant="secondary"
-                          className="flex-1 text-xs h-8"
-                          onClick={() =>
-                            navigate(`/admin/software/edit/${project.id}`)
-                          }
-                        >
-                          <Pencil className="mr-2 h-3 w-3" /> Edit
-                        </Button>
-
-                        {/* ✅ AlertDialog แทน confirm() (fix #1) */}
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button
-                              variant="destructive"
-                              className="flex-1 text-xs h-8"
-                              disabled={deletingId === project.id}
-                            >
-                              {deletingId === project.id ? (
-                                <Loader2 className="mr-2 h-3 w-3 animate-spin" />
-                              ) : (
-                                <Trash2 className="mr-2 h-3 w-3" />
-                              )}
-                              Delete
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>ยืนยันการลบ?</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                ลบ "
-                                {getLang(project.title_en, project.title_th)}" —
-                                การลบจะไม่สามารถกู้คืนได้
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction
-                                onClick={() => handleDelete(project.id)}
-                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                              >
-                                Delete
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      </div>
-                    )}
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
+              {/* === NORMAL PROJECTS GRID === */}
+              {displayedProjects.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {displayedProjects.map((project, idx) => (
+                    <ProjectCardItem
+                      key={project.id}
+                      project={project}
+                      idx={idx}
+                      language={language}
+                      getLang={getLang}
+                      user={user}
+                      deletingId={deletingId}
+                      handleDelete={handleDelete}
+                      navigate={navigate}
+                      isFeatured={false}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-10 text-muted-foreground bg-muted/20 rounded-xl border border-border">
+                  {language === "en"
+                    ? "No projects found in this category."
+                    : "ไม่พบโปรเจกต์ในหมวดหมู่นี้"}
+                </div>
+              )}
+            </>
           )}
 
           {/* View Archive */}
