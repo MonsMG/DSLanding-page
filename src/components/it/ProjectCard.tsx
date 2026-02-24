@@ -44,14 +44,15 @@ const ProjectCard = ({
         } bg-gradient-to-br from-primary/10 via-[hsl(var(--ds-cream))] to-[hsl(var(--ds-beige))] flex items-center justify-center relative overflow-hidden`}
       >
         <IconComponent
-          className={`${
-            compact ? "w-14 h-14" : "w-20 h-20"
-          } text-primary`}
+          className={`${compact ? "w-14 h-14" : "w-20 h-20"} text-primary`}
           strokeWidth={1.5}
         />
         {showCategory && category && (
           <div className="absolute top-2 right-2">
-            <Badge variant="secondary" className="text-xs bg-card/90 px-2 py-0.5">
+            <Badge
+              variant="secondary"
+              className="text-xs bg-card/90 px-2 py-0.5"
+            >
               {category}
             </Badge>
           </div>

@@ -1,6 +1,7 @@
 import { Sparkles, Target, Users, Heart } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
 import FloatingChatButton from "@/components/layout/FloatingChatButton";
+import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { contentData } from "@/data/content";
 import type { LucideIcon } from "lucide-react";
@@ -58,7 +59,9 @@ const About = () => {
                 <span className="text-4xl sm:text-5xl font-bold text-primary block mb-2">
                   {stat.value}
                 </span>
-                <span className="text-sm text-muted-foreground">{t(stat.label)}</span>
+                <span className="text-sm text-muted-foreground">
+                  {t(stat.label)}
+                </span>
               </div>
             ))}
           </div>
@@ -99,7 +102,9 @@ const About = () => {
                       <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary">
                         {t(value.title)}
                       </h3>
-                      <p className="text-muted-foreground leading-relaxed">{t(value.description)}</p>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {t(value.description)}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -111,7 +116,9 @@ const About = () => {
           <div className="text-center">
             <div className="capsule-card p-16 inline-block">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="text-6xl sm:text-7xl font-bold text-foreground">DS</span>
+                <span className="text-6xl sm:text-7xl font-bold text-foreground">
+                  DS
+                </span>
                 <span className="w-3 h-3 rounded-full bg-primary" />
               </div>
               <p className="text-lg text-muted-foreground font-medium">
@@ -122,6 +129,7 @@ const About = () => {
         </div>
       </main>
 
+      <Footer />
       <FloatingChatButton />
     </div>
   );

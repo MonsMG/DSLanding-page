@@ -46,7 +46,9 @@ const StatsCards = () => {
           <div className="flex items-start justify-between">
             <div>
               <p className="text-sm text-gray-500 font-medium">{stat.label}</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">
+                {stat.value}
+              </p>
               <div className="flex items-center gap-1.5 mt-2">
                 <span className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse" />
                 <p className="text-xs text-gray-500">{stat.change}</p>

@@ -1,6 +1,7 @@
 import { Mail, Facebook } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
 import FloatingChatButton from "@/components/layout/FloatingChatButton";
+import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { contentData } from "@/data/content";
 
@@ -53,8 +54,12 @@ const Contact = () => {
                   <div className="w-16 h-16 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
                     <IconComponent className="w-7 h-7 text-primary" />
                   </div>
-                  <h3 className="text-lg font-semibold text-[hsl(var(--ds-chocolate))] mb-2">{method.title}</h3>
-                  <p className="text-primary font-medium mb-2 group-hover:underline">{method.value}</p>
+                  <h3 className="text-lg font-semibold text-[hsl(var(--ds-chocolate))] mb-2">
+                    {method.title}
+                  </h3>
+                  <p className="text-primary font-medium mb-2 group-hover:underline">
+                    {method.value}
+                  </p>
                   <p className="text-sm text-foreground/60">{t(method.desc)}</p>
                 </a>
               );
@@ -62,28 +67,23 @@ const Contact = () => {
           </div>
 
           {/* Office Hours Card */}
-          <div className="bg-card border border-border rounded-3xl p-10 text-center shadow-sm">
+          <div className="bg-card border border-border rounded-3xl p-10 text-center shadow-sm w-fit justify-self-center">
             <h3 className="text-2xl font-bold text-[hsl(var(--ds-chocolate))] mb-6">
               {t(contentData.contact.officeHours)}
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-foreground/70 max-w-md mx-auto">
-              <div className="bg-gradient-to-br from-primary/5 to-[hsl(var(--ds-cream))] rounded-2xl p-6">
+              <div className="bg-gradient-to-br from-primary/5 to-[hsl(var(--ds-cream))] rounded-2xl p-6 ">
                 <p className="font-semibold text-[hsl(var(--ds-chocolate))] mb-2">
                   {t(contentData.contact.weekdays)}
                 </p>
                 <p className="text-lg">08:30 AM - 16:30 PM</p>
-              </div>
-              <div className="bg-gradient-to-br from-primary/5 to-[hsl(var(--ds-cream))] rounded-2xl p-6">
-                <p className="font-semibold text-[hsl(var(--ds-chocolate))] mb-2">
-                  {t(contentData.contact.saturday)}
-                </p>
-                <p className="text-lg">10:00 AM - 17:00 PM</p>
               </div>
             </div>
           </div>
         </div>
       </main>
 
+      <Footer />
       <FloatingChatButton />
     </div>
   );

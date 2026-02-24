@@ -9,7 +9,9 @@ import { contentData } from "@/data/content";
 const ITProjectDetail = () => {
   const { t } = useLanguage();
   const { projectId } = useParams<{ projectId: string }>();
-  const project = projectId ? contentData.projects[projectId as keyof typeof contentData.projects] : null;
+  const project = projectId
+    ? contentData.projects[projectId as keyof typeof contentData.projects]
+    : null;
   const labels = contentData.projectDetail;
 
   if (!project) {
@@ -43,7 +45,10 @@ const ITProjectDetail = () => {
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
           <div>
-            <Link to="/it" className="inline-flex items-center gap-2 text-[hsl(var(--ds-chocolate))]/70 hover:text-primary mb-8">
+            <Link
+              to="/it"
+              className="inline-flex items-center gap-2 text-[hsl(var(--ds-chocolate))]/70 hover:text-primary mb-8"
+            >
               <ArrowLeft className="w-5 h-5" />
               <span className="font-medium">{t(labels.backToProjects)}</span>
             </Link>
@@ -58,7 +63,12 @@ const ITProjectDetail = () => {
 
           {/* Visit Website CTA */}
           <div className="mb-12 text-left">
-            <a href={project.link} target="_blank" rel="noopener noreferrer" className="inline-block">
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block"
+            >
               <Button
                 size="lg"
                 className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-10 py-7 text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl"
@@ -91,7 +101,10 @@ const ITProjectDetail = () => {
               </div>
               <ul className="space-y-3">
                 {t(project.target).map((audience, index) => (
-                  <li key={index} className="flex items-center gap-3 text-[hsl(var(--ds-chocolate))]/80">
+                  <li
+                    key={index}
+                    className="flex items-center gap-3 text-[hsl(var(--ds-chocolate))]/80"
+                  >
                     <div className="w-2 h-2 rounded-full bg-primary" />
                     {audience}
                   </li>
@@ -109,7 +122,10 @@ const ITProjectDetail = () => {
               </div>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {t(project.features).map((feature, index) => (
-                  <li key={index} className="flex items-center gap-3 text-[hsl(var(--ds-chocolate))]/80">
+                  <li
+                    key={index}
+                    className="flex items-center gap-3 text-[hsl(var(--ds-chocolate))]/80"
+                  >
                     <div className="w-2 h-2 rounded-full bg-primary" />
                     {feature}
                   </li>

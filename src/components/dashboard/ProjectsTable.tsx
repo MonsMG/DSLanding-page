@@ -12,7 +12,12 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 
-type ProjectStatus = "Active" | "In Progress" | "Pending" | "Completed" | "On Hold";
+type ProjectStatus =
+  | "Active"
+  | "In Progress"
+  | "Pending"
+  | "Completed"
+  | "On Hold";
 
 interface Project {
   id: number;
@@ -108,12 +113,24 @@ const ProjectsTable = () => {
         <Table>
           <TableHeader>
             <TableRow className="bg-gray-50/50">
-              <TableHead className="font-semibold text-gray-700">Project</TableHead>
-              <TableHead className="font-semibold text-gray-700">Client</TableHead>
-              <TableHead className="font-semibold text-gray-700">Status</TableHead>
-              <TableHead className="font-semibold text-gray-700">Progress</TableHead>
-              <TableHead className="font-semibold text-gray-700">Team</TableHead>
-              <TableHead className="font-semibold text-gray-700">Deadline</TableHead>
+              <TableHead className="font-semibold text-gray-700">
+                Project
+              </TableHead>
+              <TableHead className="font-semibold text-gray-700">
+                Client
+              </TableHead>
+              <TableHead className="font-semibold text-gray-700">
+                Status
+              </TableHead>
+              <TableHead className="font-semibold text-gray-700">
+                Progress
+              </TableHead>
+              <TableHead className="font-semibold text-gray-700">
+                Team
+              </TableHead>
+              <TableHead className="font-semibold text-gray-700">
+                Deadline
+              </TableHead>
               <TableHead className="w-10"></TableHead>
             </TableRow>
           </TableHeader>
@@ -129,43 +146,61 @@ const ProjectsTable = () => {
                 <TableCell className="font-medium text-gray-900">
                   {project.name}
                 </TableCell>
-                <TableCell className="text-gray-600">{project.client}</TableCell>
+                <TableCell className="text-gray-600">
+                  {project.client}
+                </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
                     {/* Orange Status Dot with pulse animation */}
-                    <span 
-                      className={`w-2.5 h-2.5 ${getStatusColor(project.status)} rounded-full animate-pulse ring-2 ring-orange-200`} 
+                    <span
+                      className={`w-2.5 h-2.5 ${getStatusColor(project.status)} rounded-full animate-pulse ring-2 ring-orange-200`}
                     />
-                    <span className="text-sm text-gray-700">{project.status}</span>
+                    <span className="text-sm text-gray-700">
+                      {project.status}
+                    </span>
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-3 min-w-[120px]">
-                    <Progress 
-                      value={project.progress} 
+                    <Progress
+                      value={project.progress}
                       className="h-2 flex-1 bg-gray-100 [&>div]:bg-orange-500"
                     />
-                    <span className="text-xs text-gray-500 w-8">{project.progress}%</span>
+                    <span className="text-xs text-gray-500 w-8">
+                      {project.progress}%
+                    </span>
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className="flex -space-x-2">
                     {project.team.slice(0, 3).map((member, i) => (
                       <Avatar key={i} className="h-7 w-7 border-2 border-white">
-                        <AvatarImage src={`https://api.dicebear.com/7.x/initials/svg?seed=${member}`} />
-                        <AvatarFallback className="text-xs">{member}</AvatarFallback>
+                        <AvatarImage
+                          src={`https://api.dicebear.com/7.x/initials/svg?seed=${member}`}
+                        />
+                        <AvatarFallback className="text-xs">
+                          {member}
+                        </AvatarFallback>
                       </Avatar>
                     ))}
                     {project.team.length > 3 && (
                       <div className="h-7 w-7 rounded-full bg-gray-100 border-2 border-white flex items-center justify-center">
-                        <span className="text-xs text-gray-600">+{project.team.length - 3}</span>
+                        <span className="text-xs text-gray-600">
+                          +{project.team.length - 3}
+                        </span>
                       </div>
                     )}
                   </div>
                 </TableCell>
-                <TableCell className="text-gray-600 text-sm">{project.deadline}</TableCell>
+                <TableCell className="text-gray-600 text-sm">
+                  {project.deadline}
+                </TableCell>
                 <TableCell>
-                  <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
                     <MoreHorizontal className="h-4 w-4 text-gray-500" />
                   </Button>
                 </TableCell>

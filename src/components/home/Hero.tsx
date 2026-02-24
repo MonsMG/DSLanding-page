@@ -7,7 +7,7 @@ import { contentData } from "@/data/content";
 const Hero = () => {
   const { t } = useLanguage();
   const { home } = contentData;
-  
+
   return (
     <section className="relative h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden">
       {/* Abstract Artistic Background - Modern Infrastructure */}

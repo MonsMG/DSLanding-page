@@ -27,7 +27,9 @@ const Navigation = () => {
         <nav className="max-w-7xl mx-auto flex items-center justify-between">
           {/* DS Logo - Left */}
           <Link to="/" className="flex items-center gap-1">
-            <span className="text-2xl font-bold text-[hsl(var(--ds-chocolate))] tracking-tight">DS</span>
+            <span className="text-2xl font-bold text-[hsl(var(--ds-chocolate))] tracking-tight">
+              DS
+            </span>
             <span className="w-2.5 h-2.5 rounded-full bg-primary" />
           </Link>
 
@@ -38,7 +40,9 @@ const Navigation = () => {
                 key={link.path}
                 to={link.path}
                 className={`relative px-5 py-2 rounded-xl text-sm font-medium ${
-                  isActive(link.path) ? "text-primary-foreground bg-primary" : "text-foreground hover:text-primary"
+                  isActive(link.path)
+                    ? "text-primary-foreground bg-primary"
+                    : "text-foreground hover:text-primary"
                 }`}
               >
                 <span className="relative z-10">{link.label}</span>
@@ -80,7 +84,9 @@ const Navigation = () => {
                   to={link.path}
                   onClick={() => setMobileMenuOpen(false)}
                   className={`px-4 py-3 rounded-xl text-base font-medium ${
-                    isActive(link.path) ? "text-primary-foreground bg-primary" : "text-foreground hover:bg-muted"
+                    isActive(link.path)
+                      ? "text-primary-foreground bg-primary"
+                      : "text-foreground hover:bg-muted"
                   }`}
                 >
                   {link.label}

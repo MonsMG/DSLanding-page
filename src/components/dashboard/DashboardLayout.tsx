@@ -86,7 +86,9 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                     : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                 }`}
               >
-                <item.icon className={`h-5 w-5 flex-shrink-0 ${isActive ? "text-orange-500" : ""}`} />
+                <item.icon
+                  className={`h-5 w-5 flex-shrink-0 ${isActive ? "text-orange-500" : ""}`}
+                />
                 <AnimatePresence>
                   {sidebarOpen && (
                     <motion.span
@@ -122,8 +124,12 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                   exit={{ opacity: 0, width: 0 }}
                   className="overflow-hidden"
                 >
-                  <p className="text-sm font-medium text-gray-900 whitespace-nowrap">DS Studio</p>
-                  <p className="text-xs text-gray-500 whitespace-nowrap">Admin</p>
+                  <p className="text-sm font-medium text-gray-900 whitespace-nowrap">
+                    DS Studio
+                  </p>
+                  <p className="text-xs text-gray-500 whitespace-nowrap">
+                    Admin
+                  </p>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -160,7 +166,9 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                   <span className="text-xl font-bold text-gray-900">DS</span>
                   <span className="absolute -top-1 -right-2 w-2.5 h-2.5 bg-orange-500 rounded-full animate-pulse ring-2 ring-orange-200" />
                 </div>
-                <span className="text-lg font-semibold text-gray-700">Workspace</span>
+                <span className="text-lg font-semibold text-gray-700">
+                  Workspace
+                </span>
               </Link>
               <Button
                 variant="ghost"
@@ -185,7 +193,9 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                         : "text-gray-600 hover:bg-gray-100"
                     }`}
                   >
-                    <item.icon className={`h-5 w-5 ${isActive ? "text-orange-500" : ""}`} />
+                    <item.icon
+                      className={`h-5 w-5 ${isActive ? "text-orange-500" : ""}`}
+                    />
                     <span className="font-medium">{item.label}</span>
                     {isActive && (
                       <span className="ml-auto w-2 h-2 bg-orange-500 rounded-full animate-pulse ring-2 ring-orange-200" />
@@ -237,9 +247,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-4 lg:p-6 overflow-auto">
-          {children}
-        </main>
+        <main className="flex-1 p-4 lg:p-6 overflow-auto">{children}</main>
       </div>
     </div>
   );

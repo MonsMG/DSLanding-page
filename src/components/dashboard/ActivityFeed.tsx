@@ -74,16 +74,22 @@ const ActivityFeed = () => {
             <div className="flex items-start gap-3">
               <div className="relative">
                 <Avatar className="h-9 w-9">
-                  <AvatarImage src={`https://api.dicebear.com/7.x/initials/svg?seed=${activity.avatar}`} />
+                  <AvatarImage
+                    src={`https://api.dicebear.com/7.x/initials/svg?seed=${activity.avatar}`}
+                  />
                   <AvatarFallback>{activity.avatar}</AvatarFallback>
                 </Avatar>
                 <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-orange-500 rounded-full border-2 border-white" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm text-gray-700">
-                  <span className="font-medium text-gray-900">{activity.user}</span>{" "}
+                  <span className="font-medium text-gray-900">
+                    {activity.user}
+                  </span>{" "}
                   {activity.action}{" "}
-                  <span className="font-medium text-orange-600">{activity.target}</span>
+                  <span className="font-medium text-orange-600">
+                    {activity.target}
+                  </span>
                 </p>
                 <p className="text-xs text-gray-400 mt-0.5">{activity.time}</p>
               </div>
