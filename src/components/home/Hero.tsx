@@ -10,37 +10,34 @@ const Hero = () => {
 
   return (
     <section className="relative h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden">
-      {/* Abstract Artistic Background - Modern Infrastructure */}
+      {/* Abstract Artistic Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--ds-beige))] via-[hsl(var(--ds-cream))] to-white" />
 
-      {/* Abstract Artistic Shapes */}
+      {/* Animated gradient blobs */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-        {/* Large flowing gradient blobs */}
-        <div className="absolute -top-40 -left-40 w-[700px] h-[700px] bg-gradient-to-br from-primary/15 to-[hsl(var(--ds-red-orange))]/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/4 -right-32 w-[500px] h-[500px] bg-gradient-to-bl from-[hsl(var(--ds-beige))] to-primary/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 left-1/3 w-[600px] h-[600px] bg-gradient-to-tr from-primary/10 to-[hsl(var(--ds-cream))] rounded-full blur-3xl" />
-
-        {/* Subtle geometric accents */}
+        <div className="absolute -top-40 -left-40 w-[700px] h-[700px] bg-gradient-to-br from-primary/15 to-[hsl(var(--ds-red-orange))]/10 rounded-full blur-3xl float" />
+        <div className="absolute top-1/4 -right-32 w-[500px] h-[500px] bg-gradient-to-bl from-[hsl(var(--ds-beige))] to-primary/10 rounded-full blur-3xl float-delayed" />
+        <div className="absolute -bottom-40 left-1/3 w-[600px] h-[600px] bg-gradient-to-tr from-primary/10 to-[hsl(var(--ds-cream))] rounded-full blur-3xl float" />
       </div>
 
-      {/* Main Content */}
+      {/* Main Content — staggered entrance */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-6 text-center">
-        {/* Main Headline - Digital Solution */}
-        <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-8 text-[hsl(var(--ds-chocolate))]">
+        {/* Main Headline */}
+        <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-8 text-[hsl(var(--ds-chocolate))] animate-fade-in-up">
           Digital Solution
         </h1>
 
         {/* Slogan */}
-        <p className="text-xl sm:text-2xl md:text-3xl text-[hsl(var(--ds-chocolate))]/80 max-w-3xl mx-auto mb-14 leading-relaxed font-medium">
+        <p className="text-xl sm:text-2xl md:text-3xl text-[hsl(var(--ds-chocolate))]/80 max-w-3xl mx-auto mb-14 leading-relaxed font-medium animate-fade-in-up stagger-2">
           "{t(home.hero.slogan)}"
         </p>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+        {/* CTA Buttons — staggered with visual distinction */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 animate-fade-in-up stagger-4">
           <Link to="/it">
             <Button
               size="lg"
-              className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl min-w-[220px]"
+              className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 min-w-[220px]"
             >
               {t(home.hero.exploreSoftware)}
               <ArrowRight className="w-6 h-6 ml-3" />
@@ -49,7 +46,8 @@ const Hero = () => {
           <Link to="/production">
             <Button
               size="lg"
-              className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl min-w-[220px]"
+              variant="outline"
+              className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 min-w-[220px]"
             >
               {t(home.hero.exploreProduction)}
               <ArrowRight className="w-6 h-6 ml-3" />

@@ -26,15 +26,18 @@ const Footer = () => {
 
   return (
     <footer className="relative z-10 bg-[hsl(var(--ds-chocolate))] text-white/90">
+      {/* Gradient accent line at top */}
+      <div className="h-1 bg-gradient-to-r from-primary via-[hsl(var(--ds-red-orange))] to-primary" />
+
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Logo & Brand */}
           <div>
-            <Link to="/" className="flex items-center gap-1 mb-4">
-              <span className="text-3xl font-bold text-white tracking-tight">
+            <Link to="/" className="flex items-center gap-1 mb-4 group">
+              <span className="text-3xl font-bold text-white tracking-tight group-hover:text-primary transition-colors duration-300">
                 DS
               </span>
-              <span className="w-2.5 h-2.5 rounded-full bg-primary" />
+              <span className="w-2.5 h-2.5 rounded-full bg-primary group-hover:scale-125 transition-transform duration-300" />
             </Link>
             <p className="text-white/60 text-sm leading-relaxed">
               {language === "en"
@@ -53,7 +56,7 @@ const Footer = () => {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-white/60 hover:text-white text-sm transition-colors"
+                    className="text-white/60 hover:text-primary text-sm transition-colors duration-200 inline-block hover:translate-x-1 transform"
                   >
                     {link.label}
                   </Link>
@@ -68,8 +71,10 @@ const Footer = () => {
               {language === "en" ? "Contact" : "ติดต่อ"}
             </h4>
             <div className="space-y-2 text-sm text-white/60">
-              <p>ds.productionhouse@gmail.com</p>
-              <p>
+              <p className="hover:text-white/80 transition-colors">
+                ds.productionhouse@gmail.com
+              </p>
+              <p className="hover:text-white/80 transition-colors">
                 {language === "en"
                   ? "Bangkok, Thailand"
                   : "กรุงเทพฯ, ประเทศไทย"}

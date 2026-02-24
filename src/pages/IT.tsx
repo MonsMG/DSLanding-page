@@ -200,20 +200,20 @@ const IT = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-start gap-8">
             <div className="text-left flex-1">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-6 whitespace-pre-line">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-6 whitespace-pre-line animate-fade-in-up">
                 Designed to Solve.{"\n"}Built to Improve.
               </h1>
-              <p className="text-left sm:text-xl text-foreground/70 max-w-2xl">
+              <p className="text-left sm:text-xl text-foreground/70 max-w-2xl animate-fade-in-up stagger-2">
                 {language === "en"
                   ? "Crafting innovative digital solutions that streamline workflows and enhance productivity."
                   : "สร้างสรรค์นวัตกรรมดิจิทัลเพื่อแก้ปัญหา พัฒนากระบวนการทำงาน และเพิ่มประสิทธิภาพสู่ความสำเร็จ"}
               </p>
 
-              <div className="mt-12 flex gap-4">
+              <div className="mt-12 flex gap-4 animate-fade-in-up stagger-3">
                 <Button
                   onClick={scrollToProjects}
                   size="lg"
-                  className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl"
+                  className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                 >
                   {language === "en" ? "View Projects" : "ดูผลงาน"}
                   <ArrowRight className="w-5 h-5 ml-2" />
@@ -227,7 +227,7 @@ const IT = () => {
       {/* ===== Section A: Software Projects (Dynamic) ===== */}
       <section id="software-projects" className="relative z-10 py-12 px-[25px]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-10">
+          <div className="text-center mb-10 animate-fade-in-up">
             <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))]">
               {language === "en" ? "Software Projects" : "โปรเจกต์ซอฟต์แวร์"}
             </h2>
@@ -293,10 +293,10 @@ const IT = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project) => (
+              {projects.map((project, idx) => (
                 <Card
                   key={project.id}
-                  className="flex flex-col h-full hover:shadow-xl transition-all border-none shadow-md overflow-hidden group"
+                  className={`flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-none shadow-md overflow-hidden group animate-fade-in-up stagger-${Math.min(idx + 1, 6)}`}
                 >
                   {/* Project Image */}
                   <div className="h-48 bg-muted relative overflow-hidden">
@@ -504,19 +504,24 @@ const IT = () => {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="relative z-10 px-6">
+        <div className="max-w-7xl mx-auto section-divider" />
+      </div>
+
       {/* ===== Section B: Technical Skills (Static) ===== */}
       <section className="relative z-10 pb-24 px-6">
         <div className="max-w-7xl mx-auto py-[15px]">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))] mb-10 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))] mb-10 text-center animate-fade-in-up">
             {language === "en" ? "Technical Skills" : "ทักษะทางเทคนิค"}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {skills.map((skill) => {
+            {skills.map((skill, idx) => {
               const IconComponent = skill.icon;
               return (
                 <div
                   key={skill.name.en}
-                  className="bg-card border border-border rounded-2xl p-6 text-center hover:shadow-lg hover:-translate-y-1 transition-all"
+                  className={`bg-card border border-border rounded-2xl p-6 text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group animate-fade-in-up stagger-${idx + 1}`}
                 >
                   <div className="w-14 h-14 mx-auto mb-4 bg-primary/10 rounded-xl flex items-center justify-center">
                     <IconComponent

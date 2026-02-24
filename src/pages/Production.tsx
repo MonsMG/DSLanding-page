@@ -190,10 +190,10 @@ const Production = () => {
       {/* Cover Section */}
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-          <h1 className="text-left sm:text-6xl lg:text-7xl font-bold text-[hsl(var(--ds-chocolate))] mb-4">
+          <h1 className="text-left sm:text-6xl lg:text-7xl font-bold text-[hsl(var(--ds-chocolate))] mb-4 animate-fade-in-up">
             {production.heroTitle}
           </h1>
-          <p className="text-left sm:text-2xl text-[hsl(var(--ds-chocolate))]/80 font-medium mb-4">
+          <p className="text-left sm:text-2xl text-[hsl(var(--ds-chocolate))]/80 font-medium mb-4 animate-fade-in-up stagger-2">
             {t(production.heroSubtitle)}
           </p>
         </div>
@@ -209,7 +209,7 @@ const Production = () => {
           {/* ===== SECTION 1: OUR WORKS (Dynamic) ===== */}
           <section className="relative z-10 py-16 px-6">
             <div className="max-w-7xl mx-auto">
-              <div className="text-center mb-12">
+              <div className="text-center mb-12 animate-fade-in-up">
                 <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">
                   {t(production.sections.workSubtitle)}
                 </span>
@@ -233,13 +233,13 @@ const Production = () => {
 
               {/* Grid Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {works.map((item) => (
+                {works.map((item, idx) => (
                   <a
                     key={item.id}
                     href={item.media_url || "#"}
                     target="_blank"
                     rel="noreferrer"
-                    className="group relative block aspect-video bg-black rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                    className={`group relative block aspect-video bg-black rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 animate-fade-in-up stagger-${Math.min(idx + 1, 6)}`}
                   >
                     {/* Background Image */}
                     <img
@@ -373,12 +373,12 @@ const Production = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                {services.map((service) => {
+                {services.map((service, idx) => {
                   const IconComponent = serviceIcons[service.key];
                   return (
                     <div
                       key={service.key}
-                      className="bg-card border border-border rounded-3xl p-8 text-center group hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                      className={`bg-card border border-border rounded-3xl p-8 text-center group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 animate-fade-in-up stagger-${idx + 1}`}
                     >
                       <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-primary/10 to-[hsl(var(--ds-cream))] flex items-center justify-center mb-6 group-hover:from-primary/20 transition-colors">
                         <IconComponent className="w-10 h-10 text-primary" />
@@ -419,10 +419,10 @@ const Production = () => {
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {behindScenes.map((item) => (
+                {behindScenes.map((item, idx) => (
                   <div
                     key={item.id}
-                    className="aspect-square bg-card border border-border rounded-2xl flex flex-col items-center justify-center p-6 group cursor-pointer hover:shadow-lg transition-all"
+                    className={`aspect-square bg-card border border-border rounded-2xl flex flex-col items-center justify-center p-6 group cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fade-in-up stagger-${Math.min(idx + 1, 6)}`}
                   >
                     <Camera className="w-10 h-10 text-primary/50 group-hover:text-primary mb-4 transition-colors" />
                     <span className="text-base font-semibold text-[hsl(var(--ds-chocolate))] mb-1 text-center">

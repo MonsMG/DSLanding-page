@@ -37,13 +37,13 @@ const About = () => {
 
       {/* Decorative Background */}
       <div className="absolute inset-0 hero-gradient" />
-      <div className="absolute top-32 right-10 w-80 h-80 bg-primary/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-48 left-20 w-64 h-64 bg-accent/10 rounded-full blur-3xl" />
+      <div className="absolute top-32 right-10 w-80 h-80 bg-primary/10 rounded-full blur-3xl float" />
+      <div className="absolute bottom-48 left-20 w-64 h-64 bg-accent/10 rounded-full blur-3xl float-delayed" />
 
       <main className="relative z-10 pt-32 pb-20 px-6">
         <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-20">
+          {/* Header — entrance */}
+          <div className="text-center mb-20 animate-fade-in-up">
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6">
               {t(about.title)}
             </h1>
@@ -52,11 +52,14 @@ const About = () => {
             </p>
           </div>
 
-          {/* Stats */}
+          {/* Stats — staggered */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-            {stats.map((stat) => (
-              <div key={stat.value} className="capsule-card p-8 text-center">
-                <span className="text-4xl sm:text-5xl font-bold text-primary block mb-2">
+            {stats.map((stat, idx) => (
+              <div
+                key={stat.value}
+                className={`capsule-card p-8 text-center group animate-fade-in-up stagger-${idx + 1}`}
+              >
+                <span className="text-4xl sm:text-5xl font-bold text-primary block mb-2 group-hover:scale-110 transition-transform duration-300">
                   {stat.value}
                 </span>
                 <span className="text-sm text-muted-foreground">
@@ -66,8 +69,11 @@ const About = () => {
             ))}
           </div>
 
-          {/* Mission */}
-          <div className="capsule-card p-12 sm:p-16 text-center mb-20">
+          {/* Section Divider */}
+          <div className="section-divider mb-20" />
+
+          {/* Mission — entrance */}
+          <div className="capsule-card p-12 sm:p-16 text-center mb-20 animate-fade-in-up">
             <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">
               {t(about.mission.subtitle)}
             </span>
@@ -79,8 +85,8 @@ const About = () => {
             </p>
           </div>
 
-          {/* Values */}
-          <div className="text-center mb-12">
+          {/* Values Header */}
+          <div className="text-center mb-12 animate-fade-in-up">
             <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">
               {t(about.values.subtitle)}
             </span>
@@ -89,17 +95,21 @@ const About = () => {
             </h2>
           </div>
 
+          {/* Values — staggered with enhanced hover */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
-            {values.map((value) => {
+            {values.map((value, idx) => {
               const IconComponent = value.icon;
               return (
-                <div key={value.key} className="capsule-card p-8 group">
+                <div
+                  key={value.key}
+                  className={`capsule-card p-8 group hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-fade-in-up stagger-${idx + 1}`}
+                >
                   <div className="flex items-start gap-5">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/10 to-[hsl(var(--ds-cream))] flex items-center justify-center flex-shrink-0 group-hover:from-primary/20 group-hover:scale-110 transition-all duration-300">
                       <IconComponent className="w-7 h-7 text-primary" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary">
+                      <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-200">
                         {t(value.title)}
                       </h3>
                       <p className="text-muted-foreground leading-relaxed">
@@ -112,14 +122,17 @@ const About = () => {
             })}
           </div>
 
-          {/* Brand */}
-          <div className="text-center">
-            <div className="capsule-card p-16 inline-block">
+          {/* Section Divider */}
+          <div className="section-divider mb-20" />
+
+          {/* Brand — gradient text */}
+          <div className="text-center animate-fade-in-up">
+            <div className="capsule-card p-16 inline-block group hover:shadow-xl transition-all duration-300">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="text-6xl sm:text-7xl font-bold text-foreground">
+                <span className="text-6xl sm:text-7xl font-bold text-gradient">
                   DS
                 </span>
-                <span className="w-3 h-3 rounded-full bg-primary" />
+                <span className="w-3 h-3 rounded-full bg-primary group-hover:scale-150 transition-transform duration-300" />
               </div>
               <p className="text-lg text-muted-foreground font-medium">
                 {t(about.brandName)}

@@ -9,6 +9,7 @@ import { useState, useMemo } from "react";
 import { Loader2, Code2, Pencil, Trash2, Plus, LogOut } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
 import FloatingChatButton from "@/components/layout/FloatingChatButton";
+import Footer from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -109,7 +110,7 @@ const ITArchive = () => {
       <main className="relative z-10 pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 animate-fade-in-up">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-4">
               {t(contentData.archive.title)}
             </h1>
@@ -197,8 +198,11 @@ const ITArchive = () => {
 
               {/* Projects Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                {filteredProjects.map((project) => (
-                  <div key={project.id} className="relative group">
+                {filteredProjects.map((project, idx) => (
+                  <div
+                    key={project.id}
+                    className={`relative group animate-fade-in-up stagger-${Math.min(idx + 1, 8)}`}
+                  >
                     <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-md h-full flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                       {/* Cover */}
                       <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 via-[hsl(var(--ds-cream))] to-[hsl(var(--ds-beige))] flex items-center justify-center relative overflow-hidden">
@@ -362,6 +366,7 @@ const ITArchive = () => {
         </div>
       </main>
 
+      <Footer />
       <FloatingChatButton />
     </div>
   );

@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Loader2, Lock, Mail, ArrowLeft } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast"; // หรือถ้ายังไม่มี ให้ใช้ alert แทนได้ครับ
 
 const Login = () => {
   const navigate = useNavigate();
@@ -35,8 +34,6 @@ const Login = () => {
 
       if (error) throw error;
 
-      // Login สำเร็จ -> ไปหน้า Dashboard (เดี๋ยวเราค่อยสร้าง)
-      // ตอนนี้ให้กลับไปหน้า Home ก่อน
       navigate("/");
     } catch {
       // 🔒 ไม่แสดง error ดิบจาก Supabase (ป้องกัน email enumeration)
@@ -47,20 +44,36 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted/20 px-4">
-      <Card className="w-full max-w-md border-primary/20 shadow-xl">
+    <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
+      {/* Background matching design system */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--ds-beige))] via-[hsl(var(--ds-cream))] to-white" />
+
+      {/* Decorative gradient blobs */}
+      <div className="absolute top-20 -left-32 w-[500px] h-[500px] bg-gradient-to-br from-primary/15 to-transparent rounded-full blur-3xl float" />
+      <div className="absolute bottom-20 -right-32 w-[400px] h-[400px] bg-gradient-to-bl from-[hsl(var(--ds-cream))] to-primary/10 rounded-full blur-3xl float-delayed" />
+
+      {/* Login Card */}
+      <Card className="relative z-10 w-full max-w-md border-primary/20 shadow-xl bg-card/90 backdrop-blur-xl animate-scale-in">
         <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-2xl font-bold text-primary">
+          {/* DS Logo */}
+          <div className="flex items-center justify-center gap-1 mb-4 animate-fade-in">
+            <span className="text-4xl font-bold text-[hsl(var(--ds-chocolate))] tracking-tight">
+              DS
+            </span>
+            <span className="w-3 h-3 rounded-full bg-primary" />
+          </div>
+
+          <CardTitle className="text-2xl font-bold text-primary animate-fade-in-up stagger-1">
             Admin Access
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="animate-fade-in-up stagger-2">
             Enter your credentials to access the dashboard
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleLogin}>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 animate-fade-in-up stagger-3">
             {error && (
-              <div className="bg-destructive/15 text-destructive text-sm p-3 rounded-md text-center">
+              <div className="bg-destructive/15 text-destructive text-sm p-3 rounded-md text-center animate-fade-in">
                 {error}
               </div>
             )}
@@ -73,7 +86,7 @@ const Login = () => {
                   id="email"
                   type="email"
                   placeholder="admin@example.com"
-                  className="pl-9"
+                  className="pl-9 bg-background/50 focus:bg-background transition-colors"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -90,7 +103,7 @@ const Login = () => {
                 <Input
                   id="password"
                   type="password"
-                  className="pl-9"
+                  className="pl-9 bg-background/50 focus:bg-background transition-colors"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -99,8 +112,12 @@ const Login = () => {
             </div>
           </CardContent>
 
-          <CardFooter className="flex flex-col gap-4">
-            <Button type="submit" className="w-full" disabled={loading}>
+          <CardFooter className="flex flex-col gap-4 animate-fade-in-up stagger-4">
+            <Button
+              type="submit"
+              className="w-full hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+              disabled={loading}
+            >
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing
@@ -113,7 +130,7 @@ const Login = () => {
 
             <Button
               variant="link"
-              className="text-muted-foreground btn-link"
+              className="text-muted-foreground hover:text-primary transition-colors"
               onClick={() => navigate("/")}
               type="button"
             >
