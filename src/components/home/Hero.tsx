@@ -33,24 +33,26 @@ const Hero = () => {
         </p>
 
         {/* CTA Buttons — staggered with visual distinction */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 animate-fade-in-up stagger-4">
-          <Link to="/it">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full justify-center px-4 sm:px-0">
+          {/* ใส่ w-full sm:w-auto ที่ Link เพื่อให้บนมือถือปุ่มขยายได้เต็มที่ */}
+          <Link to="/software" className="w-full sm:w-auto">
             <Button
               size="lg"
-              className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 min-w-[220px]"
+              className="w-full sm:w-[250px] h-14 text-base font-semibold tracking-wide rounded-2xl shadow-[0_8px_30px_rgb(222,49,99,0.3)] hover:shadow-[0_8px_40px_rgb(222,49,99,0.5)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center"
             >
               {t(home.hero.exploreSoftware)}
-              <ArrowRight className="w-6 h-6 ml-3" />
+              <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </Link>
-          <Link to="/production">
+
+          <Link to="/production" className="w-full sm:w-auto">
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-12 py-8 text-xl font-semibold rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 min-w-[220px]"
+              className="w-full sm:w-[250px] h-14 text-base font-semibold tracking-wide rounded-2xl border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center"
             >
               {t(home.hero.exploreProduction)}
-              <ArrowRight className="w-6 h-6 ml-3" />
+              <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </Link>
         </div>

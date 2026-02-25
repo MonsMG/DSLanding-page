@@ -231,51 +231,68 @@ const Production = () => {
               {/* Grid Layout — Admin: image overlay / User: bento cards with thumbnails */}
               {user ? (
                 /* 🔐 Admin View — image overlay cards + Edit/Delete */
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {works.map((item, idx) => (
-                    <a
-                      key={item.id}
-                      href={item.media_url || "#"}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={`group relative block aspect-video bg-black rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 animate-fade-in-up stagger-${Math.min(idx + 1, 6)}`}
-                    >
-                      <img
-                        src={
-                          item.thumbnail_url ||
-                          "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=800&q=80"
-                        }
-                        alt={getLang(item.title_en, item.title_th)}
-                        className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90" />
-                      <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-                        <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all duration-300 mb-4">
-                          {item.media_type === "image" ? (
-                            <ImageIcon className="w-8 h-8 text-white" />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto md:auto-rows-[220px]">
+                  {works.map((item, idx) => {
+                    // Bento staggered pattern แบบเดียวกับ User
+                    const bentoPositions = [
+                      "md:col-start-1 md:row-start-1",
+                      "md:col-start-2 md:row-start-1 md:row-span-2",
+                      "md:col-start-3 md:row-start-1",
+                      "md:col-start-3 md:row-start-2",
+                      "md:col-start-1 md:row-start-3",
+                      "md:col-start-2 md:row-start-3",
+                    ];
+                    const posClass =
+                      bentoPositions[idx % bentoPositions.length] || "";
+
+                    return (
+                      <a
+                        key={item.id}
+                        href={item.media_url || "#"}
+                        target="_blank"
+                        rel="noreferrer"
+                        // เพิ่มคำว่า relative เข้าไป เพื่อให้ปุ่ม Admin เกาะอยู่มุมขวาบนของการ์ด
+                        className={`group relative flex flex-col bg-card border border-border rounded-[2rem] overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer animate-fade-in-up stagger-${Math.min(idx + 1, 6)} ${posClass}`}
+                      >
+                        {/* Thumbnail Area */}
+                        <div className="relative flex-1 flex flex-col items-center justify-center p-6 bg-gradient-to-br from-primary/5 to-transparent min-h-[140px]">
+                          {item.thumbnail_url ? (
+                            <img
+                              src={item.thumbnail_url}
+                              alt={getLang(item.title_en, item.title_th)}
+                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
                           ) : (
-                            <Play className="w-8 h-8 text-white ml-1" />
+                            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
+                              <Film
+                                className="w-8 h-8 opacity-80"
+                                strokeWidth={1.5}
+                              />
+                            </div>
+                          )}
+
+                          {/* เงาดำบางๆ โผล่มาตอน Hover เพื่อให้ปุ่ม Admin ชัดขึ้น (เฉพาะกรณีมีรูป) */}
+                          {item.thumbnail_url && (
+                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                           )}
                         </div>
-                        <span className="text-xs font-bold text-primary uppercase tracking-wider bg-black/50 px-3 py-1 rounded-full mb-2 backdrop-blur-md">
-                          {item.category || "Production"}
-                        </span>
-                        <h3 className="text-xl font-bold text-white text-center px-4 drop-shadow-md">
-                          {getLang(item.title_en, item.title_th)}
-                        </h3>
-                        <p className="text-white/80 text-sm mt-1 line-clamp-1 px-6 text-center">
-                          {getLang(
-                            item.short_desc_en || "",
-                            item.short_desc_th || "",
-                          )}
-                        </p>
 
-                        {/* 🔐 Admin Overlay Buttons */}
-                        <div className="absolute top-2 right-2 z-50 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        {/* Info Area */}
+                        <div className="p-6 text-center bg-card relative z-10 flex-shrink-0">
+                          <span className="text-[10px] font-bold text-primary uppercase tracking-widest mb-2 block">
+                            {item.category || "Production"}
+                          </span>
+                          <h3 className="text-base font-bold text-[hsl(var(--ds-chocolate))] line-clamp-2">
+                            {getLang(item.title_en, item.title_th)}
+                          </h3>
+                        </div>
+
+                        {/* 🔐 Admin Overlay Buttons (ย้ายมาไว้ตรงนี้) */}
+                        <div className="absolute top-4 right-4 z-50 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <Button
                             size="icon"
                             variant="secondary"
-                            className="h-8 w-8 bg-white/90 hover:bg-white"
+                            className="h-8 w-8 bg-white/90 hover:bg-white shadow-sm"
                             onClick={(e) => {
                               e.preventDefault();
                               navigate(`/admin/production/edit/${item.id}`);
@@ -284,13 +301,12 @@ const Production = () => {
                             <Pencil className="h-4 w-4 text-primary" />
                           </Button>
 
-                          {/* ✅ AlertDialog แทน confirm() */}
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
                               <Button
                                 size="icon"
                                 variant="destructive"
-                                className="h-8 w-8"
+                                className="h-8 w-8 shadow-sm"
                                 disabled={deletingWorkId === item.id}
                                 onClick={(e) => e.preventDefault()}
                               >
@@ -314,7 +330,10 @@ const Production = () => {
                               <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                                 <AlertDialogAction
-                                  onClick={() => handleDeleteWork(item.id)}
+                                  onClick={(e) => {
+                                    e.preventDefault(); // ป้องกันไม่ให้การกด Delete ทะลุไปเปิดลิงก์
+                                    handleDeleteWork(item.id);
+                                  }}
                                   className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                                 >
                                   Delete
@@ -323,9 +342,9 @@ const Production = () => {
                             </AlertDialogContent>
                           </AlertDialog>
                         </div>
-                      </div>
-                    </a>
-                  ))}
+                      </a>
+                    );
+                  })}
                 </div>
               ) : (
                 /* 👤 User View — Bento staggered cards with thumbnail images */
@@ -446,7 +465,7 @@ const Production = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-6 text-base font-semibold rounded-xl"
+                  className="h-14 px-8 text-base bg-white/50 backdrop-blur-md border border-[hsl(var(--ds-red-orange))]/30 text-[hsl(var(--ds-chocolate))] hover:bg-[hsl(var(--ds-cream))] hover:text-primary transition-all duration-300 rounded-[20px] shadow-sm font-medium tracking-wide"
                 >
                   {t(production.moreDetails)}
                 </Button>
@@ -607,7 +626,7 @@ const Production = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-6 text-base font-semibold rounded-xl"
+                  className="h-14 px-8 text-base bg-white/50 backdrop-blur-md border border-[hsl(var(--ds-red-orange))]/30 text-[hsl(var(--ds-chocolate))] hover:bg-[hsl(var(--ds-cream))] hover:text-primary transition-all duration-300 rounded-[20px] shadow-sm font-medium tracking-wide"
                 >
                   {t(production.viewAllGear)}
                 </Button>

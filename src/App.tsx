@@ -9,7 +9,7 @@
  *           BrowserRouter → ระบบ Routing ทั้งหมด
  *
  * Route แบ่งเป็น 3 กลุ่ม:
- *   1. Public Routes — หน้าที่ใครก็เข้าได้ (/, /it, /production, /about, /contact)
+ *   1. Public Routes — หน้าที่ใครก็เข้าได้ (/, /software, /production, /about, /contact)
  *   2. Auth Route — หน้า Login (/login) — เปิดสาธารณะ
  *   3. Protected Admin Routes — หน้า Admin ทั้งหมด (/admin/*) — ต้องล็อกอินก่อน
  */
@@ -29,7 +29,6 @@ import ITArchive from "./pages/ITArchive";
 import Production from "./pages/Production";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 
@@ -62,17 +61,12 @@ const App = () => (
             <Routes>
               {/* ===== Public Routes — ไม่ต้องล็อกอิน ===== */}
               <Route path="/" element={<Index />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/projects" element={<Dashboard />} />
-              <Route path="/tasks" element={<Dashboard />} />
-              <Route path="/team" element={<Dashboard />} />
-              <Route path="/settings" element={<Dashboard />} />
-              <Route path="/it" element={<IT />} />
+              <Route path="/software" element={<IT />} />
               <Route
-                path="/it/project/:projectId"
+                path="/software/project/:projectId"
                 element={<ITProjectDetail />}
               />
-              <Route path="/it/archive" element={<ITArchive />} />
+              <Route path="/software/archive" element={<ITArchive />} />
               <Route path="/production" element={<Production />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />

@@ -120,83 +120,118 @@ export default function AddGear() {
   };
 
   return (
-    <div className="container max-w-2xl mx-auto py-10 px-4">
-      <Button
-        variant="ghost"
-        className="mb-6"
-        onClick={() => navigate("/production")}
-      >
-        <ArrowLeft className="mr-2 h-4 w-4" /> Back
-      </Button>
+    <div className="min-h-screen bg-background relative overflow-hidden py-10 px-4">
+      {/* Decorative Background for Admin */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-primary/10 to-transparent rounded-full blur-3xl opacity-50" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[hsl(var(--ds-cream))] to-transparent rounded-full blur-3xl opacity-50" />
+      </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Add New Gear</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* — อัปโหลดรูปอุปกรณ์ — */}
-            <ImageUpload
-              value={formData.image_url}
-              onChange={(url) => setFormData({ ...formData, image_url: url })}
-              label="Gear Photo"
-            />
+      <div className="container relative z-10 max-w-4xl mx-auto animate-fade-in-up">
+        <Button
+          variant="ghost"
+          className="mb-6 hover:bg-primary/5 hover:text-primary rounded-xl transition-all"
+          onClick={() => navigate("/production")}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Production Lookbook
+        </Button>
 
-            {/* — ชื่ออุปกรณ์ (EN/TH) — */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Name (EN)</Label>
-                <Input name="name_en" required onChange={handleChange} />
-              </div>
-              <div className="space-y-2">
-                <Label>Name (TH)</Label>
-                <Input name="name_th" required onChange={handleChange} />
-              </div>
-            </div>
-
-            {/* — หมวดหมู่ & แบรนด์ — */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Category</Label>
-                <Input
-                  name="category"
-                  placeholder="Camera, Lens, Light"
-                  required
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Brand</Label>
-                <Input
-                  name="brand"
-                  placeholder="Sony, Canon"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            {/* — รุ่น — */}
-            <div className="space-y-2">
-              <Label>Model</Label>
-              <Input
-                name="model"
-                placeholder="FX6, A7S III"
-                onChange={handleChange}
+        <Card className="bg-card/80 backdrop-blur-xl border-primary/10 shadow-2xl rounded-[2rem] overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary/5 to-transparent border-b border-primary/5 pb-8 pt-8 px-8 sm:px-10">
+            <CardTitle className="text-3xl font-bold text-[hsl(var(--ds-chocolate))]">
+              Add New Gear
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-8 sm:p-10">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* — อัปโหลดรูปอุปกรณ์ — */}
+              <ImageUpload
+                value={formData.image_url}
+                onChange={(url) => setFormData({ ...formData, image_url: url })}
+                label="Gear Photo"
               />
-            </div>
 
-            {/* — ปุ่มบันทึก — */}
-            <Button type="submit" className="w-full" disabled={isSaving}>
-              {isSaving ? (
-                <Loader2 className="animate-spin mr-2" />
-              ) : (
-                <Save className="mr-2" />
-              )}{" "}
-              Save Gear
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Name (EN)
+                  </Label>
+                  <Input
+                    name="name_en"
+                    required
+                    onChange={handleChange}
+                    className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Name (TH)
+                  </Label>
+                  <Input
+                    name="name_th"
+                    required
+                    onChange={handleChange}
+                    className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Category
+                  </Label>
+                  <Input
+                    name="category"
+                    placeholder="Camera, Lens, Light"
+                    required
+                    onChange={handleChange}
+                    className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Brand
+                  </Label>
+                  <Input
+                    name="brand"
+                    placeholder="Sony, Canon"
+                    onChange={handleChange}
+                    className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                  Model
+                </Label>
+                <Input
+                  name="model"
+                  placeholder="FX6, A7S III"
+                  onChange={handleChange}
+                  className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                />
+              </div>
+
+              <div className="pt-4">
+                <Button
+                  type="submit"
+                  className="w-full h-14 shadow-[0_8px_30px_rgb(222,49,99,0.3)] hover:shadow-[0_8px_40px_rgb(222,49,99,0.5)] transition-all duration-300 rounded-[20px] text-lg font-medium tracking-wide"
+                  disabled={isSaving}
+                >
+                  {isSaving ? (
+                    <Loader2 className="animate-spin mr-2" />
+                  ) : (
+                    <Save className="mr-2 h-5 w-5" />
+                  )}{" "}
+                  Save Gear
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

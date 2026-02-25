@@ -18,7 +18,7 @@ const Footer = () => {
 
   const navLinks = [
     { path: "/", label: t(contentData.nav.home) },
-    { path: "/it", label: t(contentData.nav.software) },
+    { path: "/software", label: t(contentData.nav.software) },
     { path: "/production", label: t(contentData.nav.production) },
     { path: "/about", label: t(contentData.nav.about) },
     { path: "/contact", label: t(contentData.nav.contact) },

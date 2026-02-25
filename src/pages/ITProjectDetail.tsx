@@ -44,15 +44,16 @@ const ITProjectDetail = () => {
       <main className="relative z-10 pt-32 pb-20 px-6">
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
-          <div>
-            <Link
-              to="/it"
-              className="inline-flex items-center gap-2 text-[hsl(var(--ds-chocolate))]/70 hover:text-primary mb-8"
-            >
-              <ArrowLeft className="w-5 h-5" />
+          <Button
+            variant="ghost"
+            className="mb-8 p-0 hover:bg-transparent"
+            asChild
+          >
+            <Link to="/software">
+              <ArrowLeft className="w-5 h-5 mr-2" />
               <span className="font-medium">{t(labels.backToProjects)}</span>
             </Link>
-          </div>
+          </Button>
 
           {/* Project Header */}
           <div className="mb-6">
@@ -71,7 +72,7 @@ const ITProjectDetail = () => {
             >
               <Button
                 size="lg"
-                className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-10 py-7 text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl"
+                className="h-14 px-10 text-lg shadow-[0_8px_30px_rgb(222,49,99,0.3)] hover:shadow-[0_8px_40px_rgb(222,49,99,0.5)] transition-all duration-300 rounded-[20px] font-medium tracking-wide w-full sm:w-auto"
               >
                 <Globe className="w-5 h-5 mr-3" />
                 {t(labels.visitWebsite)}

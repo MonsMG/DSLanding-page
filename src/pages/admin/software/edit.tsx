@@ -4,8 +4,8 @@
  * การทำงาน:
  *   1. ดึง ID จาก URL params → fetch ข้อมูลจาก Supabase
  *   2. เติมข้อมูลเดิมลงใน form fields
- *   3. User แก้ไข → กดบันทึก → validate → trim → update Supabase
- *   4. สำเร็จ → redirect กลับไปหน้า /it
+ *   3. เปลี่ยนรูปใหม่ → อัปโหลด -> ลบรูปเก่า -> บันทึก URL ใหม่
+ *   4. สำเร็จ → redirect กลับไปหน้า /software
  *
  * ความปลอดภัย:
  *   - ตัด id, created_at ออกก่อน update (ป้องกัน overwrite metadata)
@@ -63,10 +63,9 @@ export default function EditSoftware() {
       if (error) {
         toast({
           variant: "destructive",
-          title: "Error",
-          description: "Failed to load project data.",
+          title: "Error loading project details",
         });
-        navigate("/it");
+        navigate("/software");
       } else {
         setFormData(data); // เติมข้อมูลเดิมลงฟอร์ม
         setIsLoading(false);
@@ -77,7 +76,9 @@ export default function EditSoftware() {
 
   // จัดการ input แบบ generic
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -113,7 +114,15 @@ export default function EditSoftware() {
     try {
       // ตัด id และ created_at ออก (ไม่ควรส่งไป update)
       // แล้ว trim ข้อมูลทุก field
-      const { id: _, created_at: __, ...rawUpdates } = formData as any;
+      const {
+        id: _,
+        created_at: __,
+        ...rawUpdates
+      } = formData as unknown as {
+        id: string;
+        created_at: string;
+        [key: string]: unknown;
+      };
       const updates = Object.fromEntries(
         Object.entries(rawUpdates).map(([key, val]) => [
           key,
@@ -148,8 +157,8 @@ export default function EditSoftware() {
       }
 
       toast({ title: "Success", description: "Project updated successfully!" });
-      navigate("/it");
-    } catch {
+      navigate("/software");
+    } catch (err: unknown) {
       toast({
         variant: "destructive",
         title: "Error",
@@ -170,111 +179,154 @@ export default function EditSoftware() {
   }
 
   return (
-    <div className="container max-w-3xl mx-auto py-10 px-4">
-      <Button variant="ghost" className="mb-6" onClick={() => navigate("/it")}>
-        <ArrowLeft className="mr-2 h-4 w-4" /> Cancel
-      </Button>
+    <div className="min-h-screen bg-background relative overflow-hidden py-10 px-4">
+      {/* Decorative Background for Admin */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-primary/10 to-transparent rounded-full blur-3xl opacity-50" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[hsl(var(--ds-cream))] to-transparent rounded-full blur-3xl opacity-50" />
+      </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl text-primary">
-            Edit Software Project
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* — ชื่อโปรเจกต์ — */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Software Name (EN)</Label>
-                <Input
-                  name="title_en"
-                  value={formData.title_en}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Software Name (TH)</Label>
-                <Input
-                  name="title_th"
-                  value={formData.title_th}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </div>
+      <div className="container relative z-10 max-w-4xl mx-auto animate-fade-in-up">
+        <Button
+          variant="ghost"
+          className="mb-6 hover:bg-primary/5 hover:text-primary rounded-xl transition-all"
+          onClick={() => navigate("/software")}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" /> Cancel
+        </Button>
 
-            {/* — คำอธิบายสั้น — */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Short Desc (EN)</Label>
+        <Card className="bg-card/80 backdrop-blur-xl border-primary/10 shadow-2xl rounded-[2rem] overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary/5 to-transparent border-b border-primary/5 pb-8 pt-8 px-8 sm:px-10">
+            <CardTitle className="text-3xl font-bold text-[hsl(var(--ds-chocolate))]">
+              Edit Software Project
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-8 sm:p-10">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* — ชื่อโปรเจกต์ — */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Software Name (EN)
+                  </Label>
+                  <Input
+                    name="title_en"
+                    value={formData.title_en}
+                    onChange={handleChange}
+                    required
+                    className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Software Name (TH)
+                  </Label>
+                  <Input
+                    name="title_th"
+                    value={formData.title_th}
+                    onChange={handleChange}
+                    required
+                    className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                  />
+                </div>
+              </div>
+
+              {/* — คำอธิบายสั้น — */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Short Desc (EN)
+                  </Label>
+                  <Textarea
+                    name="short_desc_en"
+                    value={formData.short_desc_en || ""}
+                    onChange={handleChange}
+                    required
+                    className="rounded-xl bg-white/50 focus:bg-white transition-colors resize-none"
+                    rows={3}
+                  />
+                </div>
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Short Desc (TH)
+                  </Label>
+                  <Textarea
+                    name="short_desc_th"
+                    value={formData.short_desc_th || ""}
+                    onChange={handleChange}
+                    required
+                    className="rounded-xl bg-white/50 focus:bg-white transition-colors resize-none"
+                    rows={3}
+                  />
+                </div>
+              </div>
+
+              {/* — หมวดหมู่ & URL — */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Category
+                  </Label>
+                  <Input
+                    name="category"
+                    value={formData.category || ""}
+                    onChange={handleChange}
+                    className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Project URL
+                  </Label>
+                  <Input
+                    name="url"
+                    value={formData.url || ""}
+                    onChange={handleChange}
+                    className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                  />
+                </div>
+              </div>
+
+              {/* — อัปโหลดภาพปก — */}
+              <ImageUpload
+                value={formData.image_url || ""}
+                onChange={(url) => setFormData({ ...formData, image_url: url })}
+                label="Cover Image"
+              />
+
+              {/* — คำอธิบายเต็ม — */}
+              <div className="space-y-3 border-t border-primary/10 pt-8 mt-4">
+                <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                  Full Description (EN)
+                </Label>
                 <Textarea
-                  name="short_desc_en"
-                  value={formData.short_desc_en || ""}
+                  name="full_desc_en"
+                  value={formData.full_desc_en || ""}
                   onChange={handleChange}
-                  required
+                  rows={5}
+                  className="rounded-xl bg-white/50 focus:bg-white transition-colors resize-none"
                 />
               </div>
-              <div className="space-y-2">
-                <Label>Short Desc (TH)</Label>
-                <Textarea
-                  name="short_desc_th"
-                  value={formData.short_desc_th || ""}
-                  onChange={handleChange}
-                  required
-                />
+
+              {/* — ปุ่มบันทึก — */}
+              <div className="pt-4">
+                <Button
+                  type="submit"
+                  className="w-full h-14 shadow-[0_8px_30px_rgb(222,49,99,0.3)] hover:shadow-[0_8px_40px_rgb(222,49,99,0.5)] transition-all duration-300 rounded-[20px] text-lg font-medium tracking-wide"
+                  disabled={isSaving}
+                >
+                  {isSaving ? (
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  ) : (
+                    <Save className="mr-2 h-5 w-5" />
+                  )}
+                  Update Changes
+                </Button>
               </div>
-            </div>
-
-            {/* — หมวดหมู่ & URL — */}
-            <div className="space-y-2">
-              <Label>Category</Label>
-              <Input
-                name="category"
-                value={formData.category || ""}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Project URL</Label>
-              <Input
-                name="url"
-                value={formData.url || ""}
-                onChange={handleChange}
-              />
-            </div>
-
-            {/* — อัปโหลดภาพปก — */}
-            <ImageUpload
-              value={formData.image_url || ""}
-              onChange={(url) => setFormData({ ...formData, image_url: url })}
-              label="Cover Image"
-            />
-
-            {/* — คำอธิบายเต็ม — */}
-            <div className="space-y-2 border-t pt-4">
-              <Label>Full Description (EN)</Label>
-              <Textarea
-                name="full_desc_en"
-                value={formData.full_desc_en || ""}
-                onChange={handleChange}
-                rows={5}
-              />
-            </div>
-
-            {/* — ปุ่มบันทึก — */}
-            <Button type="submit" className="w-full" disabled={isSaving}>
-              {isSaving ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <Save className="mr-2 h-4 w-4" />
-              )}
-              Update Changes
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

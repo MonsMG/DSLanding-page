@@ -78,7 +78,7 @@ const ProjectCard = ({
 
         {/* Two side-by-side action buttons */}
         <div className={`flex gap-2 mt-auto`}>
-          <Link to={`/it/project/${id}`} className="flex-1">
+          <Link to={`/software/project/${id}`} className="flex-1">
             <Button
               size="sm"
               className={`w-full bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground font-semibold ${

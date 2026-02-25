@@ -169,138 +169,176 @@ export default function EditProduction() {
   }
 
   return (
-    <div className="container max-w-2xl mx-auto py-10 px-4">
-      <Button
-        variant="ghost"
-        className="mb-6"
-        onClick={() => navigate("/production")}
-      >
-        <ArrowLeft className="mr-2 h-4 w-4" /> Cancel
-      </Button>
+    <div className="min-h-screen bg-background relative overflow-hidden py-10 px-4">
+      {/* Decorative Background for Admin */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-primary/10 to-transparent rounded-full blur-3xl opacity-50" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[hsl(var(--ds-cream))] to-transparent rounded-full blur-3xl opacity-50" />
+      </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Edit Production Work</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* — ชื่อผลงาน — */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Title (EN)</Label>
+      <div className="container relative z-10 max-w-4xl mx-auto animate-fade-in-up">
+        <Button
+          variant="ghost"
+          className="mb-6 hover:bg-primary/5 hover:text-primary rounded-xl transition-all"
+          onClick={() => navigate("/production")}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" /> Cancel
+        </Button>
+
+        <Card className="bg-card/80 backdrop-blur-xl border-primary/10 shadow-2xl rounded-[2rem] overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-primary/5 to-transparent border-b border-primary/5 pb-8 pt-8 px-8 sm:px-10">
+            <CardTitle className="text-3xl font-bold text-[hsl(var(--ds-chocolate))]">
+              Edit Production Work
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-8 sm:p-10">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Title (EN)
+                  </Label>
+                  <Input
+                    name="title_en"
+                    value={formData.title_en}
+                    onChange={handleChange}
+                    required
+                    className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Title (TH)
+                  </Label>
+                  <Input
+                    name="title_th"
+                    value={formData.title_th}
+                    onChange={handleChange}
+                    required
+                    className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                  Category
+                </Label>
                 <Input
-                  name="title_en"
-                  value={formData.title_en}
+                  name="category"
+                  value={formData.category || ""}
                   onChange={handleChange}
-                  required
+                  className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
                 />
               </div>
-              <div className="space-y-2">
-                <Label>Title (TH)</Label>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Media Type
+                  </Label>
+                  <Select
+                    value={formData.media_type}
+                    onValueChange={(val) =>
+                      handleSelectChange("media_type", val)
+                    }
+                  >
+                    <SelectTrigger className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="video">Video (YouTube)</SelectItem>
+                      <SelectItem value="image">Image (Gallery)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Featured?
+                  </Label>
+                  <Select
+                    value={formData.featured ? "true" : "false"}
+                    onValueChange={(val) =>
+                      setFormData({ ...formData, featured: val === "true" })
+                    }
+                  >
+                    <SelectTrigger className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="true">Yes</SelectItem>
+                      <SelectItem value="false">No</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                  Media URL
+                </Label>
                 <Input
-                  name="title_th"
-                  value={formData.title_th}
+                  name="media_url"
+                  value={formData.media_url || ""}
                   onChange={handleChange}
-                  required
+                  className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
                 />
               </div>
-            </div>
 
-            {/* — หมวดหมู่ — */}
-            <div className="space-y-2">
-              <Label>Category</Label>
-              <Input
-                name="category"
-                value={formData.category || ""}
-                onChange={handleChange}
+              {/* — Thumbnail (ImageUpload) — */}
+              <ImageUpload
+                value={formData.thumbnail_url || ""}
+                onChange={(url) =>
+                  setFormData({ ...formData, thumbnail_url: url })
+                }
+                label="Thumbnail Image (Cover)"
               />
-            </div>
 
-            {/* — ประเภทสื่อ & Featured — */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Media Type</Label>
-                <Select
-                  value={formData.media_type}
-                  onValueChange={(val) => handleSelectChange("media_type", val)}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="video">Video (YouTube)</SelectItem>
-                    <SelectItem value="image">Image (Gallery)</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-primary/10 pt-6">
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Short Desc (EN)
+                  </Label>
+                  <Textarea
+                    name="short_desc_en"
+                    value={formData.short_desc_en || ""}
+                    onChange={handleChange}
+                    className="rounded-xl bg-white/50 focus:bg-white transition-colors resize-none"
+                    rows={3}
+                  />
+                </div>
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Short Desc (TH)
+                  </Label>
+                  <Textarea
+                    name="short_desc_th"
+                    value={formData.short_desc_th || ""}
+                    onChange={handleChange}
+                    className="rounded-xl bg-white/50 focus:bg-white transition-colors resize-none"
+                    rows={3}
+                  />
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label>Featured?</Label>
-                <Select
-                  value={formData.featured ? "true" : "false"}
-                  onValueChange={(val) =>
-                    setFormData({ ...formData, featured: val === "true" })
-                  }
+
+              <div className="pt-4">
+                <Button
+                  type="submit"
+                  className="w-full h-14 shadow-[0_8px_30px_rgb(222,49,99,0.3)] hover:shadow-[0_8px_40px_rgb(222,49,99,0.5)] transition-all duration-300 rounded-[20px] text-lg font-medium tracking-wide"
+                  disabled={isSaving}
                 >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="true">Yes</SelectItem>
-                    <SelectItem value="false">No</SelectItem>
-                  </SelectContent>
-                </Select>
+                  {isSaving ? (
+                    <Loader2 className="animate-spin mr-2" />
+                  ) : (
+                    <Save className="mr-2 h-5 w-5" />
+                  )}{" "}
+                  Update Work
+                </Button>
               </div>
-            </div>
-
-            {/* — Media URL — */}
-            <div className="space-y-2">
-              <Label>Media URL</Label>
-              <Input
-                name="media_url"
-                value={formData.media_url || ""}
-                onChange={handleChange}
-              />
-            </div>
-
-            {/* — Thumbnail (ImageUpload) — */}
-            <ImageUpload
-              value={formData.thumbnail_url || ""}
-              onChange={(url) =>
-                setFormData({ ...formData, thumbnail_url: url })
-              }
-              label="Thumbnail Image (Cover)"
-            />
-
-            {/* — คำอธิบายสั้น — */}
-            <div className="space-y-2">
-              <Label>Short Desc (EN)</Label>
-              <Textarea
-                name="short_desc_en"
-                value={formData.short_desc_en || ""}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Short Desc (TH)</Label>
-              <Textarea
-                name="short_desc_th"
-                value={formData.short_desc_th || ""}
-                onChange={handleChange}
-              />
-            </div>
-
-            {/* — ปุ่มบันทึก — */}
-            <Button type="submit" className="w-full" disabled={isSaving}>
-              {isSaving ? (
-                <Loader2 className="animate-spin mr-2" />
-              ) : (
-                <Save className="mr-2" />
-              )}{" "}
-              Update Work
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

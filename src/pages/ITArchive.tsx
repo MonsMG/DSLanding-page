@@ -120,11 +120,12 @@ const ITArchive = () => {
 
             {/* 🔐 Admin Controls */}
             {user && (
-              <div className="flex gap-2 justify-center mt-4">
+              <div className="flex gap-2 justify-end mt-4 ">
                 <div className="flex gap-2 bg-white/80 p-2 rounded-lg border border-primary/20 shadow-lg">
                   <Button asChild size="sm">
                     <Link to="/admin/software/add">
-                      <Plus className="mr-2 h-4 w-4" /> Add Project
+                      <Plus className="mr-2 h-4 w-4" />
+                      {language === "en" ? "Add Software" : "เพิ่มซอฟต์แวร์"}
                     </Link>
                   </Button>
                 </div>
@@ -154,8 +155,7 @@ const ITArchive = () => {
               <p className="text-muted-foreground text-sm">{error}</p>
               <Button
                 onClick={() => window.location.reload()}
-                variant="outline"
-                className="mt-4"
+                className="mt-4 h-11 px-6 shadow-[0_4px_14px_rgb(222,49,99,0.3)] hover:shadow-[0_6px_20px_rgb(222,49,99,0.4)] transition-all duration-300 rounded-xl font-medium"
               >
                 {language === "en" ? "Try Again" : "ลองใหม่"}
               </Button>
@@ -255,12 +255,12 @@ const ITArchive = () => {
                         {/* Action Buttons */}
                         <div className="flex gap-2 mt-auto">
                           <Link
-                            to={`/it/project/${project.id}`}
+                            to={`/software/project/${project.id}`}
                             className="flex-1"
                           >
                             <Button
                               size="sm"
-                              className="w-full bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground font-semibold rounded-lg text-xs h-8"
+                              className="w-full h-9 shadow-[0_4px_14px_rgb(222,49,99,0.3)] hover:shadow-[0_6px_20px_rgb(222,49,99,0.4)] transition-all duration-300 rounded-lg font-medium text-xs bg-primary text-primary-foreground"
                             >
                               {language === "en"
                                 ? "View Details"
@@ -277,7 +277,7 @@ const ITArchive = () => {
                                   "noopener,noreferrer",
                                 )
                               }
-                              className="flex-1 bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground font-semibold rounded-lg text-xs h-8"
+                              className="flex-1 h-9 shadow-[0_4px_14px_rgb(222,49,99,0.3)] hover:shadow-[0_6px_20px_rgb(222,49,99,0.4)] transition-all duration-300 rounded-lg font-medium text-xs bg-primary text-primary-foreground"
                             >
                               {language === "en" ? "Visit" : "เยี่ยมชม"}
                             </Button>

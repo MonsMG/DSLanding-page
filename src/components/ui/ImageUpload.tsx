@@ -21,12 +21,12 @@
  *   />
  */
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Image as ImageIcon, X } from "lucide-react";
+import { Loader2, Image as ImageIcon, X, Upload, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 // ✅ ค่า config สำหรับ validation
@@ -46,6 +46,7 @@ export const ImageUpload = ({
 }: ImageUploadProps) => {
   const [uploading, setUploading] = useState(false);
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   /**
    * จัดการการอัปโหลดไฟล์:
@@ -119,29 +120,61 @@ export const ImageUpload = ({
     <div className="space-y-2">
       <Label>{label}</Label>
 
+      {/* Input ซ่อนอยู่ — วางไว้นอกเงื่อนไขเพื่อให้ปุ่ม Change Image เรียกใช้ได้เสมอ */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        accept="image/jpeg,image/png,image/webp,image/gif"
+        className="hidden"
+        onChange={handleUpload}
+        disabled={uploading}
+      />
+
       {value ? (
         // — กรณีมีรูปแล้ว: แสดง preview + ปุ่มลบ —
-        <div className="relative aspect-video w-full max-w-sm rounded-lg overflow-hidden border border-border bg-muted group">
-          <img
-            src={value}
-            alt="Upload"
-            className="object-cover w-full h-full"
-          />
-          {/* ปุ่มลบรูป — แสดงเมื่อ hover */}
-          <Button
-            type="button"
-            variant="destructive"
-            size="icon"
-            className="absolute top-2 right-2 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
-            onClick={() => onChange("")} // ส่งค่าว่างกลับ = ลบรูป
-          >
-            <X className="h-3 w-3" />
-          </Button>
+        <div className="flex flex-col gap-3 w-full">
+          {/* 🖼️ ส่วนแสดงรูปภาพ (เอา Group และ Absolute ออก) */}
+          <div className="relative aspect-video w-full rounded-lg overflow-hidden border border-border bg-muted shadow-sm">
+            <img
+              src={value}
+              alt="Upload preview"
+              className="object-cover w-full h-full"
+            />
+          </div>
+
+          {/* 🎛️ ส่วนปุ่มควบคุมด้านล่าง */}
+          <div className="flex items-center justify-end gap-2">
+            {/* ปุ่มอัพโหลดรูปใหม่ */}
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="text-primary border-primary/20 hover:bg-primary/10"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <Upload className="h-4 w-4 mr-2" />
+              Change Image
+            </Button>
+
+            {/* ปุ่มลบรูป */}
+            <Button
+              type="button"
+              variant="destructive"
+              size="sm"
+              onClick={() => onChange("")} // ส่งค่าว่าง = ลบรูป
+            >
+              <Trash2 className="h-4 w-4 mr-2" />
+              Remove
+            </Button>
+          </div>
         </div>
       ) : (
         // — กรณียังไม่มีรูป: แสดงปุ่ม upload —
-        <div className="flex items-center justify-center w-full max-w-sm border-2 border-dashed rounded-lg p-6 bg-muted/5 hover:bg-muted/10 transition-colors">
-          <label className="cursor-pointer flex flex-col items-center gap-2">
+        <div
+          className="flex items-center justify-center w-full max-w-full border-2 border-dashed rounded-lg p-6 bg-muted/5 hover:bg-muted/10 transition-colors cursor-pointer"
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <div className="flex flex-col items-center gap-2">
             {uploading ? (
               <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
             ) : (
@@ -153,15 +186,7 @@ export const ImageUpload = ({
             <span className="text-xs text-muted-foreground/60">
               JPG, PNG, WebP, GIF — max 5MB
             </span>
-            {/* Input ซ่อนอยู่ — ถูก trigger ผ่าน label */}
-            <Input
-              type="file"
-              accept="image/jpeg,image/png,image/webp,image/gif"
-              className="hidden"
-              onChange={handleUpload}
-              disabled={uploading}
-            />
-          </label>
+          </div>
         </div>
       )}
     </div>

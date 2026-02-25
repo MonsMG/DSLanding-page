@@ -131,10 +131,10 @@ interface ProjectCardItemProps {
   idx: number;
   language: string;
   getLang: (en?: string, th?: string) => string;
-  user: any;
+  user: unknown;
   deletingId: number | null;
   handleDelete: (id: number) => void;
-  navigate: any;
+  navigate: unknown;
   isFeatured: boolean;
 }
 
@@ -167,12 +167,6 @@ const ProjectCardItem = ({
           </div>
         )}
         <div className="absolute top-3 right-3 flex flex-col gap-2 items-end">
-          {isFeatured && (
-            <Badge className="bg-[hsl(var(--ds-red-orange))] text-white shadow-md">
-              <BadgeCheck className="w-3 h-3 mr-1" /> Slot{" "}
-              {project.featured_slot}
-            </Badge>
-          )}
           <Badge className="bg-white/90 text-primary hover:bg-white shadow-sm">
             {project.category}
           </Badge>
@@ -197,7 +191,7 @@ const ProjectCardItem = ({
           {project.url && (
             <Button
               asChild
-              className="flex-1 rounded-xl shadow-sm hover:shadow-md transition-all"
+              className="flex-1 h-11 shadow-[0_4px_14px_rgb(222,49,99,0.3)] hover:shadow-[0_6px_20px_rgb(222,49,99,0.4)] transition-all duration-300 rounded-xl font-medium"
               variant="default"
             >
               <a href={project.url} target="_blank" rel="noreferrer">
@@ -211,9 +205,9 @@ const ProjectCardItem = ({
           <Button
             asChild
             variant={project.url ? "outline" : "default"}
-            className={`flex-1 rounded-xl shadow-sm hover:shadow-md transition-all ${!project.url ? "" : "border-primary/20 text-primary hover:bg-primary/5"}`}
+            className={`flex-1 h-11 transition-all duration-300 rounded-xl font-medium ${!project.url ? "shadow-[0_4px_14px_rgb(222,49,99,0.3)] hover:shadow-[0_6px_20px_rgb(222,49,99,0.4)]" : "bg-white/50 backdrop-blur-md border border-[hsl(var(--ds-red-orange))]/30 hover:bg-[hsl(var(--ds-cream))] hover:text-primary shadow-sm"}`}
           >
-            <Link to={`/it/project/${project.id}`}>
+            <Link to={`/software/project/${project.id}`}>
               <Info className="mr-2 h-4 w-4" />
               {language === "en" ? "View Details" : "รายละเอียด"}
             </Link>
@@ -466,7 +460,7 @@ const IT = () => {
                 <Button
                   onClick={scrollToProjects}
                   size="lg"
-                  className="bg-primary hover:bg-[hsl(var(--ds-red-orange))] text-primary-foreground px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                  className="h-14 px-8 text-base shadow-[0_8px_30px_rgb(222,49,99,0.3)] hover:shadow-[0_8px_40px_rgb(222,49,99,0.5)] transition-all duration-300 rounded-[20px] w-full sm:w-auto font-medium tracking-wide"
                 >
                   {language === "en" ? "View Projects" : "ดูผลงาน"}
                   <ArrowRight className="w-5 h-5 ml-2" />
@@ -628,12 +622,12 @@ const IT = () => {
               {/* === FEATURED PROJECTS SECITON === */}
               {selectedCategory === "All" && featuredProjects.length > 0 && (
                 <div className="mb-16">
-                  <h3 className="text-2xl font-bold text-[hsl(var(--ds-red-orange))] flex items-center gap-2 mb-6">
+                  {/* <h3 className="text-2xl font-bold text-[hsl(var(--ds-red-orange))] flex items-center gap-2 mb-6">
                     <BadgeCheck className="w-6 h-6" />
                     {language === "en"
                       ? "Featured Projects"
                       : "โปรเจกต์โดดเด่น"}
-                  </h3>
+                  </h3> */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {featuredProjects.map((project, idx) => (
                       <ProjectCardItem
@@ -664,7 +658,7 @@ const IT = () => {
               )}
 
               {/* === NORMAL PROJECTS GRID === */}
-              {displayedProjects.length > 0 ? (
+              {displayedProjects.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {displayedProjects.map((project, idx) => (
                     <ProjectCardItem
@@ -681,23 +675,17 @@ const IT = () => {
                     />
                   ))}
                 </div>
-              ) : (
-                <div className="text-center py-10 text-muted-foreground bg-muted/20 rounded-xl border border-border">
-                  {language === "en"
-                    ? "No projects found in this category."
-                    : "ไม่พบโปรเจกต์ในหมวดหมู่นี้"}
-                </div>
               )}
             </>
           )}
 
           {/* View Archive */}
           <div className="flex justify-end mt-12">
-            <Link to="/it/archive">
+            <Link to="/software/archive">
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary text-primary hover:bg-primary hover:text-white px-8 py-6 text-base font-semibold rounded-xl"
+                className="h-14 px-8 text-base bg-white/50 backdrop-blur-md border border-[hsl(var(--ds-red-orange))]/30 text-[hsl(var(--ds-chocolate))] hover:bg-[hsl(var(--ds-cream))] hover:text-primary transition-all duration-300 rounded-[20px] shadow-sm font-medium tracking-wide"
               >
                 {language === "en" ? "View More Archive" : "ดูผลงานทั้งหมด"}
                 <ArrowRight className="w-5 h-5 ml-2" />
