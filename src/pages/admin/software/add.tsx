@@ -22,9 +22,16 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Save, Loader2 } from "lucide-react";
+import { ArrowLeft, Save, Loader2, Plus, X } from "lucide-react";
 import { ImageUpload } from "@/components/ui/ImageUpload";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function AddSoftware() {
   const navigate = useNavigate();
@@ -75,6 +82,34 @@ export default function AddSoftware() {
     status: "Active",
   });
 
+  const [targetsEn, setTargetsEn] = useState<string[]>([""]);
+  const [featuresEn, setFeaturesEn] = useState<string[]>([""]);
+
+  const handleDynamicChange = (
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+    index: number,
+    value: string,
+  ) => {
+    setter((prev) => {
+      const newArr = [...prev];
+      newArr[index] = value;
+      return newArr;
+    });
+  };
+
+  const addDynamicField = (
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+  ) => {
+    setter((prev) => [...prev, ""]);
+  };
+
+  const removeDynamicField = (
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+    index: number,
+  ) => {
+    setter((prev) => prev.filter((_, i) => i !== index));
+  };
+
   // จัดการ input แบบ generic (ทุกช่องใช้ name attribute)
   const handleChange = (
     e: React.ChangeEvent<
@@ -120,6 +155,11 @@ export default function AddSoftware() {
           typeof val === "string" ? val.trim() : val,
         ]),
       );
+
+      cleanData.target_en = targetsEn.filter((t) => t.trim() !== "").join("\n");
+      cleanData.features_en = featuresEn
+        .filter((f) => f.trim() !== "")
+        .join("\n");
 
       const { error } = await supabase
         .from("software_projects")
@@ -209,6 +249,50 @@ export default function AddSoftware() {
                   />
                 </div>
               </div>
+              {/* — หมวดหมู่ & สถานะ — */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* 📌 ส่วนของ Category (Searchable Dropdown) */}
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Category
+                  </Label>
+                  <Input
+                    name="category"
+                    list="category-options"
+                    placeholder="Type to search or select..."
+                    onChange={handleChange}
+                    className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                  />
+                  <datalist id="category-options">
+                    {categories.map((cat, idx) => (
+                      <option key={idx} value={cat} />
+                    ))}
+                  </datalist>
+                </div>
+
+                {/* 📌 ส่วนของ Status */}
+                <div className="space-y-3">
+                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                    Status
+                  </Label>
+                  <Select
+                    value={formData.status}
+                    onValueChange={(value) =>
+                      setFormData({ ...formData, status: value })
+                    }
+                  >
+                    <SelectTrigger className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors">
+                      <SelectValue placeholder="Select Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Active">Active</SelectItem>
+                      <SelectItem value="Maintenance">Maintenance</SelectItem>
+                      <SelectItem value="Coming Soon">Coming Soon</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
               <div className="space-y-3">
                 <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
                   Project URL
@@ -219,39 +303,6 @@ export default function AddSoftware() {
                   onChange={handleChange}
                   className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
                 />
-              </div>
-              {/* — ข้อมูลพื้นฐาน — */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-full">
-                {/* 📌 ส่วนของ Category (Searchable Dropdown) */}
-                <div className="space-y-2 max-w-7xl">
-                  <Label>Category</Label>
-                  <Input
-                    name="category"
-                    list="category-options" // ลิงก์กับ id ของ datalist ด้านล่าง
-                    placeholder="Type to search or select..."
-                    onChange={handleChange}
-                    // value={formData.category} // อย่าลืมใส่ value ด้วยถ้ามีการจัดการ state ฟอร์ม
-                  />
-                  <datalist id="category-options">
-                    {categories.map((cat, idx) => (
-                      <option key={idx} value={cat} />
-                    ))}
-                  </datalist>
-                </div>
-
-                {/* 📌 ส่วนของ Status (Dropdown 2 ตัวเลือก) */}
-                <div className="space-y-2">
-                  <Label>Status</Label>
-                  <select
-                    name="status"
-                    onChange={handleChange}
-                    // value={formData.status || "Active"} // ตั้งค่าเริ่มต้น
-                    className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                  >
-                    <option value="Active">Active</option>
-                    <option value="Maintenance">Maintenance</option>
-                  </select>
-                </div>
               </div>
 
               {/* — อัปโหลดภาพปก (ใช้ ImageUpload แทน text input) — */}
@@ -317,29 +368,96 @@ export default function AddSoftware() {
 
               {/* — กลุ่มเป้าหมาย & ฟีเจอร์ — */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-3">
-                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
-                    Target Audience (EN)
-                  </Label>
-                  <Textarea
-                    name="target_en"
-                    placeholder={"- Student\n- Teacher"}
-                    rows={4}
-                    onChange={handleChange}
-                    className="rounded-xl bg-white/50 focus:bg-white transition-colors resize-none"
-                  />
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                      Target Audience (EN)
+                    </Label>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => addDynamicField(setTargetsEn)}
+                      className="text-[hsl(var(--ds-red-orange))] hover:bg-[hsl(var(--ds-red-orange))]/10 h-8 px-2"
+                    >
+                      <Plus className="w-4 h-4 mr-1" /> Add
+                    </Button>
+                  </div>
+                  <div className="space-y-3">
+                    {targetsEn.map((item, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <Input
+                          value={item}
+                          onChange={(e) =>
+                            handleDynamicChange(
+                              setTargetsEn,
+                              index,
+                              e.target.value,
+                            )
+                          }
+                          placeholder="e.g. Student"
+                          className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() =>
+                            removeDynamicField(setTargetsEn, index)
+                          }
+                          className="text-muted-foreground hover:text-destructive flex-shrink-0 h-10 w-10"
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="space-y-3">
-                  <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
-                    Key Features (EN)
-                  </Label>
-                  <Textarea
-                    name="features_en"
-                    placeholder={"- Feature 1\n- Feature 2"}
-                    rows={4}
-                    onChange={handleChange}
-                    className="rounded-xl bg-white/50 focus:bg-white transition-colors resize-none"
-                  />
+
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                      Key Features (EN)
+                    </Label>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => addDynamicField(setFeaturesEn)}
+                      className="text-[hsl(var(--ds-red-orange))] hover:bg-[hsl(var(--ds-red-orange))]/10 h-8 px-2"
+                    >
+                      <Plus className="w-4 h-4 mr-1" /> Add
+                    </Button>
+                  </div>
+                  <div className="space-y-3">
+                    {featuresEn.map((item, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <Input
+                          value={item}
+                          onChange={(e) =>
+                            handleDynamicChange(
+                              setFeaturesEn,
+                              index,
+                              e.target.value,
+                            )
+                          }
+                          placeholder="e.g. Real-time sync"
+                          className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() =>
+                            removeDynamicField(setFeaturesEn, index)
+                          }
+                          className="text-muted-foreground hover:text-destructive flex-shrink-0 h-10 w-10"
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
               <p className="text-xs text-muted-foreground">

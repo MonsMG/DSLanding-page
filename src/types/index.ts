@@ -83,3 +83,24 @@ export interface ProductionGear {
   available?: boolean; // พร้อมใช้งานหรือไม่
   rental_price?: number; // ราคาเช่าต่อวัน (ถ้ามี)
 }
+
+// ==============================
+// 🏢 Company General Info
+// ==============================
+export interface CompanyGeneralInfo {
+  id: number;
+  created_at?: string;
+  name: string;
+  about_en?: string;
+  about_th?: string;
+  address_en?: string;
+  address_th?: string;
+  contact_email?: string;
+  contact_phone?: string;
+  facebook_url?: string;
+  instagram_url?: string;
+  youtube_url?: string;
+  line_url?: string;
+  logo_url?: string;
+  cover_url?: string;
+}

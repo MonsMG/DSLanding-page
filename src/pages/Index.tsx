@@ -7,7 +7,6 @@ const Index = () => {
     <div className="h-screen overflow-hidden bg-background">
       <Navigation />
       <Hero />
-      <FloatingChatButton />
     </div>
   );
 };

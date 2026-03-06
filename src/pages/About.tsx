@@ -1,6 +1,5 @@
 import { Sparkles, Target, Users, Heart } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
-import FloatingChatButton from "@/components/layout/FloatingChatButton";
 import Footer from "@/components/layout/Footer";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { contentData } from "@/data/content";
@@ -31,101 +30,156 @@ const About = () => {
     description: value.description,
   }));
 
+  // 1. สร้าง Mockup ข้อมูล CEO (เอาไว้ด้านบนก่อน return หรือนอก Component ก็ได้)
+  const ceos = [
+    {
+      id: 1,
+      name: "Alexander Wright",
+      role: "Chief Executive Officer",
+      image:
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop", // รูปจำลอง
+      bio: "With over 15 years of experience in digital production and technology, Alexander leads the company's global vision and strategic direction.",
+      link: "#",
+    },
+    {
+      id: 2,
+      name: "Sophia Martinez",
+      role: "Co-Chief Executive Officer",
+      image:
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop", // รูปจำลอง
+      bio: "Sophia drives operational excellence and creative innovation, ensuring that every project exceeds client expectations and industry standards.",
+      link: "#",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       <Navigation />
 
-      {/* Decorative Background */}
-      <div className="absolute inset-0 hero-gradient" />
-      <div className="absolute top-32 right-10 w-80 h-80 bg-primary/10 rounded-full blur-3xl float" />
-      <div className="absolute bottom-48 left-20 w-64 h-64 bg-accent/10 rounded-full blur-3xl float-delayed" />
-
-      <main className="relative z-10 pt-32 pb-20 px-6">
-        <div className="max-w-6xl mx-auto">
+      <main className="relative z-10 pb-20 ">
+        <div className="max-w-100% mx-auto ">
           {/* Header — entrance */}
-          <div className="text-center mb-20 animate-fade-in-up">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6">
+          <div className="text-left animate-fade-in-up bg-orange-900 p-20">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6">
               {t(about.title)}
             </h1>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-white max-w-3xl leading-relaxed">
+              {t(about.description)}
+            </p>
+            <img src="#" alt="#" />
+          </div>
+
+          {/* About Us */}
+          <div className="text-left animate-fade-in-up bg-black pl-20 pr-20 pt-12 pb-12">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6">
+              {t(about.title)}
+            </h1>
+            <p className="text-lg sm:text-xl text-white max-w-3xl leading-relaxed">
               {t(about.description)}
             </p>
           </div>
 
-          {/* Stats — staggered */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-            {stats.map((stat, idx) => (
+          {/* Infomation Detail */}
+          <div className="text-left animate-fade-in-up bg-red-900 pl-20 pr-20 pt-12 pb-12">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6">
+              {t(about.title)}
+            </h1>
+            <p className="text-lg sm:text-xl text-white max-w-3xl leading-relaxed">
+              {t(about.description)}
+            </p>
+          </div>
+
+          {/* Company Vision */}
+          <div className="text-center animate-fade-in-up bg-red-900 pl-20 pr-20 pt-12 pb-12">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6">
+              {t(about.title)}
+            </h1>
+            {/* Card details */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {stats.map((stat, index) => (
+                <div
+                  key={index}
+                  className="text-center bg-white p-40 rounded-xl"
+                >
+                  <h3 className="text-4xl font-bold text-black mb-2">
+                    {stat.value}
+                  </h3>
+                  <p className="text-lg text-black">{t(stat.label)}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ส่วนแสดงผล CEO Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mt-12 px-4">
+            {ceos.map((ceo) => (
               <div
-                key={stat.value}
-                className={`capsule-card p-8 text-center group animate-fade-in-up stagger-${idx + 1}`}
+                key={ceo.id}
+                className="bg-card border border-border rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col group"
               >
-                <span className="text-4xl sm:text-5xl font-bold text-primary block mb-2 group-hover:scale-110 transition-transform duration-300">
-                  {stat.value}
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  {t(stat.label)}
-                </span>
+                {/* 🖼️ ส่วนรูปภาพ */}
+                <div className="relative h-72 md:h-80 overflow-hidden bg-muted">
+                  <img
+                    src={ceo.image}
+                    alt={ceo.name}
+                    // ลูกเล่น: พอเอาเมาส์ชี้การ์ด รูปจะค่อยๆ ซูมเข้า (scale-105)
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                  />
+                </div>
+
+                {/* 📝 ส่วนเนื้อหา */}
+                <div className="p-8 flex flex-col flex-grow">
+                  {/* ชื่อและตำแหน่ง */}
+                  <div className="mb-4">
+                    <h3 className="text-2xl md:text-3xl font-bold text-[hsl(var(--ds-chocolate))] mb-1">
+                      {ceo.name}
+                    </h3>
+                    <span className="text-primary font-bold tracking-widest text-xs uppercase">
+                      {ceo.role}
+                    </span>
+                  </div>
+
+                  {/* คำอธิบาย */}
+                  {/* flex-grow จะช่วยดันปุ่ม Read More ลงไปอยู่ล่างสุดของการ์ดเสมอ */}
+                  <div className="text-foreground/70 leading-relaxed mb-8 flex-grow">
+                    <p>{ceo.bio}</p>
+                  </div>
+
+                  {/* 🖱️ ปุ่ม Read More */}
+                  {/* ใช้แท็ก <a> เพียวๆ ตกแต่งให้เหมือนปุ่มแทนการครอบด้วย <button> */}
+                  <div className="mt-auto pt-4 border-t border-border/50">
+                    <a
+                      href={ceo.link}
+                      className="inline-flex items-center justify-center w-full px-6 py-3 border-2 border-[hsl(var(--ds-chocolate))] text-[hsl(var(--ds-chocolate))] font-bold rounded-xl hover:bg-[hsl(var(--ds-chocolate))] hover:text-white transition-colors duration-300"
+                    >
+                      Read More
+                    </a>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Section Divider */}
-          <div className="section-divider mb-20" />
-
-          {/* Mission — entrance */}
-          <div className="capsule-card p-12 sm:p-16 text-center mb-20 animate-fade-in-up">
-            <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">
-              {t(about.mission.subtitle)}
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
-              {t(about.mission.title)}
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              {t(about.mission.description)}
-            </p>
-          </div>
-
-          {/* Values Header */}
-          <div className="text-center mb-12 animate-fade-in-up">
-            <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">
-              {t(about.values.subtitle)}
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-bold text-foreground">
-              {t(about.values.title)}
-            </h2>
-          </div>
-
-          {/* Values — staggered with enhanced hover */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
-            {values.map((value, idx) => {
-              const IconComponent = value.icon;
-              return (
-                <div
-                  key={value.key}
-                  className={`capsule-card p-8 group hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-fade-in-up stagger-${idx + 1}`}
+          {/* See more from PDF Information */}
+          <div>
+            <h1>.....</h1>
+            <div>
+              <button>
+                <a
+                  href="https://lcinkptronrfkojdtzxw.supabase.co/storage/v1/object/public/images/DSBusinessPlan_1772785302701.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
                 >
-                  <div className="flex items-start gap-5">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/10 to-[hsl(var(--ds-cream))] flex items-center justify-center flex-shrink-0 group-hover:from-primary/20 group-hover:scale-110 transition-all duration-300">
-                      <IconComponent className="w-7 h-7 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-200">
-                        {t(value.title)}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {t(value.description)}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+                  See More Detail
+                </a>
+              </button>
+            </div>
           </div>
         </div>
       </main>
 
       <Footer />
-      <FloatingChatButton />
     </div>
   );
 };

@@ -179,6 +179,22 @@ export const contentData = {
     },
     allCategory: { en: "All", th: "ทั้งหมด" },
   },
+  // Gear Archive Page
+  gearArchive: {
+    title: {
+      en: "Production Gear Archive",
+      th: "คลังอุปกรณ์โปรดักชั่นทั้งหมด",
+    },
+    subtitle: {
+      en: "A complete collection of our professional production equipment.",
+      th: "รวบรวมอุปกรณ์โปรดักชั่นมืออาชีพทั้งหมดของเรา",
+    },
+    noResults: {
+      en: "No gear found matching your criteria.",
+      th: "ไม่พบอุปกรณ์ที่ตรงกับเกณฑ์ของคุณ",
+    },
+    allCategory: { en: "All", th: "ทั้งหมด" },
+  },
   // IT Project Detail Page
   projectDetail: {
     backToProjects: { en: "Back to Projects", th: "กลับไปหน้าโปรเจกต์" },
@@ -265,6 +281,8 @@ export const contentData = {
       onSet: {
         placeholder: { en: "On Set", th: "ในกองถ่าย" },
         description: { en: "Capturing the magic", th: "จับช่วงเวลาวิเศษ" },
+        image_url:
+          "https://scontent.fcnx1-1.fna.fbcdn.net/v/t39.30808-6/628030926_122137042910987911_9134088275520610199_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=13d280&_nc_ohc=A33vdZieuaMQ7kNvwFgfE5X&_nc_oc=AdmRojRDAcI811siW0r-EGbnf6v6D0XFQndM_xr0nj6cVNh7G7Taiw7vrRRoMmfUhwg&_nc_zt=23&_nc_ht=scontent.fcnx1-1.fna&_nc_gid=kVG6UYtRL4GhVxdGiDHm0w&oh=00_AfvL3nUeJdP5_v88j3qpy-HsxrflQnqvx6pMV5qntgv1Vg&oe=69A6E850",
       },
       teamMeeting: {
         placeholder: { en: "Team Meeting", th: "ประชุมทีม" },
@@ -272,14 +290,17 @@ export const contentData = {
           en: "Creative brainstorming",
           th: "ระดมความคิดสร้างสรรค์",
         },
+        image_url: "",
       },
       equipmentSetup: {
         placeholder: { en: "Equipment Setup", th: "ติดตั้งอุปกรณ์" },
         description: { en: "Preparation phase", th: "ขั้นตอนเตรียมการ" },
+        image_url: "",
       },
       postProduction: {
         placeholder: { en: "Post-Production", th: "โพสต์โปรดักชั่น" },
         description: { en: "Final touches", th: "ตกแต่งขั้นสุดท้าย" },
+        image_url: "",
       },
       locationScout: {
         placeholder: { en: "Location Scout", th: "หาสถานที่" },
@@ -287,10 +308,12 @@ export const contentData = {
           en: "Finding the perfect spot",
           th: "ค้นหาสถานที่ที่เหมาะสม",
         },
+        image_url: "",
       },
       clientReview: {
         placeholder: { en: "Client Review", th: "ลูกค้าตรวจสอบ" },
         description: { en: "Collaboration time", th: "เวลาร่วมมือกัน" },
+        image_url: "",
       },
     },
   },

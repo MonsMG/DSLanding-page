@@ -1,7 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { Globe, ArrowLeft, Users, CheckCircle } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
-import FloatingChatButton from "@/components/layout/FloatingChatButton";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { contentData } from "@/data/content";
@@ -16,7 +15,7 @@ const ITProjectDetail = () => {
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-[hsl(var(--ds-chocolate))] mb-4">
             {t(labels.projectNotFound)}
@@ -32,14 +31,8 @@ const ITProjectDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Navigation />
-
-      {/* Subtle Background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-primary/5 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[hsl(var(--ds-cream))] to-transparent rounded-full blur-3xl" />
-      </div>
 
       <main className="relative z-10 pt-32 pb-20 px-6">
         <div className="max-w-4xl mx-auto">
@@ -136,8 +129,6 @@ const ITProjectDetail = () => {
           </div>
         </div>
       </main>
-
-      <FloatingChatButton />
     </div>
   );
 };

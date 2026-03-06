@@ -1,6 +1,16 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, LogOut } from "lucide-react";
+import {
+  Menu,
+  X,
+  LogOut,
+  Home,
+  Monitor,
+  Film,
+  Info,
+  Settings,
+  FolderClosed,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -16,31 +26,36 @@ const Navigation = () => {
   // Scroll-aware navbar effect
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
+    // เช็คสถานะ scroll ทันทีเมื่อเปลี่ยนหน้า (pathname changed) เพื่อลดอาการกระตุก
+    handleScroll();
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   const navLinks = [
-    { path: "/", label: t(contentData.nav.home) },
-    { path: "/software", label: t(contentData.nav.software) },
-    { path: "/production", label: t(contentData.nav.production) },
-    { path: "/about", label: t(contentData.nav.about) },
-    { path: "/contact", label: t(contentData.nav.contact) },
+    { path: "/", label: t(contentData.nav.home), icon: Home },
+    { path: "/software", label: t(contentData.nav.software), icon: Monitor },
+    { path: "/production", label: t(contentData.nav.production), icon: Film },
+    { path: "/about", label: t(contentData.nav.about), icon: Info },
   ];
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
     <>
-      {/* Fixed Header — glassmorphism intensifies on scroll */}
+      {/* Fixed Header — locked scale with fixed heights instead of paddings */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 w-full px-6 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 border-b border-[hsl(var(--ds-chocolate))]/50 ${
           scrolled
-            ? "py-3 bg-card/90 backdrop-blur-xl shadow-soft border-b border-border"
-            : "py-4 bg-card/60 backdrop-blur-sm border-b border-transparent"
+            ? "h-16 bg-card/95 backdrop-blur-xl shadow-lg"
+            : "h-20 bg-card/70 backdrop-blur-md shadow-sm"
         }`}
       >
-        <nav className="max-w-7xl mx-auto flex items-center justify-between">
+        <nav
+          className="max-w-7xl mx-auto px-6 w-full h-full flex items-center justify-between"
+          style={{ transform: "translateZ(0)" }}
+        >
           {/* DS Logo */}
           <Link to="/" className="flex items-center gap-1 group">
             <span className="text-2xl font-bold text-[hsl(var(--ds-chocolate))] tracking-tight group-hover:text-primary transition-colors duration-300">
@@ -50,21 +65,25 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-2">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`relative px-5 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+                className={`relative px-5 h-[42px] flex items-center justify-center rounded-xl text-sm font-medium transition-all duration-200 border border-transparent ${
                   isActive(link.path)
-                    ? "text-primary-foreground bg-primary shadow-md"
-                    : "text-foreground hover:text-primary hover:bg-primary/5"
+                    ? "text-primary-foreground bg-[hsl(var(--ds-chocolate))] shadow-md border-[hsl(var(--ds-chocolate))]/10"
+                    : "text-foreground hover:text-primary hover:bg-[hsl(var(--ds-chocolate))]/5 hover:border-[hsl(var(--ds-chocolate))]/20 hover:shadow-sm"
                 }`}
+                style={{ minWidth: "110px" }}
               >
-                <span className="relative z-10">{link.label}</span>
+                <span className="relative z-10 font-bold flex items-center gap-2">
+                  <link.icon className="w-[18px] h-[18px]" />
+                  {link.label}
+                </span>
                 {/* Active underline indicator */}
                 {isActive(link.path) && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-primary-foreground/60 rounded-full" />
+                  <span className="absolute bottom-[3px] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] h-[3px] bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
                 )}
               </Link>
             ))}
@@ -81,19 +100,40 @@ const Navigation = () => {
               {language.toUpperCase()}
             </Button>
 
-            {/* 🔐 Admin Global Logout Button */}
+            {/* 🔐 Admin Area Buttons */}
             {user && (
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={signOut}
-                className="hidden sm:flex px-3 py-1 text-sm shadow-sm"
-              >
-                <LogOut className="w-4 h-4 mr-1.5" />
-                {language === "th" ? "ออกระบบ" : "Logout"}
-              </Button>
+              <>
+                <Link to="/admin/media" className="hidden sm:block">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="px-3 py-1 text-sm shadow-sm border-primary/20 hover:bg-primary/10 hover:text-primary transition-all rounded-xl"
+                  >
+                    <FolderClosed className="w-4 h-4 mr-1.5" />
+                    {language === "th" ? "จัดการไฟล์" : "Files"}
+                  </Button>
+                </Link>
+                <Link to="/admin/company-info" className="hidden sm:block">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="px-3 py-1 text-sm shadow-sm border-primary/20 hover:bg-primary/10 hover:text-primary transition-all rounded-xl"
+                  >
+                    <Settings className="w-4 h-4 mr-1.5" />
+                    {language === "th" ? "ตั้งค่าบริษัท" : "Company Info"}
+                  </Button>
+                </Link>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={signOut}
+                  className="hidden sm:flex px-3 py-1 text-sm shadow-sm rounded-xl"
+                >
+                  <LogOut className="w-4 h-4 mr-1.5" />
+                  {language === "th" ? "ออกระบบ" : "Logout"}
+                </Button>
+              </>
             )}
-
             <button
               className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -116,35 +156,58 @@ const Navigation = () => {
                   key={link.path}
                   to={link.path}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`px-4 py-3 rounded-xl text-base font-medium transition-all animate-fade-in-up stagger-${idx + 1} ${
+                  className={`px-4 py-3 rounded-xl text-base font-medium transition-all shadow-sm animate-fade-in-up stagger-${idx + 1} ${
                     isActive(link.path)
-                      ? "text-primary-foreground bg-primary"
-                      : "text-foreground hover:bg-muted"
+                      ? "text-primary-foreground bg-[hsl(var(--ds-chocolate))] border-l-4 border-primary"
+                      : "text-foreground hover:bg-muted border-l-4 border-transparent"
                   }`}
                 >
-                  {link.label}
+                  <div className="flex items-center gap-3">
+                    <link.icon className="w-5 h-5" />
+                    {link.label}
+                  </div>
                 </Link>
               ))}
 
-              {/* 🔐 Admin Global Logout Button (Mobile) */}
+              {/* 🔐 Admin Mobile Buttons */}
               {user && (
-                <button
-                  onClick={() => {
-                    signOut();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="mt-2 flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-base font-medium transition-all animate-fade-in-up stagger-6 text-destructive-foreground bg-destructive hover:bg-destructive/90"
-                >
-                  <LogOut className="w-5 h-5" />
-                  {language === "th" ? "ออกจากระบบ" : "Logout"}
-                </button>
+                <div className="mt-2 space-y-2 border-t border-border pt-2 animate-fade-in-up stagger-6">
+                  <Link
+                    to="/admin/media"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex justify-center items-center gap-2 w-full px-4 py-3 rounded-xl text-base font-medium transition-all text-primary border border-primary/20 bg-primary/5 hover:bg-primary/10"
+                  >
+                    <FolderClosed className="w-5 h-5" />
+                    {language === "th" ? "จัดการไฟล์" : "Files"}
+                  </Link>
+
+                  <Link
+                    to="/admin/company-info"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex justify-center items-center gap-2 w-full px-4 py-3 rounded-xl text-base font-medium transition-all text-primary border border-primary/20 bg-primary/5 hover:bg-primary/10"
+                  >
+                    <Settings className="w-5 h-5" />
+                    {language === "th" ? "ตั้งค่าบริษัท" : "Company Info"}
+                  </Link>
+
+                  <button
+                    onClick={() => {
+                      signOut();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-base font-medium transition-all text-destructive-foreground bg-destructive hover:bg-destructive/90"
+                  >
+                    <LogOut className="w-5 h-5" />
+                    {language === "th" ? "ออกจากระบบ" : "Logout"}
+                  </button>
+                </div>
               )}
             </div>
           </div>
         )}
       </header>
 
-      <div className="h-16 w-full bg-transparent" aria-hidden="true" />
+      <div className="h-20 w-full bg-transparent" aria-hidden="true" />
     </>
   );
 };

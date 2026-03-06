@@ -23,12 +23,12 @@ import ScrollToTop from "./components/layout/ScrollToTop";
 
 // — หน้าสาธารณะ (Public Pages) —
 import Index from "./pages/Index";
-import IT from "./pages/IT";
-import ITProjectDetail from "./pages/ITProjectDetail";
-import ITArchive from "./pages/ITArchive";
+import IT from "./pages/Software";
+import ITProjectDetail from "./pages/Software_Project_Detail";
+import ITArchive from "./pages/Software_Archive";
 import Production from "./pages/Production";
+import GearArchive from "./pages/Gear_Archive";
 import About from "./pages/About";
-import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 
@@ -43,6 +43,8 @@ import EditProduction from "./pages/admin/production/edit";
 import AddSoftware from "./pages/admin/software/add";
 import AddGear from "./pages/admin/gear/add";
 import EditGear from "./pages/admin/gear/edit";
+import AdminCompanyInfo from "./pages/admin/company/index";
+import AdminMediaManager from "./pages/admin/media/index";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -68,8 +70,8 @@ const App = () => (
               />
               <Route path="/software/archive" element={<ITArchive />} />
               <Route path="/production" element={<Production />} />
+              <Route path="/production/gear" element={<GearArchive />} />
               <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
               <Route path="*" element={<NotFound />} />
 
               {/* ===== Auth Route — หน้า Login (เปิดสาธารณะ) ===== */}
@@ -77,6 +79,22 @@ const App = () => (
 
               {/* ===== 🔒 Protected Admin Routes — ต้องล็อกอินก่อนถึงจะเข้าได้ ===== */}
               {/* ProtectedRoute จะเช็ค session → ถ้าไม่ได้ล็อกอิน redirect ไป /login */}
+              <Route
+                path="/admin/company-info"
+                element={
+                  <ProtectedRoute>
+                    <AdminCompanyInfo />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/media"
+                element={
+                  <ProtectedRoute>
+                    <AdminMediaManager />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/admin/software/edit/:id"
                 element={

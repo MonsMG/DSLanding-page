@@ -22,9 +22,16 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, ArrowLeft, Save } from "lucide-react";
+import { Loader2, ArrowLeft, Save, Plus, X } from "lucide-react";
 import { ImageUpload } from "@/components/ui/ImageUpload";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function EditSoftware() {
   const navigate = useNavigate();
@@ -32,6 +39,7 @@ export default function EditSoftware() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true); // โหลดข้อมูลเดิม
   const [isSaving, setIsSaving] = useState(false); // กำลังบันทึก
+  const [categories, setCategories] = useState<string[]>([]);
 
   // — State ของฟอร์ม —
   const [formData, setFormData] = useState({
@@ -51,6 +59,34 @@ export default function EditSoftware() {
     status: "Active",
   });
 
+  const [targetsEn, setTargetsEn] = useState<string[]>([""]);
+  const [featuresEn, setFeaturesEn] = useState<string[]>([""]);
+
+  const handleDynamicChange = (
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+    index: number,
+    value: string,
+  ) => {
+    setter((prev) => {
+      const newArr = [...prev];
+      newArr[index] = value;
+      return newArr;
+    });
+  };
+
+  const addDynamicField = (
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+  ) => {
+    setter((prev) => [...prev, ""]);
+  };
+
+  const removeDynamicField = (
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+    index: number,
+  ) => {
+    setter((prev) => prev.filter((_, i) => i !== index));
+  };
+
   // ดึงข้อมูลเดิมจาก Supabase มาเติมในฟอร์ม
   useEffect(() => {
     const fetchProject = async () => {
@@ -68,11 +104,38 @@ export default function EditSoftware() {
         navigate("/software");
       } else {
         setFormData(data); // เติมข้อมูลเดิมลงฟอร์ม
+        if (data.target_en) {
+          setTargetsEn(data.target_en.split("\n"));
+        } else {
+          setTargetsEn([""]);
+        }
+        if (data.features_en) {
+          setFeaturesEn(data.features_en.split("\n"));
+        } else {
+          setFeaturesEn([""]);
+        }
         setIsLoading(false);
       }
     };
+
+    const fetchCategories = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("software_categories")
+          .select("name")
+          .order("name", { ascending: true });
+
+        if (!error && data) {
+          setCategories(data.map((item) => item.name));
+        }
+      } catch (err: unknown) {
+        console.error("Error fetching categories:", err);
+      }
+    };
+
     fetchProject();
-  }, [id, navigate]);
+    fetchCategories();
+  }, [id, navigate, toast]);
 
   // จัดการ input แบบ generic
   const handleChange = (
@@ -129,6 +192,11 @@ export default function EditSoftware() {
           typeof val === "string" ? (val as string).trim() : val,
         ]),
       );
+
+      updates.target_en = targetsEn.filter((t) => t.trim() !== "").join("\n");
+      updates.features_en = featuresEn
+        .filter((f) => f.trim() !== "")
+        .join("\n");
 
       const { error } = await supabase
         .from("software_projects")
@@ -261,7 +329,7 @@ export default function EditSoftware() {
                 </div>
               </div>
 
-              {/* — หมวดหมู่ & URL — */}
+              {/* — หมวดหมู่ & สถานะ — */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-3">
                   <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
@@ -269,22 +337,50 @@ export default function EditSoftware() {
                   </Label>
                   <Input
                     name="category"
+                    list="category-options"
+                    placeholder="Type to search or select..."
                     value={formData.category || ""}
                     onChange={handleChange}
                     className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
                   />
+                  <datalist id="category-options">
+                    {categories.map((cat, idx) => (
+                      <option key={idx} value={cat} />
+                    ))}
+                  </datalist>
                 </div>
                 <div className="space-y-3">
                   <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
-                    Project URL
+                    Status
                   </Label>
-                  <Input
-                    name="url"
-                    value={formData.url || ""}
-                    onChange={handleChange}
-                    className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
-                  />
+                  <Select
+                    value={formData.status}
+                    onValueChange={(value) =>
+                      setFormData({ ...formData, status: value })
+                    }
+                  >
+                    <SelectTrigger className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors">
+                      <SelectValue placeholder="Select Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Active">Active</SelectItem>
+                      <SelectItem value="Maintenance">Maintenance</SelectItem>
+                      <SelectItem value="Coming Soon">Coming Soon</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
+              </div>
+
+              <div className="space-y-3">
+                <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                  Project URL
+                </Label>
+                <Input
+                  name="url"
+                  value={formData.url || ""}
+                  onChange={handleChange}
+                  className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                />
               </div>
 
               {/* — อัปโหลดภาพปก — */}
@@ -306,6 +402,101 @@ export default function EditSoftware() {
                   rows={5}
                   className="rounded-xl bg-white/50 focus:bg-white transition-colors resize-none"
                 />
+              </div>
+
+              {/* — กลุ่มเป้าหมาย & ฟีเจอร์ — */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-primary/10 pt-8 mt-4">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                      Target Audience (EN)
+                    </Label>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => addDynamicField(setTargetsEn)}
+                      className="text-[hsl(var(--ds-red-orange))] hover:bg-[hsl(var(--ds-red-orange))]/10 h-8 px-2"
+                    >
+                      <Plus className="w-4 h-4 mr-1" /> Add
+                    </Button>
+                  </div>
+                  <div className="space-y-3">
+                    {targetsEn.map((item, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <Input
+                          value={item}
+                          onChange={(e) =>
+                            handleDynamicChange(
+                              setTargetsEn,
+                              index,
+                              e.target.value,
+                            )
+                          }
+                          placeholder="e.g. Student"
+                          className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() =>
+                            removeDynamicField(setTargetsEn, index)
+                          }
+                          className="text-muted-foreground hover:text-destructive flex-shrink-0 h-10 w-10"
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                      Key Features (EN)
+                    </Label>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => addDynamicField(setFeaturesEn)}
+                      className="text-[hsl(var(--ds-red-orange))] hover:bg-[hsl(var(--ds-red-orange))]/10 h-8 px-2"
+                    >
+                      <Plus className="w-4 h-4 mr-1" /> Add
+                    </Button>
+                  </div>
+                  <div className="space-y-3">
+                    {featuresEn.map((item, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <Input
+                          value={item}
+                          onChange={(e) =>
+                            handleDynamicChange(
+                              setFeaturesEn,
+                              index,
+                              e.target.value,
+                            )
+                          }
+                          placeholder="e.g. Real-time sync"
+                          className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() =>
+                            removeDynamicField(setFeaturesEn, index)
+                          }
+                          className="text-muted-foreground hover:text-destructive flex-shrink-0 h-10 w-10"
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* — ปุ่มบันทึก — */}

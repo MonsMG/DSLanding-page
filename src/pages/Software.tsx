@@ -12,7 +12,7 @@
  */
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, NavigateFunction } from "react-router-dom";
 import {
   BadgeCheck,
   ArrowRight,
@@ -32,7 +32,6 @@ import {
 } from "lucide-react";
 
 import Navigation from "@/components/layout/Navigation";
-import FloatingChatButton from "@/components/layout/FloatingChatButton";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -134,7 +133,7 @@ interface ProjectCardItemProps {
   user: unknown;
   deletingId: number | null;
   handleDelete: (id: number) => void;
-  navigate: unknown;
+  navigate: NavigateFunction;
   isFeatured: boolean;
 }
 
@@ -434,38 +433,22 @@ const IT = () => {
     <div className="min-h-screen bg-background relative overflow-hidden">
       <Navigation />
 
-      {/* Decorative Background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 via-[hsl(var(--ds-beige))] to-[hsl(var(--ds-cream))]" />
-        <div className="absolute top-20 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/3 -right-20 w-80 h-80 bg-[hsl(var(--ds-red-orange))]/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-      </div>
-
       {/* Hero Section */}
       <section className="relative pt-32 pb-16 overflow-hidden my-0 py-[50px]">
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-start gap-8">
             <div className="text-left flex-1">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-6 whitespace-pre-line animate-fade-in-up">
-                Designed to Solve.{"\n"}Built to Improve.
+                Designed to Solve.
+              </h1>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-6 whitespace-pre-line animate-fade-in-up">
+                Built to Improve.
               </h1>
               <p className="text-left sm:text-xl text-foreground/70 max-w-2xl animate-fade-in-up stagger-2">
                 {language === "en"
                   ? "Crafting innovative digital solutions that streamline workflows and enhance productivity."
                   : "สร้างสรรค์นวัตกรรมดิจิทัลเพื่อแก้ปัญหา พัฒนากระบวนการทำงาน และเพิ่มประสิทธิภาพสู่ความสำเร็จ"}
               </p>
-
-              <div className="mt-12 flex gap-4 animate-fade-in-up stagger-3">
-                <Button
-                  onClick={scrollToProjects}
-                  size="lg"
-                  className="h-14 px-8 text-base shadow-[0_8px_30px_rgb(222,49,99,0.3)] hover:shadow-[0_8px_40px_rgb(222,49,99,0.5)] transition-all duration-300 rounded-[20px] w-full sm:w-auto font-medium tracking-wide"
-                >
-                  {language === "en" ? "View Projects" : "ดูผลงาน"}
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </div>
             </div>
           </div>
         </div>
@@ -736,7 +719,6 @@ const IT = () => {
       </section>
 
       <Footer />
-      <FloatingChatButton />
     </div>
   );
 };
