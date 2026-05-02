@@ -321,72 +321,75 @@ export const contentData = {
   about: {
     title: { en: "About DS Workspace", th: "เกี่ยวกับ DS Workspace" },
     description: {
-      en: "We are a creative digital studio dedicated to transforming ideas into exceptional digital experiences. Our passion drives innovation, and our expertise delivers results that exceed expectations.",
-      th: "เราเป็นสตูดิโอดิจิทัลสร้างสรรค์ที่อุทิศตนเพื่อเปลี่ยนไอเดียให้เป็นประสบการณ์ดิจิทัลที่ยอดเยี่ยม ความหลงใหลของเราขับเคลื่อนนวัตกรรม และความเชี่ยวชาญของเรามอบผลลัพธ์ที่เกินความคาดหมาย",
+      en: "We are a creative digital studio dedicated to transforming visionary ideas into seamless digital experiences. By blending innovation with deep technical expertise, we deliver impactful results that push boundaries and exceed expectations.",
+      th: "เราคือดิจิทัลสตูดิโอที่มุ่งมั่นเปลี่ยนจินตนาการให้กลายเป็นประสบการณ์ดิจิทัลที่เหนือระดับ ผสานความคิดสร้างสรรค์เข้ากับเทคโนโลยีล้ำสมัย เพื่อส่งมอบผลลัพธ์ที่สร้างความแตกต่างและก้าวข้ามทุกความคาดหมาย",
     },
     stats: {
       projects: {
         value: "50+",
-        label: { en: "Projects Completed", th: "โปรเจกต์สำเร็จ" },
+        label: { en: "Successful Projects", th: "โปรเจกต์ที่สำเร็จ" },
       },
       clients: {
         value: "30+",
-        label: { en: "Happy Clients", th: "ลูกค้าพึงพอใจ" },
+        label: { en: "Trusted Partners", th: "พันธมิตรที่ไว้วางใจ" },
       },
       experience: {
         value: "5+",
-        label: { en: "Years Experience", th: "ปีประสบการณ์" },
+        label: { en: "Years of Excellence", th: "ปีแห่งประสบการณ์" },
       },
-      team: { value: "10+", label: { en: "Team Members", th: "สมาชิกในทีม" } },
+      team: {
+        value: "10+",
+        label: { en: "Creative Experts", th: "ผู้เชี่ยวชาญในทีม" },
+      },
     },
     mission: {
       subtitle: { en: "Our Mission", th: "พันธกิจของเรา" },
       title: {
         en: "Empowering Digital Excellence",
-        th: "ส่งเสริมความเป็นเลิศทางดิจิทัล",
+        th: "ยกระดับความเป็นเลิศทางดิจิทัล",
       },
       description: {
-        en: "To empower businesses and individuals with innovative digital solutions that not only meet their needs but exceed their expectations. We believe in the power of technology to transform, connect, and inspire people around the world.",
-        th: "เพื่อเสริมศักยภาพธุรกิจและบุคคลด้วยโซลูชันดิจิทัลที่สร้างสรรค์ ไม่เพียงแค่ตอบสนองความต้องการแต่ยังเกินความคาดหมาย เราเชื่อในพลังของเทคโนโลยีที่จะเปลี่ยนแปลง เชื่อมต่อ และสร้างแรงบันดาลใจให้ผู้คนทั่วโลก",
+        en: "Our mission is to empower businesses with forward-thinking digital solutions that drive growth and inspire change. We believe in the power of technology to seamlessly connect people and transform how the world operates.",
+        th: "ติดปีกศักยภาพให้ธุรกิจด้วยโซลูชันดิจิทัลแห่งอนาคตที่ขับเคลื่อนการเติบโตและสร้างผลกระทบเชิงบวก เราเชื่อมั่นในพลังของเทคโนโลยีที่จะช่วยพลิกโฉมธุรกิจ เชื่อมโยงผู้คน และจุดประกายแรงบันดาลใจใหม่ๆ",
       },
     },
     values: {
-      subtitle: { en: "What We Stand For", th: "สิ่งที่เรายึดมั่น" },
-      title: { en: "Our Values", th: "ค่านิยมของเรา" },
+      subtitle: { en: "What We Stand For", th: "หลักการที่เรายึดมั่น" },
+      title: { en: "Our Core Values", th: "ค่านิยมองค์กรของเรา" },
       items: {
         innovation: {
-          title: { en: "Innovation", th: "นวัตกรรม" },
+          title: { en: "Innovation", th: "นวัตกรรมล้ำสมัย" },
           description: {
-            en: "We push boundaries and embrace new technologies to deliver cutting-edge solutions.",
-            th: "เราผลักดันขอบเขตและยอมรับเทคโนโลยีใหม่เพื่อมอบโซลูชันล้ำสมัย",
+            en: "We constantly push boundaries and embrace emerging technologies to engineer cutting-edge solutions.",
+            th: "เราไม่หยุดที่จะท้าทายขีดจำกัดเดิมๆ และเปิดรับเทคโนโลยีใหม่ เพื่อสร้างสรรค์โซลูชันที่ก้าวล้ำนำหน้าเสมอ",
           },
         },
         quality: {
-          title: { en: "Quality", th: "คุณภาพ" },
+          title: { en: "Craftsmanship", th: "คุณภาพไร้ที่ติ" },
           description: {
-            en: "Every project receives our full attention to detail and commitment to excellence.",
-            th: "ทุกโปรเจกต์ได้รับความใส่ใจในรายละเอียดและความมุ่งมั่นสู่ความเป็นเลิศ",
+            en: "Every line of code and every pixel receives our uncompromising attention to detail and pursuit of perfection.",
+            th: "เราใส่ใจในทุกรายละเอียด ตั้งแต่บรรทัดแรกของโค้ดไปจนถึงงานดีไซน์ เพื่อส่งมอบผลลัพธ์ระดับมาสเตอร์พีซ",
           },
         },
         collaboration: {
-          title: { en: "Collaboration", th: "ความร่วมมือ" },
+          title: { en: "Collaboration", th: "พลังแห่งความร่วมมือ" },
           description: {
-            en: "We work closely with our clients to understand their vision and bring it to life.",
-            th: "เราทำงานอย่างใกล้ชิดกับลูกค้าเพื่อเข้าใจวิสัยทัศน์และทำให้เป็นจริง",
+            en: "We partner closely with our clients, turning shared visions into tangible, high-performing realities.",
+            th: "เราทำงานร่วมกับลูกค้าเสมือนพาร์ทเนอร์คนสำคัญ เพื่อเปลี่ยนวิสัยทัศน์ให้กลายเป็นความสำเร็จที่จับต้องได้",
           },
         },
         passion: {
-          title: { en: "Passion", th: "ความหลงใหล" },
+          title: { en: "Driven by Passion", th: "ขับเคลื่อนด้วยความมุ่งมั่น" },
           description: {
-            en: "Our love for what we do drives us to create exceptional digital experiences.",
-            th: "ความรักในสิ่งที่เราทำขับเคลื่อนให้เราสร้างประสบการณ์ดิจิทัลที่ยอดเยี่ยม",
+            en: "Our genuine love for digital creation is the core engine that powers our exceptional user experiences.",
+            th: "ความหลงใหลในโลกดิจิทัลคือขุมพลังหลักที่ผลักดันให้เราสร้างสรรค์ผลงานที่เหนือชั้นในทุกๆ วัน",
           },
         },
       },
     },
     brandName: {
       en: "Digital Solution Workspace",
-      th: "พื้นที่ทำงานโซลูชันดิจิทัล",
+      th: "ศูนย์รวมโซลูชันดิจิทัลแบบครบวงจร",
     },
   },
   // Contact Page
