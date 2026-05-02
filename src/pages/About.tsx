@@ -30,24 +30,33 @@ const About = () => {
     description: value.description,
   }));
 
-  // 1. สร้าง Mockup ข้อมูล CEO (เอาไว้ด้านบนก่อน return หรือนอก Component ก็ได้)
+  // 1. สร้าง Mockup ข้อมูล CEO (เพิ่ม 2 ภาษา)
   const ceos = [
     {
       id: 1,
       name: "Alexander Wright",
-      role: "Chief Executive Officer",
+      role: { en: "Chief Executive Officer", th: "ประธานเจ้าหน้าที่บริหาร" },
       image:
-        "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop", // รูปจำลอง
-      bio: "With over 15 years of experience in digital production and technology, Alexander leads the company's global vision and strategic direction.",
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop",
+      bio: {
+        en: "With over 15 years of experience in digital production and technology, Alexander leads the company's global vision and strategic direction.",
+        th: "ด้วยประสบการณ์กว่า 15 ปีในด้านดิจิทัลโปรดักชั่นและเทคโนโลยี อเล็กซานเดอร์เป็นผู้นำวิสัยทัศน์และทิศทางเชิงกลยุทธ์ระดับโลกของบริษัท",
+      },
       link: "#",
     },
     {
       id: 2,
       name: "Sophia Martinez",
-      role: "Co-Chief Executive Officer",
+      role: {
+        en: "Co-Chief Executive Officer",
+        th: "ประธานเจ้าหน้าที่บริหารร่วม",
+      },
       image:
-        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop", // รูปจำลอง
-      bio: "Sophia drives operational excellence and creative innovation, ensuring that every project exceeds client expectations and industry standards.",
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop",
+      bio: {
+        en: "Sophia drives operational excellence and creative innovation, ensuring that every project exceeds client expectations and industry standards.",
+        th: "โซเฟียขับเคลื่อนความเป็นเลิศด้านการปฏิบัติงานและนวัตกรรมเชิงสร้างสรรค์ เพื่อให้มั่นใจว่าทุกโปรเจกต์ก้าวข้ามความคาดหวังของลูกค้าและมาตรฐานอุตสาหกรรม",
+      },
       link: "#",
     },
   ];
@@ -56,25 +65,27 @@ const About = () => {
     <div className="min-h-screen bg-background relative overflow-hidden">
       <Navigation />
 
-      <main className="relative z-10 pb-20 ">
-        <div className="max-w-100% mx-auto ">
+      <main className="relative z-10 pb-20">
+        <div className="w-full">
           {/* Header — entrance */}
-          <div className="relative w-full flex items-center bg-orange-900 overflow-hidden min-h-[400px] md:min-h-[500px] animate-fade-in-up">
+          <div className="relative w-full flex items-center overflow-hidden min-h-[500px] md:min-h-[600px] animate-fade-in-up">
             {/* 🖼️ เลเยอร์ที่ 1: รูปภาพพื้นหลัง (ชิดขวา) */}
             <div className="absolute inset-0 w-full h-full">
               <img
-                src="https://lcinkptronrfkojdtzxw.supabase.co/storage/v1/object/public/images/547674150_122112071312987911_2525542087216709983_n_1773088944197.jpg" // 👈 เปลี่ยนเป็นลิงก์รูปภาพของคุณ
+                src="https://lcinkptronrfkojdtzxw.supabase.co/storage/v1/object/public/images/547674150_122112071312987911_2525542087216709983_n_1773088944197.jpg"
                 alt={t(about.title)}
                 className="w-full h-full object-cover object-right"
               />
 
-              {/* 🌫️ เลเยอร์ที่ 2: พระเอกของงาน (Gradient Overlay) 
-        ไล่สีส้มทึบจากฝั่งซ้าย (40%) -> ค่อยๆ จางลง (60%) -> ใสแจ๋วทางฝั่งขวา */}
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-900 from-40% via-orange-900/50 via-60% to-transparent" />
+              {/* 🌫️ เลเยอร์ที่ 2: Gradient Overlay (ปรับให้นุ่มนวลและดูพรีเมียมขึ้น) */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--ds-chocolate))]/95 via-[hsl(var(--ds-chocolate))]/80 to-transparent" />
             </div>
 
-            {/* 📝 เลเยอร์ที่ 3: กล่องข้อความฝั่งซ้าย (อยู่บนสุด z-10) */}
-            <div className="relative z-10 w-full px-8 py-16 md:px-16 lg:px-24 md:w-2/3 lg:w-1/2 text-left">
+            {/* 📝 เลเยอร์ที่ 3: กล่องข้อความฝั่งซ้าย */}
+            <div className="relative z-10 w-full px-6 py-16 md:px-12 lg:px-24 md:w-2/3 lg:w-1/2 text-left">
+              <span className="text-sm font-bold text-primary/80 mb-4 block uppercase tracking-widest drop-shadow-sm">
+                Discover Our Story
+              </span>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-md">
                 {t(about.title)}
               </h1>
@@ -84,27 +95,39 @@ const About = () => {
             </div>
           </div>
 
-          {/* About Us */}
-          <div className="flex  text-left animate-fade-in-up bg-white pl-20 pr-20 pt-20 pb-20">
-            <h1 className="items-center text-5xl sm:text-6xl lg:text-7xl font-bold text-black mb-6">
-              {t(about.mission.title)}
-            </h1>
-            <div className="flex justify-center items-center ml-96">
-              <p className="text-lg sm:text-xl text-black max-w-3xl leading-relaxed">
-                {t(about.mission.description)}
-              </p>
+          {/* About Us & Mission */}
+          <section className="relative z-10 py-20 bg-white">
+            <div className="container mx-auto px-6 lg:px-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div>
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-6 leading-tight">
+                    {t(about.mission.title)}
+                  </h1>
+                </div>
+                <div>
+                  <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
+                    {t(about.mission.description)}
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+          </section>
 
           {/* Infomation Detail */}
-          <div className="text-left animate-fade-in-up bg-red-900 pl-20 pr-20 pt-12 pb-12">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6">
-              {t(about.title)}
-            </h1>
-            <p className="text-lg sm:text-xl text-white max-w-3xl leading-relaxed">
-              {t(about.description)}
-            </p>
-          </div>
+          <section className="relative z-10 py-24 bg-[hsl(var(--ds-chocolate))] text-white overflow-hidden">
+            {/* Decorative element */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-3xl opacity-50 translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+            <div className="container mx-auto px-6 lg:px-8 relative z-10">
+              <div className="max-w-4xl mx-auto text-center">
+                <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+                  {t(about.title)}
+                </h2>
+                <p className="text-lg sm:text-xl text-white/80 leading-relaxed">
+                  {t(about.description)}
+                </p>
+              </div>
+            </div>
+          </section>
 
           {/* Company Vision */}
           <section className="relative z-10 py-20 px-6">
@@ -126,22 +149,22 @@ const About = () => {
                   return (
                     <div
                       key={value.key}
-                      className={`flex flex-col bg-card border border-border rounded-3xl p-8 lg:p-10 group hover:shadow-xl hover:-translate-y-2 transition-all duration-300 animate-fade-in-up stagger-${idx + 1}`}
+                      className={`flex flex-col bg-white border-0 shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-[2rem] p-8 lg:p-10 group hover:shadow-[0_8px_40px_rgb(0,0,0,0.12)] hover:-translate-y-2 transition-all duration-500 animate-fade-in-up stagger-${idx + 1}`}
                     >
                       {/* 🔝 ส่วนบน: Icon และ หัวข้อ */}
                       <div>
-                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-[hsl(var(--ds-cream))] flex items-center justify-center mb-6 group-hover:from-primary/20 transition-colors">
+                        <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
                           <IconComponent className="w-8 h-8 text-primary" />
                         </div>
 
-                        <h3 className="text-xl md:text-2xl font-bold text-primary mb-3 text-left">
+                        <h3 className="text-xl md:text-2xl font-bold text-[hsl(var(--ds-chocolate))] mb-3 text-left">
                           {t(value.title)}
                         </h3>
                       </div>
 
                       {/* 🔽 ส่วนล่าง: คำอธิบาย */}
-                      <div className="mt-auto pt-10">
-                        <p className="text-foreground/70 text-left leading-relaxed">
+                      <div className="mt-auto pt-8">
+                        <p className="text-muted-foreground text-left leading-relaxed">
                           {t(value.description)}
                         </p>
                       </div>
@@ -153,99 +176,110 @@ const About = () => {
           </section>
 
           {/* ส่วนแสดงผล CEO Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mt-12 px-4">
-            {ceos.map((ceo) => (
-              <div
-                key={ceo.id}
-                className="bg-card border border-border rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col group"
-              >
-                {/* 🖼️ ส่วนรูปภาพ */}
-                <div className="relative h-72 md:h-80 overflow-hidden bg-muted">
-                  <img
-                    src={ceo.image}
-                    alt={ceo.name}
-                    // ลูกเล่น: พอเอาเมาส์ชี้การ์ด รูปจะค่อยๆ ซูมเข้า (scale-105)
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
-                  />
+          <section className="py-12 md:py-20 bg-background">
+            <div className="text-center mb-16 px-6">
+              <span className="text-sm font-semibold text-primary mb-4 block uppercase tracking-widest">
+                Our Leadership
+              </span>
+              <h2 className="text-4xl sm:text-5xl font-bold text-[hsl(var(--ds-chocolate))]">
+                Meet The Executive Team
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto px-4">
+              {ceos.map((ceo) => (
+                <div
+                  key={ceo.id}
+                  className="bg-white border-0 rounded-[2rem] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:shadow-[0_20px_50px_rgb(0,0,0,0.12)] hover:-translate-y-2 transition-all duration-500 flex flex-col group"
+                >
+                  {/* 🖼️ ส่วนรูปภาพ */}
+                  {/* ✅ ปรับเป็น aspect-[4/5] (หรือ aspect-square) รูปจะสูงขึ้นแบบพอร์ตเทรต สวยเป๊ะ */}
+                  <div className="relative aspect-[4/5] w-full overflow-hidden bg-muted rounded-t-[2rem]">
+                    <img
+                      src={ceo.image}
+                      alt={ceo.name}
+                      // ✅ ใช้ object-top เพื่อให้หัวไม่ขาด
+                      className="block w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out transform-gpu"
+                    />
+
+                    {/* ✅ เฟดขาวบางๆ (ไล่แค่ from-white to-transparent พอ) และลดความสูงเหลือ h-24 จะได้ไม่บังตัวเยอะ */}
+                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none" />
+                  </div>
+
+                  {/* 📝 ส่วนเนื้อหา */}
+                  {/* ✅ ปรับ padding-top นิดหน่อย ให้ระยะห่างพอดีกับเฟดขาวด้านบน */}
+                  <div className="px-8 pb-8 pt-2 md:px-10 md:pb-10 md:pt-4 flex flex-col flex-grow relative z-20 bg-white">
+                    {/* ชื่อและตำแหน่ง */}
+                    <div className="mb-6">
+                      <h3 className="text-2xl md:text-3xl font-bold text-[hsl(var(--ds-chocolate))] mb-2">
+                        {ceo.name}
+                      </h3>
+                      <span className="text-primary font-bold tracking-widest text-xs uppercase">
+                        {t(ceo.role)}
+                      </span>
+                    </div>
+
+                    {/* คำอธิบาย */}
+                    <div className="text-muted-foreground leading-relaxed flex-grow font-light">
+                      <p>{t(ceo.bio)}</p>
+                    </div>
+                  </div>
                 </div>
-
-                {/* 📝 ส่วนเนื้อหา */}
-                <div className="p-8 flex flex-col flex-grow">
-                  {/* ชื่อและตำแหน่ง */}
-                  <div className="mb-4">
-                    <h3 className="text-2xl md:text-3xl font-bold text-[hsl(var(--ds-chocolate))] mb-1">
-                      {ceo.name}
-                    </h3>
-                    <span className="text-primary font-bold tracking-widest text-xs uppercase">
-                      {ceo.role}
-                    </span>
-                  </div>
-
-                  {/* คำอธิบาย */}
-                  {/* flex-grow จะช่วยดันปุ่ม Read More ลงไปอยู่ล่างสุดของการ์ดเสมอ */}
-                  <div className="text-foreground/70 leading-relaxed mb-8 flex-grow">
-                    <p>{ceo.bio}</p>
-                  </div>
-
-                  {/* 🖱️ ปุ่ม Read More */}
-                  {/* ใช้แท็ก <a> เพียวๆ ตกแต่งให้เหมือนปุ่มแทนการครอบด้วย <button> */}
-                  <div className="mt-auto pt-4 border-t border-border/50">
-                    <a
-                      href={ceo.link}
-                      className="inline-flex items-center justify-center w-full px-6 py-3 border-2 border-[hsl(var(--ds-chocolate))] text-[hsl(var(--ds-chocolate))] font-bold rounded-xl hover:bg-[hsl(var(--ds-chocolate))] hover:text-white transition-colors duration-300"
-                    >
-                      Read More
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </section>
 
           {/* See more from PDF Information (CTA Section) */}
-          <div className="py-16 px-6 bg-gradient-to-br from-[hsl(var(--ds-cream))] to-white text-center rounded-3xl shadow-sm border border-border/50 max-w-4xl mx-auto my-12">
-            {/* ส่วน Head 1 (เลือก Draft ที่ชอบมาใส่ได้เลยครับ) */}
-            <h1 className="text-3xl md:text-4xl font-bold text-[hsl(var(--ds-chocolate))] mb-4">
-              {language === "en"
-                ? "Discover Our Comprehensive Business Profile"
-                : "ค้นพบโปรไฟล์ธุรกิจฉบับสมบูรณ์ของเรา"}
-            </h1>
+          <section className="py-16 md:py-20 px-6 max-w-5xl mx-auto my-12 md:my-20">
+            <div className="relative bg-white rounded-[3rem] p-10 md:p-16 shadow-[0_8px_40px_rgb(0,0,0,0.06)] border-0 overflow-hidden text-center group">
+              {/* Decorative Background Elements */}
+              <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-gradient-to-bl from-primary/10 to-transparent rounded-full blur-3xl opacity-50 group-hover:opacity-70 transition-opacity duration-700 pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-gradient-to-tr from-[hsl(var(--ds-cream))] to-transparent rounded-full blur-3xl opacity-50 group-hover:opacity-70 transition-opacity duration-700 pointer-events-none" />
 
-            <p className="text-foreground/70 max-w-2xl mx-auto mb-8 text-lg">
-              {language === "en"
-                ? "Download our full business plan to learn more about our services, methodologies, and how we can help your business grow."
-                : "ดาวน์โหลดแผนธุรกิจฉบับเต็มเพื่อเรียนรู้เพิ่มเติมเกี่ยวกับบริการ วิธีการทำงาน และสิ่งที่เราสามารถช่วยให้ธุรกิจของคุณเติบโต"}
-            </p>
+              <div className="relative z-10">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[hsl(var(--ds-chocolate))] mb-6 leading-tight">
+                  {t({
+                    en: "Discover Our Comprehensive Business Profile",
+                    th: "ค้นพบโปรไฟล์ธุรกิจฉบับสมบูรณ์ของเรา",
+                  })}
+                </h2>
 
-            {/* ปุ่มลิงก์ไป PDF (เอาแท็ก <button> ออก ใช้แค่ <a> เพียวๆ) */}
-            <div>
-              <a
-                href="https://lcinkptronrfkojdtzxw.supabase.co/storage/v1/object/public/images/DSBusinessPlan_1772785302701.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-4 bg-[hsl(var(--ds-chocolate))] text-white font-bold rounded-xl hover:bg-[hsl(var(--ds-chocolate))]/90 hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
-              >
-                {/* สามารถใส่ Icon เช่น Document หรือ Download ตรงนี้เพิ่มได้ครับ */}
-                <svg
-                  className="w-5 h-5 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+                <p className="text-muted-foreground max-w-2xl mx-auto mb-10 text-lg md:text-xl leading-relaxed">
+                  {t({
+                    en: "Download our full business plan to learn more about our services, methodologies, and how we can help your business grow.",
+                    th: "ดาวน์โหลดแผนธุรกิจฉบับเต็มเพื่อเรียนรู้เพิ่มเติมเกี่ยวกับบริการ วิธีการทำงาน และสิ่งที่เราสามารถช่วยให้ธุรกิจของคุณเติบโต",
+                  })}
+                </p>
+
+                {/* ปุ่มลิงก์ไป PDF */}
+                <a
+                  href="https://lcinkptronrfkojdtzxw.supabase.co/storage/v1/object/public/images/DSBusinessPlan_1772785302701.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-[hsl(var(--ds-chocolate))] text-white font-bold rounded-2xl hover:bg-primary hover:shadow-[0_8px_30px_rgb(222,49,99,0.3)] hover:-translate-y-1 transition-all duration-300 text-lg"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-                {language === "en"
-                  ? "See More Detail (PDF)"
-                  : "ดูรายละเอียดเพิ่มเติม (PDF)"}
-              </a>
+                  <svg
+                    className="w-6 h-6 mr-3"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  {t({
+                    en: "See More Detail (PDF)",
+                    th: "ดูรายละเอียดเพิ่มเติม (PDF)",
+                  })}
+                </a>
+              </div>
             </div>
-          </div>
+          </section>
         </div>
       </main>
 

@@ -44,169 +44,191 @@ const Navigation = () => {
 
   return (
     <>
-      {/* Fixed Header — locked scale with fixed heights instead of paddings */}
+      {/* 🎨 Fixed Header — ปรับ Glassmorphism และ Transition ให้สมูทที่สุด */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 border-b border-[hsl(var(--ds-chocolate))]/50 ${
+        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-500 border-b ${
           scrolled
-            ? "h-16 bg-card/95 backdrop-blur-xl shadow-lg"
-            : "h-20 bg-card/70 backdrop-blur-md shadow-sm"
+            ? "h-16 bg-white/80 backdrop-blur-xl border-border/50 shadow-[0_4px_30px_rgb(0,0,0,0.03)]"
+            : "h-20 bg-white/40 backdrop-blur-md border-transparent shadow-none"
         }`}
       >
         <nav
           className="max-w-7xl mx-auto px-6 w-full h-full flex items-center justify-between"
           style={{ transform: "translateZ(0)" }}
         >
-          {/* DS Logo */}
-          <Link to="/" className="flex items-center gap-1 group">
-            <span className="text-2xl font-bold text-[hsl(var(--ds-chocolate))] tracking-tight group-hover:text-primary transition-colors duration-300">
+          {/* โลโก้ DS */}
+          <Link to="/" className="flex items-center gap-1.5 group">
+            <span className="text-2xl font-black text-[hsl(var(--ds-chocolate))] tracking-tight group-hover:text-primary transition-colors duration-300">
               DS
             </span>
-            <span className="w-2.5 h-2.5 rounded-full bg-primary group-hover:scale-125 transition-transform duration-300" />
+            <span className="w-2 h-2 rounded-full bg-primary group-hover:scale-150 transition-transform duration-300" />
           </Link>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-2">
+          {/* Desktop Nav Links (ทรง Pill โค้งมน) */}
+          <div className="hidden md:flex items-center gap-1.5 p-1 bg-muted/20 backdrop-blur-sm rounded-full border border-border/50">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`relative px-5 h-[42px] flex items-center justify-center rounded-xl text-sm font-medium transition-all duration-200 border border-transparent ${
+                className={`relative px-5 h-9 flex items-center justify-center rounded-full text-sm font-semibold transition-all duration-300 outline-none ${
                   isActive(link.path)
-                    ? "text-primary-foreground bg-[hsl(var(--ds-chocolate))] shadow-md border-[hsl(var(--ds-chocolate))]/10"
-                    : "text-foreground hover:text-primary hover:bg-[hsl(var(--ds-chocolate))]/5 hover:border-[hsl(var(--ds-chocolate))]/20 hover:shadow-sm"
+                    ? "text-white bg-[hsl(var(--ds-chocolate))] shadow-md"
+                    : "text-[hsl(var(--ds-chocolate))]/70 hover:text-[hsl(var(--ds-chocolate))] hover:bg-white/60 hover:shadow-sm"
                 }`}
-                style={{ minWidth: "110px" }}
+                style={{ minWidth: "100px" }}
               >
-                <span className="relative z-10 font-bold flex items-center gap-2">
-                  <link.icon className="w-[18px] h-[18px]" />
+                <span className="relative z-10 flex items-center gap-2">
+                  <link.icon
+                    className={`w-[16px] h-[16px] ${isActive(link.path) ? "text-primary-foreground" : "text-primary"}`}
+                  />
                   {link.label}
                 </span>
-                {/* Active underline indicator */}
-                {isActive(link.path) && (
-                  <span className="absolute bottom-[3px] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] h-[3px] bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
-                )}
               </Link>
             ))}
           </div>
 
           {/* Language Switcher + Admin Logout + Mobile Menu */}
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* ปุ่มเปลี่ยนภาษา */}
             <Button
-              variant="outline"
+              variant="ghost"
               size="sm"
               onClick={toggleLanguage}
-              className="px-3 py-1 text-sm font-semibold border-border hover:bg-primary/10 hover:text-primary hover:border-primary/30 transition-all duration-200"
+              className="w-10 h-10 rounded-full font-bold text-[hsl(var(--ds-chocolate))] bg-white/50 border border-border/50 shadow-sm hover:bg-primary/10 hover:text-primary transition-all duration-300"
             >
               {language.toUpperCase()}
             </Button>
 
-            {/* 🔐 Admin Area Buttons */}
+            {/* 🔐 Admin Area Buttons (ปรับเป็นปุ่มโค้งมนมนแบบพรีเมียม) */}
             {user && (
-              <>
-                <Link to="/admin/media" className="hidden sm:block">
+              <div className="hidden sm:flex items-center gap-2 border-l border-border/60 pl-3 ml-1">
+                <Link to="/admin/media">
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
-                    className="px-3 py-1 text-sm shadow-sm border-primary/20 hover:bg-primary/10 hover:text-primary transition-all rounded-xl"
+                    className="h-9 px-3 text-xs font-semibold text-[hsl(var(--ds-chocolate))]/80 bg-white/50 border border-border/50 shadow-sm hover:bg-primary/5 hover:text-primary transition-all rounded-full"
                   >
-                    <FolderClosed className="w-4 h-4 mr-1.5" />
+                    <FolderClosed className="w-4 h-4 mr-1.5 text-primary" />
                     {language === "th" ? "จัดการไฟล์" : "Files"}
                   </Button>
                 </Link>
-                <Link to="/admin/company-info" className="hidden sm:block">
+                <Link to="/admin/company-info">
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
-                    className="px-3 py-1 text-sm shadow-sm border-primary/20 hover:bg-primary/10 hover:text-primary transition-all rounded-xl"
+                    className="h-9 px-3 text-xs font-semibold text-[hsl(var(--ds-chocolate))]/80 bg-white/50 border border-border/50 shadow-sm hover:bg-primary/5 hover:text-primary transition-all rounded-full"
                   >
-                    <Settings className="w-4 h-4 mr-1.5" />
-                    {language === "th" ? "ตั้งค่าบริษัท" : "Company Info"}
+                    <Settings className="w-4 h-4 mr-1.5 text-primary" />
+                    {language === "th" ? "ตั้งค่า" : "Config"}
                   </Button>
                 </Link>
                 <Button
                   variant="destructive"
                   size="sm"
                   onClick={signOut}
-                  className="hidden sm:flex px-3 py-1 text-sm shadow-sm rounded-xl"
+                  className="h-9 px-4 text-xs shadow-sm rounded-full bg-destructive/10 text-destructive border border-destructive/20 hover:bg-destructive hover:text-white transition-all"
                 >
                   <LogOut className="w-4 h-4 mr-1.5" />
                   {language === "th" ? "ออกระบบ" : "Logout"}
                 </Button>
-              </>
+              </div>
             )}
+
+            {/* Mobile Hamburger Toggle */}
             <button
-              className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
+              className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-white/50 border border-border/50 shadow-sm hover:bg-primary/10 hover:text-primary transition-colors text-[hsl(var(--ds-chocolate))]"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? (
-                <X className="w-6 h-6 text-foreground" />
+                <X className="w-5 h-5" />
               ) : (
-                <Menu className="w-6 h-6 text-foreground" />
+                <Menu className="w-5 h-5" />
               )}
             </button>
           </div>
         </nav>
 
-        {/* Mobile Menu — animated slide-down */}
-        {mobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-card/95 backdrop-blur-xl border-b border-border shadow-lg animate-slide-down">
-            <div className="flex flex-col p-4 gap-2">
-              {navLinks.map((link, idx) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`px-4 py-3 rounded-xl text-base font-medium transition-all shadow-sm animate-fade-in-up stagger-${idx + 1} ${
-                    isActive(link.path)
-                      ? "text-primary-foreground bg-[hsl(var(--ds-chocolate))] border-l-4 border-primary"
-                      : "text-foreground hover:bg-muted border-l-4 border-transparent"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <link.icon className="w-5 h-5" />
-                    {link.label}
+        {/* 📱 Mobile Menu — ปรับดีไซน์ให้นุ่มนวลขึ้น เป็นการ์ดลอยๆ */}
+        <div
+          className={`md:hidden absolute top-full left-0 right-0 overflow-hidden transition-all duration-300 ease-in-out ${
+            mobileMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="mx-4 mt-2 mb-4 p-4 bg-white/95 backdrop-blur-xl border border-border/50 shadow-[0_10px_40px_rgb(0,0,0,0.08)] rounded-3xl flex flex-col gap-1.5">
+            {navLinks.map((link, idx) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`px-4 py-3.5 rounded-2xl text-base font-semibold transition-all ${
+                  isActive(link.path)
+                    ? "text-[hsl(var(--ds-chocolate))] bg-primary/10" // สไตล์ใหม่ นุ่มนวลขึ้น
+                    : "text-foreground/70 hover:bg-muted hover:text-[hsl(var(--ds-chocolate))]"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`p-1.5 rounded-lg ${
+                      isActive(link.path)
+                        ? "bg-white shadow-sm"
+                        : "bg-transparent"
+                    }`}
+                  >
+                    <link.icon
+                      className={`w-5 h-5 ${
+                        isActive(link.path)
+                          ? "text-primary"
+                          : "text-muted-foreground"
+                      }`}
+                    />
                   </div>
-                </Link>
-              ))}
-
-              {/* 🔐 Admin Mobile Buttons */}
-              {user && (
-                <div className="mt-2 space-y-2 border-t border-border pt-2 animate-fade-in-up stagger-6">
-                  <Link
-                    to="/admin/media"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex justify-center items-center gap-2 w-full px-4 py-3 rounded-xl text-base font-medium transition-all text-primary border border-primary/20 bg-primary/5 hover:bg-primary/10"
-                  >
-                    <FolderClosed className="w-5 h-5" />
-                    {language === "th" ? "จัดการไฟล์" : "Files"}
-                  </Link>
-
-                  <Link
-                    to="/admin/company-info"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex justify-center items-center gap-2 w-full px-4 py-3 rounded-xl text-base font-medium transition-all text-primary border border-primary/20 bg-primary/5 hover:bg-primary/10"
-                  >
-                    <Settings className="w-5 h-5" />
-                    {language === "th" ? "ตั้งค่าบริษัท" : "Company Info"}
-                  </Link>
-
-                  <button
-                    onClick={() => {
-                      signOut();
-                      setMobileMenuOpen(false);
-                    }}
-                    className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-base font-medium transition-all text-destructive-foreground bg-destructive hover:bg-destructive/90"
-                  >
-                    <LogOut className="w-5 h-5" />
-                    {language === "th" ? "ออกจากระบบ" : "Logout"}
-                  </button>
+                  {link.label}
                 </div>
-              )}
-            </div>
+              </Link>
+            ))}
+
+            {/* 🔐 Admin Mobile Buttons */}
+            {user && (
+              <div className="mt-3 flex flex-col gap-2 border-t border-border/60 pt-4 px-2">
+                <Link
+                  to="/admin/media"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-semibold transition-all text-[hsl(var(--ds-chocolate))] bg-muted/50 hover:bg-primary/10"
+                >
+                  <div className="p-1.5 bg-white rounded-lg shadow-sm">
+                    <FolderClosed className="w-4 h-4 text-primary" />
+                  </div>
+                  {language === "th" ? "จัดการไฟล์ระบบ" : "Media Files"}
+                </Link>
+
+                <Link
+                  to="/admin/company-info"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-semibold transition-all text-[hsl(var(--ds-chocolate))] bg-muted/50 hover:bg-primary/10"
+                >
+                  <div className="p-1.5 bg-white rounded-lg shadow-sm">
+                    <Settings className="w-4 h-4 text-primary" />
+                  </div>
+                  {language === "th" ? "ตั้งค่าบริษัท" : "Company Settings"}
+                </Link>
+
+                <button
+                  onClick={() => {
+                    signOut();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="flex items-center justify-center gap-2 w-full mt-2 px-4 py-3 rounded-xl text-sm font-bold transition-all text-destructive bg-destructive/10 hover:bg-destructive hover:text-white"
+                >
+                  <LogOut className="w-4 h-4" />
+                  {language === "th" ? "ออกจากระบบ" : "Logout"}
+                </button>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </header>
 
+      {/* Spacer ป้องกันเนื้อหาถูก Header บัง */}
       <div className="h-20 w-full bg-transparent" aria-hidden="true" />
     </>
   );

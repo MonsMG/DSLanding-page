@@ -58,6 +58,28 @@ export interface ProductionWork {
 }
 
 // ==============================
+// 📸 Behind the Scenes
+// ==============================
+export interface BehindScene {
+  id: number;
+  created_at: string;
+
+  // หัวข้อ (Bilingual)
+  title_en: string;
+  title_th: string;
+
+  // คำอธิบาย (Bilingual)
+  description_en?: string;
+  description_th?: string;
+
+  // รูปภาพ
+  image_url?: string;
+
+  // เพื่อ Ordering
+  sort_order?: number;
+}
+
+// ==============================
 // 🎥 Production Gear
 // ==============================
 export interface ProductionGear {

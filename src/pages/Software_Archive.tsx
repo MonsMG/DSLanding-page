@@ -6,7 +6,7 @@
  */
 
 import { useState, useMemo } from "react";
-import { Loader2, Code2, Pencil, Trash2, Plus, LogOut } from "lucide-react";
+import { Loader2, Code2, Pencil, Trash2, Plus, ArrowRight, BadgeCheck } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
 import FloatingChatButton from "@/components/layout/FloatingChatButton";
 import Footer from "@/components/layout/Footer";
@@ -33,7 +33,7 @@ import {
 
 const ITArchive = () => {
   const { t, language } = useLanguage();
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -97,73 +97,64 @@ const ITArchive = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative overflow-hidden">
       <Navigation />
 
-      <main className="relative z-10 pt-32 pb-20 px-6">
+      <main className="relative z-10 pt-32 pb-24 px-6">
         <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-8 animate-fade-in-up">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-4">
+          {/* 🎯 Header */}
+          <div className="text-center mb-12 animate-fade-in-up">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] mb-6 tracking-tight">
               {t(contentData.archive.title)}
             </h1>
-            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
+            <p className="text-lg text-foreground/70 max-w-2xl mx-auto font-light">
               {t(contentData.archive.subtitle)}
             </p>
 
             {/* 🔐 Admin Controls */}
             {user && (
-              <div className="flex gap-2 justify-end mt-4 ">
-                <div className="flex gap-2 bg-white/80 p-2 rounded-lg border border-primary/20 shadow-lg">
-                  <Button asChild size="sm">
-                    <Link to="/admin/software/add">
-                      <Plus className="mr-2 h-4 w-4" />
-                      {language === "en" ? "Add Software" : "เพิ่มซอฟต์แวร์"}
-                    </Link>
-                  </Button>
-                </div>
+              <div className="flex justify-center mt-6">
+                <Button asChild size="sm" className="rounded-full px-6 shadow-sm">
+                  <Link to="/admin/software/add">
+                    <Plus className="mr-2 h-4 w-4" />
+                    {language === "en" ? "Add Software" : "เพิ่มซอฟต์แวร์"}
+                  </Link>
+                </Button>
               </div>
             )}
           </div>
 
-          {/* Loading State */}
+          {/* ⏳ Loading State */}
           {loading ? (
-            <div className="min-h-[40vh] flex flex-col items-center justify-center">
-              <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-              <p className="text-muted-foreground">
-                {language === "en"
-                  ? "Loading projects..."
-                  : "กำลังโหลดโปรเจกต์..."}
-              </p>
+            <div className="flex justify-center py-32">
+              <Loader2 className="h-10 w-10 animate-spin text-primary opacity-50" />
             </div>
           ) : error ? (
-            /* Error State */
-            <div className="min-h-[40vh] flex flex-col items-center justify-center">
-              <Code2 className="h-16 w-16 text-destructive/30 mb-4" />
-              <p className="text-destructive font-medium mb-2">
-                {language === "en"
-                  ? "Failed to load projects"
-                  : "โหลดโปรเจกต์ไม่สำเร็จ"}
+            /* ❌ Error State */
+            <div className="text-center py-20 bg-destructive/5 rounded-3xl border border-destructive/20 max-w-2xl mx-auto">
+              <Code2 className="h-12 w-12 text-destructive/40 mx-auto mb-4" />
+              <p className="text-destructive font-semibold text-lg mb-2">
+                {language === "en" ? "Failed to load projects" : "โหลดโปรเจกต์ไม่สำเร็จ"}
               </p>
-              <p className="text-muted-foreground text-sm">{error}</p>
+              <p className="text-destructive/70 text-sm mb-6">{error}</p>
               <Button
                 onClick={() => window.location.reload()}
-                className="mt-4 h-11 px-6 shadow-[0_4px_14px_rgb(222,49,99,0.3)] hover:shadow-[0_6px_20px_rgb(222,49,99,0.4)] transition-all duration-300 rounded-xl font-medium"
+                className="h-11 px-8 shadow-sm hover:shadow-md transition-all duration-300 rounded-full font-medium"
               >
                 {language === "en" ? "Try Again" : "ลองใหม่"}
               </Button>
             </div>
           ) : (
             <>
-              {/* Filter Section */}
-              <div className="mb-8">
-                <div className="flex flex-wrap justify-center gap-2">
+              {/* 🔍 Filter Section */}
+              <div className="mb-10 flex justify-center animate-fade-in-up stagger-1">
+                <div className="flex flex-wrap justify-center gap-2.5 bg-white/50 backdrop-blur-md p-2 rounded-2xl border border-border/50 shadow-sm">
                   <Badge
                     variant={selectedCategory === "All" ? "default" : "outline"}
-                    className={`cursor-pointer px-4 py-1.5 text-sm rounded-full transition-all ${
+                    className={`cursor-pointer px-5 py-2 text-sm rounded-xl transition-all duration-300 border-transparent ${
                       selectedCategory === "All"
-                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                        : "bg-card/80 hover:bg-muted border-border"
+                        ? "bg-primary text-primary-foreground shadow-sm"
+                        : "bg-transparent text-muted-foreground hover:bg-muted hover:text-primary"
                     }`}
                     onClick={() => setSelectedCategory("All")}
                   >
@@ -173,10 +164,10 @@ const ITArchive = () => {
                     <Badge
                       key={cat}
                       variant={selectedCategory === cat ? "default" : "outline"}
-                      className={`cursor-pointer px-4 py-1.5 text-sm rounded-full transition-all ${
+                      className={`cursor-pointer px-5 py-2 text-sm rounded-xl transition-all duration-300 border-transparent ${
                         selectedCategory === cat
-                          ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                          : "bg-card/80 hover:bg-muted border-border"
+                          ? "bg-primary text-primary-foreground shadow-sm"
+                          : "bg-transparent text-muted-foreground hover:bg-muted hover:text-primary"
                       }`}
                       onClick={() => setSelectedCategory(cat)}
                     >
@@ -186,46 +177,44 @@ const ITArchive = () => {
                 </div>
               </div>
 
-              {/* Projects Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              {/* 📚 Projects Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
                 {filteredProjects.map((project, idx) => (
                   <div
                     key={project.id}
                     className={`relative group animate-fade-in-up stagger-${Math.min(idx + 1, 8)}`}
                   >
-                    <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-md h-full flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                      {/* Cover */}
-                      <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 via-[hsl(var(--ds-cream))] to-[hsl(var(--ds-beige))] flex items-center justify-center relative overflow-hidden">
+                    {/* 🎨 Card ไร้ขอบ + เงาพรีเมียม แบบเดียวกับหน้า IT.tsx */}
+                    <div className="bg-white border-0 rounded-2xl overflow-hidden shadow-[0_2px_10px_rgb(0,0,0,0.04)] h-full flex flex-col hover:shadow-[0_10px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
+                      
+                      {/* 🖼️ Cover - ใช้ aspect-video */}
+                      <div className="aspect-video bg-muted flex items-center justify-center relative overflow-hidden">
                         {project.image_url ? (
                           <img
                             src={project.image_url}
                             alt={getLang(project.title_en, project.title_th)}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover object-center"
                           />
                         ) : (
-                          <Code2
-                            className="w-14 h-14 text-primary"
-                            strokeWidth={1.5}
-                          />
+                          <div className="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
+                            <BadgeCheck className="w-12 h-12 text-primary/20" />
+                          </div>
                         )}
                         {/* Category Badge */}
-                        <div className="absolute top-2 right-2 ">
-                          <Badge
-                            variant="secondary"
-                            className="text-xs bg-card/90 px-2 py-0.5 text-black"
-                          >
+                        <div className="absolute top-3 right-3">
+                          <Badge className="bg-white/90 backdrop-blur-sm text-[hsl(var(--ds-chocolate))] hover:bg-white shadow-sm border-none font-medium">
                             {project.category}
                           </Badge>
                         </div>
                         {/* Status Badge */}
-                        <div className="absolute top-2 left-2">
+                        <div className="absolute top-3 left-3">
                           <Badge
-                            className={`text-xs px-2 py-0.5 ${
+                            className={`text-[10px] px-2.5 py-0.5 border-none shadow-sm ${
                               project.status === "Active"
-                                ? "bg-green-500/90 text-white"
+                                ? "bg-emerald-500/90 text-white"
                                 : project.status === "Coming Soon"
                                   ? "bg-amber-500/90 text-white"
-                                  : "bg-gray-500/90 text-white"
+                                  : "bg-slate-500/90 text-white"
                             }`}
                           >
                             {project.status}
@@ -233,73 +222,64 @@ const ITArchive = () => {
                         </div>
                       </div>
 
-                      {/* Info */}
-                      <div className="p-4 flex flex-col flex-1">
-                        <h3 className="text-base font-bold text-primary mb-2">
+                      {/* 📝 Info */}
+                      <div className="p-5 flex flex-col flex-1 bg-gradient-to-b from-transparent to-muted/10">
+                        <h3 className="text-lg font-bold text-[hsl(var(--ds-chocolate))] mb-2 line-clamp-2 leading-tight">
                           {getLang(project.title_en, project.title_th)}
                         </h3>
-                        <p className="text-foreground/70 text-xs leading-relaxed line-clamp-2 mb-3 flex-1">
-                          {getLang(
-                            project.short_desc_en,
-                            project.short_desc_th,
-                          )}
+                        <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2 mb-5 flex-1">
+                          {getLang(project.short_desc_en, project.short_desc_th)}
                         </p>
 
                         {/* Action Buttons */}
-                        <div className="flex gap-2 mt-auto">
-                          <Link
-                            to={`/software/project/${project.id}`}
-                            className="flex-1"
+                        <div className="flex gap-2.5 mt-auto">
+                          <Button
+                            asChild
+                            variant={project.url ? "outline" : "default"}
+                            className={`flex-1 h-10 rounded-xl text-xs font-medium transition-all ${
+                              !project.url
+                                ? "shadow-sm hover:shadow"
+                                : "bg-white border-border/60 hover:bg-muted hover:text-primary shadow-sm"
+                            }`}
                           >
-                            <Button
-                              size="sm"
-                              className="w-full h-9 shadow-[0_4px_14px_rgb(222,49,99,0.3)] hover:shadow-[0_6px_20px_rgb(222,49,99,0.4)] transition-all duration-300 rounded-lg font-medium text-xs bg-primary text-primary-foreground"
-                            >
-                              {language === "en"
-                                ? "View Details"
-                                : "ดูรายละเอียด"}
-                            </Button>
-                          </Link>
+                            <Link to={`/software/project/${project.id}`}>
+                              {language === "en" ? "Details" : "รายละเอียด"}
+                            </Link>
+                          </Button>
+
                           {project.url && (
                             <Button
                               size="sm"
                               onClick={() =>
-                                window.open(
-                                  project.url,
-                                  "_blank",
-                                  "noopener,noreferrer",
-                                )
+                                window.open(project.url, "_blank", "noopener,noreferrer")
                               }
-                              className="flex-1 h-9 shadow-[0_4px_14px_rgb(222,49,99,0.3)] hover:shadow-[0_6px_20px_rgb(222,49,99,0.4)] transition-all duration-300 rounded-lg font-medium text-xs bg-primary text-primary-foreground"
+                              className="flex-1 h-10 shadow-sm hover:shadow transition-all rounded-xl text-xs font-medium"
                             >
-                              {language === "en" ? "Visit" : "เยี่ยมชม"}
+                              {language === "en" ? "Visit App" : "เปิดใช้งาน"}
                             </Button>
                           )}
                         </div>
                       </div>
                     </div>
 
-                    {/* 🔐 Admin: Edit / Delete overlay */}
+                    {/* 🔐 Admin: Edit / Delete overlay (Hover ถึงจะแสดง) */}
                     {user && (
-                      <div className="absolute top-10 right-3 z-50 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="absolute top-12 right-3 z-50 flex flex-col gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <Button
                           size="icon"
                           variant="secondary"
-                          className="h-7 w-7 bg-white/90 hover:bg-white shadow"
-                          onClick={() =>
-                            navigate(`/admin/software/edit/${project.id}`)
-                          }
+                          className="h-8 w-8 bg-white/90 backdrop-blur-sm hover:bg-white hover:text-primary shadow-sm border border-border/50 rounded-lg"
+                          onClick={() => navigate(`/admin/software/edit/${project.id}`)}
                         >
                           <Pencil className="h-3.5 w-3.5 text-primary" />
                         </Button>
 
-                        {/* AlertDialog ยืนยันก่อนลบ */}
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
                             <Button
                               size="icon"
                               variant="destructive"
-                              className="h-7 w-7 shadow"
+                              className="h-8 w-8 shadow-sm rounded-lg"
                               disabled={deletingId === project.id}
                             >
                               {deletingId === project.id ? (
@@ -309,20 +289,19 @@ const ITArchive = () => {
                               )}
                             </Button>
                           </AlertDialogTrigger>
-                          <AlertDialogContent>
+                          <AlertDialogContent className="rounded-2xl">
                             <AlertDialogHeader>
-                              <AlertDialogTitle>ยืนยันการลบ?</AlertDialogTitle>
+                              <AlertDialogTitle className="text-[hsl(var(--ds-chocolate))]">ยืนยันการลบ?</AlertDialogTitle>
                               <AlertDialogDescription>
-                                ลบ "
-                                {getLang(project.title_en, project.title_th)}" —
+                                ลบ "{getLang(project.title_en, project.title_th)}" —
                                 การลบจะไม่สามารถกู้คืนได้
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
                               <AlertDialogAction
                                 onClick={() => handleDelete(project.id)}
-                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl"
                               >
                                 Delete
                               </AlertDialogAction>
@@ -335,15 +314,15 @@ const ITArchive = () => {
                 ))}
               </div>
 
-              {/* Empty State */}
+              {/* 📭 Empty State */}
               {filteredProjects.length === 0 && (
-                <div className="text-center py-12 bg-muted/20 rounded-xl border border-border">
-                  <Code2 className="w-16 h-16 text-muted-foreground/30 mx-auto mb-4" />
-                  <p className="text-muted-foreground text-lg">
+                <div className="text-center py-24 bg-white/50 rounded-3xl border border-border/50 shadow-sm max-w-2xl mx-auto backdrop-blur-sm mt-8">
+                  <Code2 className="w-16 h-16 text-muted-foreground/20 mx-auto mb-4" />
+                  <p className="text-muted-foreground text-lg font-medium">
                     {t(contentData.archive.noResults)}
                   </p>
                   {user && (
-                    <Button asChild className="mt-4">
+                    <Button asChild className="mt-6 rounded-full px-6 shadow-md">
                       <Link to="/admin/software/add">
                         <Plus className="mr-2 h-4 w-4" /> Add First Project
                       </Link>

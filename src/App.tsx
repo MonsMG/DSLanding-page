@@ -45,6 +45,8 @@ import AddGear from "./pages/admin/gear/add";
 import EditGear from "./pages/admin/gear/edit";
 import AdminCompanyInfo from "./pages/admin/company/index";
 import AdminMediaManager from "./pages/admin/media/index";
+import AddBehindScene from "./pages/admin/behind-scenes/add";
+import EditBehindScene from "./pages/admin/behind-scenes/edit";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -140,6 +142,22 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <AddGear />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/behind-scenes/add"
+                element={
+                  <ProtectedRoute>
+                    <AddBehindScene />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/behind-scenes/edit/:id"
+                element={
+                  <ProtectedRoute>
+                    <EditBehindScene />
                   </ProtectedRoute>
                 }
               />

@@ -39,6 +39,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/lib/supabase";
 import { useSoftwareProjects } from "@/hooks/useSoftwareProjects";
 import { useToast } from "@/hooks/use-toast";
+import { SoftwareProject } from "@/types";
 
 // UI Components
 import {
@@ -55,7 +56,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   AlertDialog,
@@ -123,8 +123,6 @@ const skills = [
 // ==========================================
 // Sub-Component: ProjectCardItem
 // ==========================================
-import { SoftwareProject } from "@/types";
-
 interface ProjectCardItemProps {
   project: SoftwareProject;
   idx: number;
@@ -150,15 +148,24 @@ const ProjectCardItem = ({
 }: ProjectCardItemProps) => {
   return (
     <Card
-      className={`flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-none shadow-md overflow-hidden group ${isFeatured ? "ring-2 ring-primary/50" : ""} animate-fade-in-up stagger-${Math.min(idx + 1, 6)}`}
+      // 🎨 ใส่ border-0 เข้าไปเพื่อบังคับลบเส้นขอบทุกชนิดทิ้ง!
+      className={`flex flex-col h-full hover:-translate-y-1 transition-all duration-300 overflow-hidden group bg-white animate-fade-in-up stagger-${Math.min(idx + 1, 6)}
+        ${
+          isFeatured
+            ? "border-0 shadow-[0_4px_20px_rgb(0,0,0,0.08)] hover:shadow-[0_12px_30px_rgb(222,49,99,0.15)]" // ไร้ขอบ + ใช้เงาฟุ้งๆ สีอมแดงให้รู้ว่าเป็น Featured
+            : "border-0 shadow-[0_2px_10px_rgb(0,0,0,0.04)] hover:shadow-lg" // ไร้ขอบ + เงาเทาปกติ
+        }
+      `}
     >
-      {/* Project Image */}
-      <div className="h-48 bg-muted relative overflow-hidden">
+      {/* 🖼️ Project Image */}
+      {/* ปรับใช้ aspect-video (16:9) เพื่อบังคับให้รูปสัดส่วนเท่ากันทุกใบ และไม่เพี้ยนตามความกว้างจอ */}
+      <div className="aspect-video w-full bg-muted relative overflow-hidden">
         {project.image_url ? (
           <img
             src={project.image_url}
             alt="Cover"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            // เอาเอฟเฟกต์ซูมออก และใช้ object-center เพื่อให้จุดโฟกัสอยู่ตรงกลางเสมอ
+            className="w-full h-full object-cover object-center"
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
@@ -166,31 +173,31 @@ const ProjectCardItem = ({
           </div>
         )}
         <div className="absolute top-3 right-3 flex flex-col gap-2 items-end">
-          <Badge className="bg-white/90 text-primary hover:bg-white shadow-sm">
+          <Badge className="bg-white/90 backdrop-blur-sm text-[hsl(var(--ds-chocolate))] hover:bg-white shadow-sm border-none">
             {project.category}
           </Badge>
         </div>
       </div>
 
-      <CardHeader>
-        <CardTitle className="text-xl text-[hsl(var(--ds-chocolate))] line-clamp-2">
+      <CardHeader className="pt-5 pb-2">
+        <CardTitle className="text-xl font-bold text-[hsl(var(--ds-chocolate))] line-clamp-2 leading-tight">
           {getLang(project.title_en, project.title_th)}
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="flex-grow">
-        <p className="text-muted-foreground text-sm line-clamp-3">
+      <CardContent className="flex-grow pb-4">
+        <p className="text-muted-foreground text-sm line-clamp-3 leading-relaxed">
           {getLang(project.short_desc_en, project.short_desc_th)}
         </p>
       </CardContent>
 
-      <CardFooter className="flex flex-col gap-3 pt-5 pb-5 border-t bg-gradient-to-b from-transparent to-muted/20">
+      <CardFooter className="flex flex-col gap-4 pt-4 pb-5 border-t border-border/40 bg-gradient-to-b from-transparent to-muted/10">
         <div className="flex w-full gap-3">
           {/* ปุ่ม: เปิด App */}
           {project.url && (
             <Button
               asChild
-              className="flex-1 h-11 shadow-[0_4px_14px_rgb(222,49,99,0.3)] hover:shadow-[0_6px_20px_rgb(222,49,99,0.4)] transition-all duration-300 rounded-xl font-medium"
+              className="flex-1 h-10 shadow-sm hover:shadow transition-all duration-300 rounded-xl font-medium"
               variant="default"
             >
               <a href={project.url} target="_blank" rel="noreferrer">
@@ -204,7 +211,11 @@ const ProjectCardItem = ({
           <Button
             asChild
             variant={project.url ? "outline" : "default"}
-            className={`flex-1 h-11 transition-all duration-300 rounded-xl font-medium ${!project.url ? "shadow-[0_4px_14px_rgb(222,49,99,0.3)] hover:shadow-[0_6px_20px_rgb(222,49,99,0.4)]" : "bg-white/50 backdrop-blur-md border border-[hsl(var(--ds-red-orange))]/30 hover:bg-[hsl(var(--ds-cream))] hover:text-primary shadow-sm"}`}
+            className={`flex-1 h-10 transition-all duration-300 rounded-xl font-medium ${
+              !project.url
+                ? "shadow-sm hover:shadow"
+                : "bg-white border-border/60 hover:bg-muted hover:text-primary shadow-sm"
+            }`}
           >
             <Link to={`/software/project/${project.id}`}>
               <Info className="mr-2 h-4 w-4" />
@@ -215,43 +226,47 @@ const ProjectCardItem = ({
 
         {/* 🔐 Admin: Edit / Delete */}
         {user && (
-          <div className="flex gap-2 w-full pt-2 border-t border-dashed border-primary/30">
+          <div className="flex gap-3 w-full pt-3 border-t border-dashed border-border">
             <Button
-              variant="secondary"
-              className="flex-1 text-xs h-8"
+              variant="outline"
+              className="flex-1 text-xs h-8 rounded-lg border-border/60 hover:bg-primary/5 hover:text-primary"
               onClick={() => navigate(`/admin/software/edit/${project.id}`)}
             >
-              <Pencil className="mr-2 h-3 w-3" /> Edit
+              <Pencil className="mr-1.5 h-3 w-3" /> Edit
             </Button>
 
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button
-                  variant="destructive"
-                  className="flex-1 text-xs h-8"
+                  variant="outline"
+                  className="flex-1 text-xs h-8 rounded-lg border-destructive/20 text-destructive hover:bg-destructive/10 hover:text-destructive"
                   disabled={deletingId === project.id}
                 >
                   {deletingId === project.id ? (
-                    <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                    <Loader2 className="mr-1.5 h-3 w-3 animate-spin" />
                   ) : (
-                    <Trash2 className="mr-2 h-3 w-3" />
+                    <Trash2 className="mr-1.5 h-3 w-3" />
                   )}
                   Delete
                 </Button>
               </AlertDialogTrigger>
-              <AlertDialogContent>
+              <AlertDialogContent className="rounded-2xl">
                 <AlertDialogHeader>
-                  <AlertDialogTitle>ยืนยันการลบ?</AlertDialogTitle>
+                  <AlertDialogTitle className="text-[hsl(var(--ds-chocolate))]">
+                    ยืนยันการลบ?
+                  </AlertDialogTitle>
                   <AlertDialogDescription>
                     ลบ "{getLang(project.title_en, project.title_th)}" —
                     การลบจะไม่สามารถกู้คืนได้
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel className="rounded-xl">
+                    Cancel
+                  </AlertDialogCancel>
                   <AlertDialogAction
                     onClick={() => handleDelete(project.id)}
-                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl"
                   >
                     Delete
                   </AlertDialogAction>
@@ -274,7 +289,7 @@ const IT = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // ✅ ใช้ custom hook แทน inline fetch (fix #5)
+  // ✅ ใช้ custom hook แทน inline fetch
   const { projects: allProjects, loading, error } = useSoftwareProjects();
 
   // State สำหรับ category filter
@@ -285,11 +300,6 @@ const IT = () => {
 
   // กรองโปรเจกต์ทั่วไป (ไม่ใช่ Featured) นำไปแสดงผลและเข้า Filter
   const nonFeaturedProjects = activeProjects.filter((p) => !p.featured_slot);
-
-  // สร้างรายการ Category แบบไม่ซ้ำเพื่อทำปุ่ม Filter จาก **เฉพาะ Normal Projects**
-  const categories = Array.from(
-    new Set(nonFeaturedProjects.map((p) => p.category || "Other")),
-  ).sort();
 
   // กรองโปรเจกต์ที่จะแสดง
   const displayedProjects =
@@ -312,7 +322,6 @@ const IT = () => {
   const handleSlotChange = async (projectId: number, targetSlot: number) => {
     try {
       setSavingSlot(true);
-      // 1. เคลียร์โปรเจกต์เดิมที่มี slot นี้อยู่ให้ออกเป็น null
       const existingProject = featuredProjects.find(
         (p) => p.featured_slot === targetSlot,
       );
@@ -323,8 +332,6 @@ const IT = () => {
           .eq("id", existingProject.id);
       }
 
-      // 2. เคลียร์โปรเจกต์ที่จะตั้ง (ถ้ามันอยู่ slot อื่นอยู่ก่อนแล้ว) แต่เพื่อให้ง่าย เราแค่ยัดค่าใส่เลย
-      // 3. เซฟโปรเจกต์เป้าหมายเป็น Slot ใหม่
       const { error } = await supabase
         .from("software_projects")
         .update({ featured_slot: targetSlot })
@@ -379,7 +386,7 @@ const IT = () => {
     return language === "en" ? en || th || "" : th || en || "";
   };
 
-  // ✅ Delete handler ที่ถูกต้อง (fix #1)
+  // ✅ Delete handler
   const handleDelete = async (id: number) => {
     setDeletingId(id);
     try {
@@ -409,7 +416,6 @@ const IT = () => {
       }
 
       toast({ title: "Deleted", description: "Project deleted successfully." });
-      // Reload data สด ๆ แทน window.location.reload()
       window.location.reload();
     } catch {
       toast({
@@ -419,13 +425,6 @@ const IT = () => {
       });
     } finally {
       setDeletingId(null);
-    }
-  };
-
-  const scrollToProjects = () => {
-    const section = document.getElementById("software-projects");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -455,45 +454,45 @@ const IT = () => {
       </section>
 
       {/* ===== Section A: Software Projects (Dynamic) ===== */}
-      <section id="software-projects" className="relative z-10 py-12 px-[25px]">
+      <section
+        id="software-projects"
+        className="relative z-10 py-16 md:py-24 px-6"
+      >
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8 animate-fade-in-up md:flex md:justify-between md:items-end">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--ds-chocolate))] text-center md:text-left">
+          {/* 🎯 Header & Admin Controls */}
+          <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[hsl(var(--ds-chocolate))] tracking-tight text-center md:text-left">
               {language === "en" ? "Software Projects" : "โปรเจกต์ซอฟต์แวร์"}
             </h2>
 
-            {/* 🔐 Admin Controls */}
             {user && (
-              <div className="flex flex-wrap justify-center gap-2 mt-4 md:mt-0 bg-white/80 p-2 rounded-lg border border-primary/20 shadow-lg w-fit mx-auto md:mx-0">
-                {/* ปุ่ม Manage Slots */}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setSlotModalOpen(true)}
-                  className="border-primary/50 text-primary hover:bg-primary hover:text-white"
-                >
-                  <Settings className="mr-2 h-4 w-4" /> Manage Slots
-                </Button>
-              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSlotModalOpen(true)}
+                className="border-[hsl(var(--ds-red-orange))]/30 text-[hsl(var(--ds-red-orange))] hover:bg-[hsl(var(--ds-red-orange))] hover:text-white rounded-full px-6 transition-all shadow-sm"
+              >
+                <Settings className="mr-2 h-4 w-4" /> Manage Slots
+              </Button>
             )}
           </div>
 
-          {/* Slot Management Modal (Admin Only) */}
+          {/* ⚙️ Slot Management Modal (Admin Only) */}
           {user && (
             <Dialog open={slotModalOpen} onOpenChange={setSlotModalOpen}>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle className="text-2xl flex items-center gap-2 text-[hsl(var(--ds-chocolate))]">
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl">
+                <DialogHeader className="mb-4">
+                  <DialogTitle className="text-2xl flex items-center gap-2 text-[hsl(var(--ds-chocolate))] font-bold">
                     <Settings className="w-6 h-6 text-primary" />
                     Manage Featured Slots
                   </DialogTitle>
-                  <DialogDescription>
+                  <DialogDescription className="text-base">
                     Select which projects should appear in Slot 1, 2, and 3 at
                     the top of the IT frontpage.
                   </DialogDescription>
                 </DialogHeader>
 
-                <div className="space-y-6 py-4">
+                <div className="space-y-4">
                   {[1, 2, 3].map((slotNum) => {
                     const currentProjectInSlot = featuredProjects.find(
                       (p) => p.featured_slot === slotNum,
@@ -502,64 +501,68 @@ const IT = () => {
                     return (
                       <div
                         key={slotNum}
-                        className="bg-muted/30 p-4 rounded-xl border border-border flex flex-col gap-3"
+                        className="bg-white p-5 rounded-xl border border-border shadow-sm flex flex-col gap-4 transition-all hover:border-primary/30"
                       >
                         <div className="flex items-center justify-between">
-                          <h4 className="font-bold text-lg text-primary flex items-center gap-2">
-                            <BadgeCheck className="w-5 h-5" />
+                          <h4 className="font-semibold text-lg text-[hsl(var(--ds-chocolate))] flex items-center gap-2">
+                            <BadgeCheck className="w-5 h-5 text-primary" />
                             Slot {slotNum}
                           </h4>
                           {currentProjectInSlot && (
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="text-destructive hover:bg-destructive/10 hover:text-destructive h-8 px-2"
+                              className="text-destructive hover:bg-destructive/10 hover:text-destructive h-8 px-3 rounded-md"
                               disabled={savingSlot}
                               onClick={() =>
                                 handleClearSlot(currentProjectInSlot.id)
                               }
                             >
-                              <Trash2 className="w-4 h-4 mr-1" /> Remove
+                              <Trash2 className="w-4 h-4 mr-1.5" /> Remove
                             </Button>
                           )}
                         </div>
 
-                        <div className="flex flex-col sm:flex-row gap-3">
-                          <Select
-                            disabled={savingSlot}
-                            value={
-                              currentProjectInSlot?.id.toString() || "none"
+                        <Select
+                          disabled={savingSlot}
+                          value={currentProjectInSlot?.id.toString() || "none"}
+                          onValueChange={(val) => {
+                            if (val !== "none") {
+                              handleSlotChange(parseInt(val), slotNum);
                             }
-                            onValueChange={(val) => {
-                              if (val !== "none") {
-                                handleSlotChange(parseInt(val), slotNum);
-                              }
-                            }}
-                          >
-                            <SelectTrigger className="w-full bg-white">
-                              <SelectValue placeholder="Select a project for this slot..." />
-                            </SelectTrigger>
-                            <SelectContent className="max-h-[300px]">
+                          }}
+                        >
+                          <SelectTrigger className="w-full bg-slate-50/50 h-11 border-border/80 focus:ring-primary/20">
+                            <SelectValue placeholder="Select a project for this slot..." />
+                          </SelectTrigger>
+                          <SelectContent className="max-h-[300px]">
+                            <SelectItem
+                              value="none"
+                              disabled
+                              className="font-medium text-muted-foreground"
+                            >
+                              {currentProjectInSlot
+                                ? "Currently selected:"
+                                : "-- Select a project --"}
+                            </SelectItem>
+                            {activeProjects.map((p) => (
                               <SelectItem
-                                value="none"
-                                disabled
-                                className="font-medium text-muted-foreground"
+                                key={p.id}
+                                value={p.id.toString()}
+                                className="py-2.5"
                               >
-                                {currentProjectInSlot
-                                  ? "Currently selected:"
-                                  : "-- Select a project --"}
+                                {p.featured_slot ? (
+                                  <span className="text-primary font-medium mr-1">
+                                    [Slot {p.featured_slot}]
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                                {p.title_en}
                               </SelectItem>
-                              {activeProjects.map((p) => (
-                                <SelectItem key={p.id} value={p.id.toString()}>
-                                  {p.featured_slot
-                                    ? `[Slot ${p.featured_slot}] `
-                                    : ""}
-                                  {p.title_en}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
                     );
                   })}
@@ -568,32 +571,32 @@ const IT = () => {
             </Dialog>
           )}
 
-          {/* Loading State */}
+          {/* ⏳ Loading State */}
           {loading ? (
-            <div className="flex justify-center py-20">
-              <Loader2 className="h-10 w-10 animate-spin text-primary" />
+            <div className="flex justify-center py-32">
+              <Loader2 className="h-10 w-10 animate-spin text-primary opacity-50" />
             </div>
           ) : error ? (
-            /* ✅ Error State (fix #6) */
-            <div className="text-center py-20 bg-destructive/5 rounded-xl border border-destructive/20">
-              <p className="text-destructive font-medium mb-2">
+            /* ❌ Error State */
+            <div className="text-center py-20 bg-destructive/5 rounded-2xl border border-destructive/20 max-w-2xl mx-auto">
+              <p className="text-destructive font-semibold text-lg mb-2">
                 Failed to load projects
               </p>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-destructive/70">
                 Please refresh the page or try again later.
               </p>
             </div>
           ) : activeProjects.length === 0 ? (
-            /* ✅ Empty State (fix #6) */
-            <div className="text-center py-20 bg-muted/20 rounded-xl border border-border">
-              <BadgeCheck className="w-16 h-16 text-muted-foreground/30 mx-auto mb-4" />
-              <p className="text-muted-foreground font-medium">
+            /* 📭 Empty State */
+            <div className="text-center py-24 bg-white/50 rounded-3xl border border-border/50 shadow-sm max-w-2xl mx-auto backdrop-blur-sm">
+              <BadgeCheck className="w-16 h-16 text-muted-foreground/20 mx-auto mb-4" />
+              <p className="text-muted-foreground font-medium text-lg">
                 {language === "en"
                   ? "No projects available yet."
                   : "ยังไม่มีโปรเจกต์ในขณะนี้"}
               </p>
               {user && (
-                <Button asChild className="mt-4">
+                <Button asChild className="mt-6 rounded-full px-6 shadow-md">
                   <Link to="/admin/software/add">
                     <Plus className="mr-2 h-4 w-4" /> Add First Project
                   </Link>
@@ -602,16 +605,10 @@ const IT = () => {
             </div>
           ) : (
             <>
-              {/* === FEATURED PROJECTS SECITON === */}
+              {/* ⭐ FEATURED PROJECTS */}
               {selectedCategory === "All" && featuredProjects.length > 0 && (
                 <div className="mb-16">
-                  {/* <h3 className="text-2xl font-bold text-[hsl(var(--ds-red-orange))] flex items-center gap-2 mb-6">
-                    <BadgeCheck className="w-6 h-6" />
-                    {language === "en"
-                      ? "Featured Projects"
-                      : "โปรเจกต์โดดเด่น"}
-                  </h3> */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                     {featuredProjects.map((project, idx) => (
                       <ProjectCardItem
                         key={project.id}
@@ -628,21 +625,22 @@ const IT = () => {
                     ))}
                   </div>
 
+                  {/* Elegant Divider */}
                   {displayedProjects.length > 0 && (
-                    <div className="mt-12 mb-6 flex items-center">
-                      <div className="h-px bg-border flex-grow"></div>
-                      <span className="px-4 text-muted-foreground bg-background">
+                    <div className="mt-16 mb-8 flex items-center justify-center">
+                      <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent flex-grow max-w-[200px]"></div>
+                      <span className="px-6 text-sm font-medium tracking-widest uppercase text-muted-foreground/60">
                         {language === "en" ? "More Projects" : "โปรเจกต์อื่นๆ"}
                       </span>
-                      <div className="h-px bg-border flex-grow"></div>
+                      <div className="h-px bg-gradient-to-r from-border via-border to-transparent flex-grow max-w-[200px]"></div>
                     </div>
                   )}
                 </div>
               )}
 
-              {/* === NORMAL PROJECTS GRID === */}
+              {/* 📚 NORMAL PROJECTS */}
               {displayedProjects.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                   {displayedProjects.map((project, idx) => (
                     <ProjectCardItem
                       key={project.id}
@@ -662,15 +660,15 @@ const IT = () => {
             </>
           )}
 
-          {/* View Archive */}
-          <div className="flex justify-end mt-12">
+          {/* 🚀 View Archive */}
+          <div className="flex justify-center mt-16">
             <Link to="/software/archive">
               <Button
                 size="lg"
                 variant="outline"
-                className="h-14 px-8 text-base bg-white/50 backdrop-blur-md border border-[hsl(var(--ds-red-orange))]/30 text-[hsl(var(--ds-chocolate))] hover:bg-[hsl(var(--ds-cream))] hover:text-primary transition-all duration-300 rounded-[20px] shadow-sm font-medium tracking-wide"
+                className="h-14 px-10 text-base bg-white/50 backdrop-blur-md border border-border/60 text-[hsl(var(--ds-chocolate))] hover:bg-white hover:border-[hsl(var(--ds-red-orange))]/50 hover:text-[hsl(var(--ds-red-orange))] transition-all duration-300 rounded-full shadow-sm hover:shadow-md font-medium"
               >
-                {language === "en" ? "View More Archive" : "ดูผลงานทั้งหมด"}
+                {language === "en" ? "View Archive" : "ดูผลงานทั้งหมด"}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
