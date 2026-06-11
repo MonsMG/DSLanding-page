@@ -1,26 +1,31 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
-
 # Editor directories and files
+.agents
+.claude
+.cursor
+.gemini
+.idea
 .vscode/*
 !.vscode/extensions.json
-.idea
 .DS_Store
-*.suo
-*.ntvs*
 *.njsproj
+*.ntvs*
 *.sln
+*.suo
 *.sw?
-informationSupabase.md
+
+# Logs
+*.log
+lerna-debug.log*
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Project files
 .env.local
+*.local
+dist
+dist-ssr
+informationSupabase.md
+node_modules
+repomix-output.xml

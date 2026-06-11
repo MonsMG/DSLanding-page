@@ -27,7 +27,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Image as ImageIcon, X, Upload, Trash2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 // ✅ ค่า config สำหรับ validation
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB

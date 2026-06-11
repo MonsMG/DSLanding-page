@@ -61,6 +61,8 @@ export default function EditSoftware() {
 
   const [targetsEn, setTargetsEn] = useState<string[]>([""]);
   const [featuresEn, setFeaturesEn] = useState<string[]>([""]);
+  const [targetsTh, setTargetsTh] = useState<string[]>([""]);
+  const [featuresTh, setFeaturesTh] = useState<string[]>([""]);
 
   const handleDynamicChange = (
     setter: React.Dispatch<React.SetStateAction<string[]>>,
@@ -113,6 +115,16 @@ export default function EditSoftware() {
           setFeaturesEn(data.features_en.split("\n"));
         } else {
           setFeaturesEn([""]);
+        }
+        if (data.target_th) {
+          setTargetsTh(data.target_th.split("\n"));
+        } else {
+          setTargetsTh([""]);
+        }
+        if (data.features_th) {
+          setFeaturesTh(data.features_th.split("\n"));
+        } else {
+          setFeaturesTh([""]);
         }
         setIsLoading(false);
       }
@@ -175,28 +187,23 @@ export default function EditSoftware() {
 
     setIsSaving(true);
     try {
-      // ตัด id และ created_at ออก (ไม่ควรส่งไป update)
-      // แล้ว trim ข้อมูลทุก field
-      const {
-        id: _,
-        created_at: __,
-        ...rawUpdates
-      } = formData as unknown as {
-        id: string;
-        created_at: string;
-        [key: string]: unknown;
+      // ระบุ field ที่จะ update แบบชัดเจน (ไม่ spread ทั้ง row — กัน column แปลกปลอม)
+      const updates = {
+        title_en: formData.title_en.trim(),
+        title_th: formData.title_th.trim(),
+        short_desc_en: formData.short_desc_en?.trim() ?? "",
+        short_desc_th: formData.short_desc_th?.trim() ?? "",
+        full_desc_en: formData.full_desc_en?.trim() ?? "",
+        full_desc_th: formData.full_desc_th?.trim() ?? "",
+        url: formData.url?.trim() ?? "",
+        image_url: formData.image_url?.trim() ?? "",
+        category: formData.category?.trim() ?? "",
+        status: formData.status,
+        target_en: targetsEn.filter((t) => t.trim() !== "").join("\n"),
+        features_en: featuresEn.filter((f) => f.trim() !== "").join("\n"),
+        target_th: targetsTh.filter((t) => t.trim() !== "").join("\n"),
+        features_th: featuresTh.filter((f) => f.trim() !== "").join("\n"),
       };
-      const updates = Object.fromEntries(
-        Object.entries(rawUpdates).map(([key, val]) => [
-          key,
-          typeof val === "string" ? (val as string).trim() : val,
-        ]),
-      );
-
-      updates.target_en = targetsEn.filter((t) => t.trim() !== "").join("\n");
-      updates.features_en = featuresEn
-        .filter((f) => f.trim() !== "")
-        .join("\n");
 
       const { error } = await supabase
         .from("software_projects")
@@ -488,6 +495,99 @@ export default function EditSoftware() {
                           size="icon"
                           onClick={() =>
                             removeDynamicField(setFeaturesEn, index)
+                          }
+                          className="text-muted-foreground hover:text-destructive flex-shrink-0 h-10 w-10"
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* — กลุ่มเป้าหมาย & ฟีเจอร์ (TH) — */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                      Target Audience (TH)
+                    </Label>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => addDynamicField(setTargetsTh)}
+                      className="text-[hsl(var(--ds-red-orange))] hover:bg-[hsl(var(--ds-red-orange))]/10 h-8 px-2"
+                    >
+                      <Plus className="w-4 h-4 mr-1" /> Add
+                    </Button>
+                  </div>
+                  <div className="space-y-3">
+                    {targetsTh.map((item, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <Input
+                          value={item}
+                          onChange={(e) =>
+                            handleDynamicChange(
+                              setTargetsTh,
+                              index,
+                              e.target.value,
+                            )
+                          }
+                          placeholder="เช่น นักเรียน"
+                          className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => removeDynamicField(setTargetsTh, index)}
+                          className="text-muted-foreground hover:text-destructive flex-shrink-0 h-10 w-10"
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="font-semibold text-[hsl(var(--ds-chocolate))] text-base">
+                      Key Features (TH)
+                    </Label>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => addDynamicField(setFeaturesTh)}
+                      className="text-[hsl(var(--ds-red-orange))] hover:bg-[hsl(var(--ds-red-orange))]/10 h-8 px-2"
+                    >
+                      <Plus className="w-4 h-4 mr-1" /> Add
+                    </Button>
+                  </div>
+                  <div className="space-y-3">
+                    {featuresTh.map((item, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <Input
+                          value={item}
+                          onChange={(e) =>
+                            handleDynamicChange(
+                              setFeaturesTh,
+                              index,
+                              e.target.value,
+                            )
+                          }
+                          placeholder="เช่น ซิงค์ข้อมูลแบบเรียลไทม์"
+                          className="h-12 rounded-xl bg-white/50 focus:bg-white transition-colors"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() =>
+                            removeDynamicField(setFeaturesTh, index)
                           }
                           className="text-muted-foreground hover:text-destructive flex-shrink-0 h-10 w-10"
                         >

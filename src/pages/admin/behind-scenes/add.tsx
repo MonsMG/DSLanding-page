@@ -26,7 +26,7 @@ import {
   Hash,
 } from "lucide-react";
 import { ImageUpload } from "@/components/ui/ImageUpload";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function AddBehindScene() {
   const navigate = useNavigate();

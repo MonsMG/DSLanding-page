@@ -1,0 +1,20 @@
+# Render Blueprint — DSLanding (Static Site / Vite SPA)
+# วิธีใช้: push ขึ้น GitHub → Render Dashboard → New → Blueprint → เลือก repo
+# จากนั้นกรอกค่า env 2 ตัวด้านล่าง (sync: false = Render จะถามตอน deploy)
+services:
+  - type: web
+    name: dslanding
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    # SPA rewrite — ทุก path เสิร์ฟ index.html (กัน 404 ตอน refresh /software)
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      # ค่าของ Supabase Cloud (ไม่ใช่ของ local Docker!)
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false

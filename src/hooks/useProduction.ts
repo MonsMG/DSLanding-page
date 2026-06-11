@@ -1,7 +1,7 @@
 // 📂 src/hooks/useProduction.ts
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
-import type { ProductionWork, ProductionGear } from "@/types";
+import type { ProductionGear } from "@/types";
 
 // ==============================
 // 📊 State Interfaces
@@ -73,44 +73,6 @@ function useSupabaseQuery<T>(
   }, [...dependencies, trigger]);
 
   return { data, loading, error, refetch };
-}
-
-// ==============================
-// 🎬 Custom Hook: useProductionWorks
-// ==============================
-/**
- * Custom Hook สำหรับดึงข้อมูล Production Works จาก Supabase
- *
- * @returns {Object} - works, loading, error
- *
- * @example
- * const { works, loading, error } = useProductionWorks();
- */
-export function useProductionWorks() {
-  const queryFn = async () => {
-    const { data, error } = await supabase
-      .from("production_works")
-      .select("*")
-      .order("featured", { ascending: false })
-      .order("year", { ascending: false });
-
-    if (error) throw error;
-    return data || [];
-  };
-
-  const {
-    data: works,
-    loading,
-    error,
-    refetch,
-  } = useSupabaseQuery<ProductionWork[]>(
-    queryFn,
-    [],
-    [],
-    "เกิดข้อผิดพลาดในการโหลดข้อมูลผลงาน",
-  );
-
-  return { works, loading, error };
 }
 
 // ==============================
@@ -201,48 +163,6 @@ export function useProduction() {
   );
 
   return { works, gear, loading, error };
-}
-
-// ==============================
-// 🎬 Custom Hook: useProductionWorkById
-// ==============================
-/**
- * Custom Hook สำหรับดึงข้อมูล Production Work เดียวตาม ID
- *
- * @param {number | null} id - Work ID ที่ต้องการดึง
- * @returns {Object} - work, loading, error
- *
- * @example
- * const { work, loading, error } = useProductionWorkById(1);
- */
-export function useProductionWorkById(id: number | null) {
-  const queryFn = async () => {
-    // ถ้าไม่มี id ให้คืนค่า null
-    if (!id) return null;
-
-    const { data, error } = await supabase
-      .from("production_works")
-      .select("*")
-      .eq("id", id)
-      .single();
-
-    if (error) throw error;
-    return data;
-  };
-
-  const {
-    data: work,
-    loading,
-    error,
-    refetch,
-  } = useSupabaseQuery<ProductionWork | null>(
-    queryFn,
-    [id], // ดึงข้อมูลใหม่เมื่อ id เปลี่ยน
-    null,
-    "ไม่พบข้อมูลผลงาน",
-  );
-
-  return { work, loading, error, refetch };
 }
 
 // ==============================

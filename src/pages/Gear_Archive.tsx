@@ -17,7 +17,7 @@ import { contentData } from "@/data/content";
 import { useProductionGear } from "@/hooks/useProduction";
 import { supabase } from "@/lib/supabase";
 import { Link, useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import {
   AlertDialog,
   AlertDialogAction,

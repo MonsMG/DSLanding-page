@@ -1,17 +1,69 @@
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Globe, ArrowLeft, Users, CheckCircle, Info } from "lucide-react";
+import { Globe, ArrowLeft, Users, CheckCircle, Info, Loader2 } from "lucide-react";
 import Navigation from "@/components/layout/Navigation";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { contentData } from "@/data/content";
+import { supabase } from "@/lib/supabase";
+import type { SoftwareProject } from "@/types";
+
+// แปลงสตริงรายการ (คั่นด้วยบรรทัดใหม่) → array พร้อมตัด prefix "- " ที่ซ้ำกับ bullet ของหน้า
+const toList = (value?: string | null): string[] =>
+  (value ?? "")
+    .split("\n")
+    .map((item) => item.replace(/^[-•]\s*/, "").trim())
+    .filter((item) => item !== "");
 
 const ITProjectDetail = () => {
   const { t } = useLanguage();
   const { projectId } = useParams<{ projectId: string }>();
-  const project = projectId
-    ? contentData.projects[projectId as keyof typeof contentData.projects]
-    : null;
   const labels = contentData.projectDetail;
+
+  const [project, setProject] = useState<SoftwareProject | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchProject = async () => {
+      if (!projectId) {
+        setLoading(false);
+        return;
+      }
+      const { data, error } = await supabase
+        .from("software_projects")
+        .select("*")
+        .eq("id", projectId)
+        .single();
+
+      if (!isMounted) return;
+      if (error) {
+        console.error("Error fetching software project:", error);
+        setProject(null);
+      } else {
+        setProject(data as SoftwareProject);
+      }
+      setLoading(false);
+    };
+    fetchProject();
+    return () => {
+      isMounted = false;
+    };
+  }, [projectId]);
+
+  // ==========================================
+  // ⏳ Loading State
+  // ==========================================
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <Navigation />
+        <div className="flex-grow flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </div>
+    );
+  }
 
   // ==========================================
   // ❌ 404 Not Found State
@@ -35,6 +87,21 @@ const ITProjectDetail = () => {
       </div>
     );
   }
+
+  // ประกอบข้อมูลแบบ 2 ภาษาจากแถวใน DB เพื่อใช้กับ t()
+  const name = { en: project.title_en, th: project.title_th };
+  const fullDesc = {
+    en: project.full_desc_en ?? "",
+    th: project.full_desc_th ?? "",
+  };
+  const target = {
+    en: toList(project.target_en),
+    th: toList(project.target_th),
+  };
+  const features = {
+    en: toList(project.features_en),
+    th: toList(project.features_th),
+  };
 
   // ==========================================
   // ✅ Project Detail State
@@ -63,27 +130,29 @@ const ITProjectDetail = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 animate-fade-in-up stagger-1">
             <div className="flex-1">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[hsl(var(--ds-chocolate))] tracking-tight">
-                {t(project.name)}
+                {t(name)}
               </h1>
             </div>
 
             {/* Visit Website CTA */}
-            <div className="shrink-0">
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block w-full sm:w-auto"
-              >
-                <Button
-                  size="lg"
-                  className="h-14 px-8 text-base shadow-[0_8px_20px_rgb(222,49,99,0.2)] hover:shadow-[0_12px_30px_rgb(222,49,99,0.3)] hover:-translate-y-1 transition-all duration-300 rounded-full font-medium tracking-wide w-full sm:w-auto"
+            {project.url && (
+              <div className="shrink-0">
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block w-full sm:w-auto"
                 >
-                  <Globe className="w-5 h-5 mr-2.5" />
-                  {t(labels.visitWebsite)}
-                </Button>
-              </a>
-            </div>
+                  <Button
+                    size="lg"
+                    className="h-14 px-8 text-base shadow-[0_8px_20px_rgb(222,49,99,0.2)] hover:shadow-[0_12px_30px_rgb(222,49,99,0.3)] hover:-translate-y-1 transition-all duration-300 rounded-full font-medium tracking-wide w-full sm:w-auto"
+                  >
+                    <Globe className="w-5 h-5 mr-2.5" />
+                    {t(labels.visitWebsite)}
+                  </Button>
+                </a>
+              </div>
+            )}
           </div>
 
           {/* 📝 Project Details Card (ไร้ขอบ + เงาฟุ้งแบบพรีเมียม) */}
@@ -101,8 +170,8 @@ const ITProjectDetail = () => {
                   {t(labels.aboutProject)}
                 </h2>
               </div>
-              <p className="text-[hsl(var(--ds-chocolate))]/70 leading-relaxed text-lg sm:text-xl font-light">
-                {t(project.fullDesc)}
+              <p className="text-[hsl(var(--ds-chocolate))]/70 leading-relaxed text-lg sm:text-xl font-light whitespace-pre-line">
+                {t(fullDesc)}
               </p>
             </div>
 
@@ -118,7 +187,7 @@ const ITProjectDetail = () => {
                   </h2>
                 </div>
                 <ul className="space-y-4">
-                  {t(project.target).map((audience, index) => (
+                  {t(target).map((audience, index) => (
                     <li
                       key={index}
                       className="flex items-start gap-3 text-[hsl(var(--ds-chocolate))]/80 leading-relaxed"
@@ -142,7 +211,7 @@ const ITProjectDetail = () => {
                   </h2>
                 </div>
                 <ul className="space-y-4">
-                  {t(project.features).map((feature, index) => (
+                  {t(features).map((feature, index) => (
                     <li
                       key={index}
                       className="flex items-start gap-3 text-[hsl(var(--ds-chocolate))]/80 leading-relaxed"

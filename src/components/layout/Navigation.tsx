@@ -9,7 +9,6 @@ import {
   Film,
   Info,
   Settings,
-  FolderClosed,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -102,16 +101,6 @@ const Navigation = () => {
             {/* 🔐 Admin Area Buttons (ปรับเป็นปุ่มโค้งมนมนแบบพรีเมียม) */}
             {user && (
               <div className="hidden sm:flex items-center gap-2 border-l border-border/60 pl-3 ml-1">
-                <Link to="/admin/media">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-9 px-3 text-xs font-semibold text-[hsl(var(--ds-chocolate))]/80 bg-white/50 border border-border/50 shadow-sm hover:bg-primary/5 hover:text-primary transition-all rounded-full"
-                  >
-                    <FolderClosed className="w-4 h-4 mr-1.5 text-primary" />
-                    {language === "th" ? "จัดการไฟล์" : "Files"}
-                  </Button>
-                </Link>
                 <Link to="/admin/company-info">
                   <Button
                     variant="ghost"
@@ -190,17 +179,6 @@ const Navigation = () => {
             {/* 🔐 Admin Mobile Buttons */}
             {user && (
               <div className="mt-3 flex flex-col gap-2 border-t border-border/60 pt-4 px-2">
-                <Link
-                  to="/admin/media"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-semibold transition-all text-[hsl(var(--ds-chocolate))] bg-muted/50 hover:bg-primary/10"
-                >
-                  <div className="p-1.5 bg-white rounded-lg shadow-sm">
-                    <FolderClosed className="w-4 h-4 text-primary" />
-                  </div>
-                  {language === "th" ? "จัดการไฟล์ระบบ" : "Media Files"}
-                </Link>
-
                 <Link
                   to="/admin/company-info"
                   onClick={() => setMobileMenuOpen(false)}

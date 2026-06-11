@@ -38,7 +38,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/lib/supabase";
 import { useSoftwareProjects } from "@/hooks/useSoftwareProjects";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { SoftwareProject } from "@/types";
 
 // UI Components

@@ -35,7 +35,7 @@ import type { LucideIcon } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -70,8 +70,15 @@ const Production = () => {
   const { toast } = useToast();
 
   // ✅ ดึงข้อมูลจริงจาก Supabase
-  const { works, gear, loading } = useProduction();
-  const { behindScenes, refetch: refetchBehindScenes } = useBehindScenes();
+  const { works: allWorks, gear, loading } = useProduction();
+  const { behindScenes: allBehindScenes, refetch: refetchBehindScenes } =
+    useBehindScenes();
+
+  // 🎠 แสดงใน showcase แค่ 10 รายการแรกต่อ section (สไตล์ key.visualarts.gr.jp)
+  // — ข้อมูลทั้งหมดยังอยู่ใน DB ครบ แค่จำกัดจำนวนที่โชว์บนหน้านี้
+  const MAX_SHOWCASE_ITEMS = 10;
+  const works = allWorks.slice(0, MAX_SHOWCASE_ITEMS);
+  const behindScenes = allBehindScenes.slice(0, MAX_SHOWCASE_ITEMS);
 
   // State สำหรับ delete (ป้องกัน double-click)
   const [deletingWorkId, setDeletingWorkId] = useState<number | null>(null);
@@ -326,7 +333,10 @@ const Production = () => {
         });
         return;
       }
-      toast({ title: "Deleted", description: "Behind the Scenes deleted successfully." });
+      toast({
+        title: "Deleted",
+        description: "Behind the Scenes deleted successfully.",
+      });
       refetchBehindScenes();
     } catch {
       toast({
@@ -389,7 +399,9 @@ const Production = () => {
       {loading ? (
         <div className="min-h-[50vh] flex flex-col items-center justify-center">
           <Loader2 className="h-12 w-12 animate-spin text-primary opacity-50 mb-4" />
-          <p className="text-muted-foreground font-medium">Loading production data...</p>
+          <p className="text-muted-foreground font-medium">
+            Loading production data...
+          </p>
         </div>
       ) : (
         <>
@@ -410,7 +422,11 @@ const Production = () => {
                 {/* 🔐 Admin: Add Work */}
                 {user && (
                   <div className="flex justify-center mt-6">
-                    <Button asChild size="sm" className="rounded-full px-6 shadow-sm">
+                    <Button
+                      asChild
+                      size="sm"
+                      className="rounded-full px-6 shadow-sm"
+                    >
                       <Link to="/admin/production/add">
                         <Plus className="mr-2 h-4 w-4" /> Add Work
                       </Link>
@@ -504,7 +520,7 @@ const Production = () => {
                             );
                           }}
                         >
-                          <Pencil className="h-4 w-4 " />
+                          <Pencil className="h-4 w-4 text-orange-950" />
                         </Button>
 
                         <AlertDialog>
@@ -528,17 +544,27 @@ const Production = () => {
                           </AlertDialogTrigger>
                           <AlertDialogContent className="rounded-3xl">
                             <AlertDialogHeader>
-                              <AlertDialogTitle className="text-[hsl(var(--ds-chocolate))]">ยืนยันการลบ?</AlertDialogTitle>
+                              <AlertDialogTitle className="text-[hsl(var(--ds-chocolate))]">
+                                ยืนยันการลบ?
+                              </AlertDialogTitle>
                               <AlertDialogDescription>
-                                ลบ "{getLang(activeWork?.title_en, activeWork?.title_th)}" — การลบจะไม่สามารถกู้คืนได้
+                                ลบ "
+                                {getLang(
+                                  activeWork?.title_en,
+                                  activeWork?.title_th,
+                                )}
+                                " — การลบจะไม่สามารถกู้คืนได้
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                              <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
+                              <AlertDialogCancel className="rounded-xl">
+                                Cancel
+                              </AlertDialogCancel>
                               <AlertDialogAction
                                 onClick={(e) => {
                                   e.preventDefault();
-                                  if (activeWork) handleDeleteWork(activeWork.id);
+                                  if (activeWork)
+                                    handleDeleteWork(activeWork.id);
                                 }}
                                 className="bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl"
                               >
@@ -624,10 +650,15 @@ const Production = () => {
                 <div className="text-center py-24 bg-white/50 backdrop-blur-sm rounded-3xl border-0 shadow-sm max-w-2xl mx-auto">
                   <Film className="w-16 h-16 text-muted-foreground/20 mx-auto mb-4" />
                   <p className="text-muted-foreground font-medium text-lg">
-                    {language === "en" ? "No works available yet." : "ยังไม่มีผลงานในขณะนี้"}
+                    {language === "en"
+                      ? "No works available yet."
+                      : "ยังไม่มีผลงานในขณะนี้"}
                   </p>
                   {user && (
-                    <Button asChild className="mt-6 rounded-full px-6 shadow-md">
+                    <Button
+                      asChild
+                      className="mt-6 rounded-full px-6 shadow-md"
+                    >
                       <Link to="/admin/production/add">
                         <Plus className="mr-2 h-4 w-4" /> Add First Work
                       </Link>
@@ -646,7 +677,9 @@ const Production = () => {
               <div
                 className="absolute inset-0 bg-cover bg-center blur-3xl opacity-30 scale-110 transition-all duration-1000 ease-in-out"
                 style={{
-                  backgroundImage: activeItem?.image_url ? `url(${activeItem.image_url})` : "none",
+                  backgroundImage: activeItem?.image_url
+                    ? `url(${activeItem.image_url})`
+                    : "none",
                   backgroundColor: "hsl(var(--ds-chocolate) / 0.05)",
                 }}
               />
@@ -665,21 +698,32 @@ const Production = () => {
                 {/* 🔐 Admin: Add Behind the Scenes */}
                 {user && (
                   <div className="flex justify-center mt-6">
-                    <Button asChild size="sm" className="rounded-full px-6 shadow-sm">
+                    <Button
+                      asChild
+                      size="sm"
+                      className="rounded-full px-6 shadow-sm"
+                    >
                       <Link to="/admin/behind-scenes/add">
-                        <Plus className="mr-2 h-4 w-4" /> 
-                        {language === "en" ? "Add Behind the Scenes" : "เพิ่มเบื้องหลัง"}
+                        <Plus className="mr-2 h-4 w-4" />
+                        {language === "en"
+                          ? "Add Behind the Scenes"
+                          : "เพิ่มเบื้องหลัง"}
                       </Link>
                     </Button>
                   </div>
                 )}
               </div>
 
-              <div ref={sliderRef} className="relative w-full flex flex-col gap-6 md:gap-8">
+              <div
+                ref={sliderRef}
+                className="relative w-full flex flex-col gap-6 md:gap-8"
+              >
                 {/* 🖼️ Main Image */}
                 <div
                   className="w-full aspect-video lg:aspect-[21/9] relative group select-none cursor-pointer rounded-2xl md:rounded-[2rem] overflow-hidden bg-white shadow-[0_8px_30px_rgb(0,0,0,0.08)] z-10 border-0"
-                  onTouchStart={(e) => { touchStartX.current = e.changedTouches[0].clientX; }}
+                  onTouchStart={(e) => {
+                    touchStartX.current = e.changedTouches[0].clientX;
+                  }}
                   onTouchEnd={(e) => {
                     touchEndX.current = e.changedTouches[0].clientX;
                     handleSwipeEnd();
@@ -703,7 +747,10 @@ const Production = () => {
                       {getLang(activeItem?.title_en, activeItem?.title_th)}
                     </h3>
                     <p className="text-white/80 text-sm md:text-lg drop-shadow-md line-clamp-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-75 max-w-3xl font-light">
-                      {getLang(activeItem?.description_en, activeItem?.description_th)}
+                      {getLang(
+                        activeItem?.description_en,
+                        activeItem?.description_th,
+                      )}
                     </p>
                   </div>
 
@@ -717,10 +764,12 @@ const Production = () => {
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
-                          navigate(`/admin/behind-scenes/edit/${activeItem?.id}`);
+                          navigate(
+                            `/admin/behind-scenes/edit/${activeItem?.id}`,
+                          );
                         }}
                       >
-                        <Pencil className="h-4 w-4" />
+                        <Pencil className="h-4 w-4 text-orange-950" />
                       </Button>
 
                       <AlertDialog>
@@ -744,17 +793,23 @@ const Production = () => {
                         </AlertDialogTrigger>
                         <AlertDialogContent className="rounded-3xl">
                           <AlertDialogHeader>
-                            <AlertDialogTitle className="text-[hsl(var(--ds-chocolate))]">ยืนยันการลบ?</AlertDialogTitle>
+                            <AlertDialogTitle className="text-[hsl(var(--ds-chocolate))]">
+                              ยืนยันการลบ?
+                            </AlertDialogTitle>
                             <AlertDialogDescription>
-                              ลบ "{activeItem?.title_en || activeItem?.title_th}" — การลบจะไม่สามารถกู้คืนได้
+                              ลบ "{activeItem?.title_en || activeItem?.title_th}
+                              " — การลบจะไม่สามารถกู้คืนได้
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
-                            <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
+                            <AlertDialogCancel className="rounded-xl">
+                              Cancel
+                            </AlertDialogCancel>
                             <AlertDialogAction
                               onClick={(e) => {
                                 e.preventDefault();
-                                if (activeItem) handleDeleteBehindScene(activeItem.id);
+                                if (activeItem)
+                                  handleDeleteBehindScene(activeItem.id);
                               }}
                               className="bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl"
                             >
@@ -784,7 +839,9 @@ const Production = () => {
                       {behindScenes.map((item, idx) => (
                         <button
                           key={item.id}
-                          ref={(el) => { behindThumbRefs.current[idx] = el; }}
+                          ref={(el) => {
+                            behindThumbRefs.current[idx] = el;
+                          }}
                           onClick={(e) => {
                             e.stopPropagation();
                             setActiveIndex(idx);
@@ -883,7 +940,11 @@ const Production = () => {
 
               {user && (
                 <div className="flex justify-center mb-10">
-                  <Button asChild size="sm" className="rounded-full px-6 shadow-sm">
+                  <Button
+                    asChild
+                    size="sm"
+                    className="rounded-full px-6 shadow-sm"
+                  >
                     <Link to="/admin/gear/add">
                       <Plus className="mr-2 h-4 w-4" /> Add Gear
                     </Link>
@@ -929,8 +990,12 @@ const Production = () => {
                           }`}
                         >
                           {item.available !== false
-                            ? language === "en" ? "Available" : "พร้อมใช้"
-                            : language === "en" ? "Unavailable" : "ไม่ว่าง"}
+                            ? language === "en"
+                              ? "Available"
+                              : "พร้อมใช้"
+                            : language === "en"
+                              ? "Unavailable"
+                              : "ไม่ว่าง"}
                         </span>
                       </div>
                     </div>
@@ -947,7 +1012,7 @@ const Production = () => {
                             navigate(`/admin/gear/edit/${item.id}`);
                           }}
                         >
-                          <Pencil className="h-3 w-3" />
+                          <Pencil className="h-3 w-3 text-orange-950" />
                         </Button>
 
                         <AlertDialog>
@@ -967,13 +1032,18 @@ const Production = () => {
                           </AlertDialogTrigger>
                           <AlertDialogContent className="rounded-2xl">
                             <AlertDialogHeader>
-                              <AlertDialogTitle className="text-[hsl(var(--ds-chocolate))]">ยืนยันการลบ?</AlertDialogTitle>
+                              <AlertDialogTitle className="text-[hsl(var(--ds-chocolate))]">
+                                ยืนยันการลบ?
+                              </AlertDialogTitle>
                               <AlertDialogDescription>
-                                ลบ "{getLang(item.name_en, item.name_th)}" — การลบจะไม่สามารถกู้คืนได้
+                                ลบ "{getLang(item.name_en, item.name_th)}" —
+                                การลบจะไม่สามารถกู้คืนได้
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                              <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
+                              <AlertDialogCancel className="rounded-xl">
+                                Cancel
+                              </AlertDialogCancel>
                               <AlertDialogAction
                                 onClick={() => handleDeleteGear(item.id)}
                                 className="bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl"
@@ -993,7 +1063,9 @@ const Production = () => {
                 <div className="text-center py-20 bg-white/50 backdrop-blur-sm rounded-3xl border-0 shadow-sm mb-10 max-w-2xl mx-auto">
                   <Wrench className="w-16 h-16 text-muted-foreground/20 mx-auto mb-4" />
                   <p className="text-muted-foreground font-medium text-lg">
-                    {language === "en" ? "No gear listed yet." : "ยังไม่มีอุปกรณ์ในขณะนี้"}
+                    {language === "en"
+                      ? "No gear listed yet."
+                      : "ยังไม่มีอุปกรณ์ในขณะนี้"}
                   </p>
                 </div>
               )}
@@ -1114,39 +1186,56 @@ const Production = () => {
                           }`}
                         ></span>
                         {selectedGear.available !== false
-                          ? language === "en" ? "Available in Stock" : "พร้อมใช้งาน"
-                          : language === "en" ? "Currently Unavailable" : "ไม่พร้อมใช้งาน"}
+                          ? language === "en"
+                            ? "Available in Stock"
+                            : "พร้อมใช้งาน"
+                          : language === "en"
+                            ? "Currently Unavailable"
+                            : "ไม่พร้อมใช้งาน"}
                       </span>
                     </div>
 
                     <div className="w-12 h-1 bg-border rounded-full mb-8"></div>
 
-                    {(selectedGear.short_desc_en || selectedGear.short_desc_th) && (
+                    {(selectedGear.short_desc_en ||
+                      selectedGear.short_desc_th) && (
                       <div className="mb-8">
                         <h4 className="text-xs font-bold text-muted-foreground mb-3 uppercase tracking-widest">
                           {language === "en" ? "Description" : "รายละเอียด"}
                         </h4>
                         <p className="text-[hsl(var(--ds-chocolate))]/70 leading-relaxed font-light text-base">
-                          {getLang(selectedGear.short_desc_en, selectedGear.short_desc_th)}
+                          {getLang(
+                            selectedGear.short_desc_en,
+                            selectedGear.short_desc_th,
+                          )}
                         </p>
                       </div>
                     )}
 
-                    {(selectedGear.full_desc_en || selectedGear.full_desc_th || selectedGear.specs) && (
+                    {(selectedGear.full_desc_en ||
+                      selectedGear.full_desc_th ||
+                      selectedGear.specs) && (
                       <div className="mb-8 bg-muted/30 p-6 rounded-2xl border-none">
                         <h4 className="flex items-center text-sm font-bold text-[hsl(var(--ds-chocolate))] mb-3">
                           <Wrench className="w-4 h-4 mr-2 text-primary" />
-                          {language === "en" ? "Specifications" : "ข้อมูลจำเพาะ"}
+                          {language === "en"
+                            ? "Specifications"
+                            : "ข้อมูลจำเพาะ"}
                         </h4>
                         <p className="text-[hsl(var(--ds-chocolate))]/70 text-sm whitespace-pre-line leading-relaxed font-light">
-                          {getLang(selectedGear.full_desc_en, selectedGear.full_desc_th) || selectedGear.specs}
+                          {getLang(
+                            selectedGear.full_desc_en,
+                            selectedGear.full_desc_th,
+                          ) || selectedGear.specs}
                         </p>
                       </div>
                     )}
 
                     {selectedGear.rental_price && (
                       <div className="mt-8 flex items-baseline gap-2 bg-primary/5 p-6 rounded-2xl border border-primary/10">
-                        <span className="text-sm font-semibold text-muted-foreground mb-1 mr-2">Rate:</span>
+                        <span className="text-sm font-semibold text-muted-foreground mb-1 mr-2">
+                          Rate:
+                        </span>
                         <span className="text-4xl font-bold text-primary tracking-tight">
                           ฿{selectedGear.rental_price.toLocaleString()}
                         </span>

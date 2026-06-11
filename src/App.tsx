@@ -14,11 +14,13 @@
  *   3. Protected Admin Routes — หน้า Admin ทั้งหมด (/admin/*) — ต้องล็อกอินก่อน
  */
 
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 import ScrollToTop from "./components/layout/ScrollToTop";
 
 // — หน้าสาธารณะ (Public Pages) —
@@ -36,18 +38,27 @@ import Login from "./pages/Login";
 import { AuthProvider } from "./contexts/AuthContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
-// — หน้า Admin (ต้องล็อกอิน) —
-import EditSoftware from "./pages/admin/software/edit";
-import AddProduction from "./pages/admin/production/add";
-import EditProduction from "./pages/admin/production/edit";
-import AddSoftware from "./pages/admin/software/add";
-import AddGear from "./pages/admin/gear/add";
-import EditGear from "./pages/admin/gear/edit";
-import AdminCompanyInfo from "./pages/admin/company/index";
-import AdminMediaManager from "./pages/admin/media/index";
-import AddBehindScene from "./pages/admin/behind-scenes/add";
-import EditBehindScene from "./pages/admin/behind-scenes/edit";
+// — หน้า Admin (ต้องล็อกอิน) — โหลดแบบ lazy เพื่อแยกออกจาก bundle หลัก
+// ผู้เข้าชมทั่วไปไม่ต้องดาวน์โหลดโค้ดส่วน Admin
+const EditSoftware = lazy(() => import("./pages/admin/software/edit"));
+const AddProduction = lazy(() => import("./pages/admin/production/add"));
+const EditProduction = lazy(() => import("./pages/admin/production/edit"));
+const AddSoftware = lazy(() => import("./pages/admin/software/add"));
+const AddGear = lazy(() => import("./pages/admin/gear/add"));
+const EditGear = lazy(() => import("./pages/admin/gear/edit"));
+const AdminCompanyInfo = lazy(() => import("./pages/admin/company/index"));
+const EditAbout = lazy(() => import("./pages/admin/about/edit"));
+const AddBehindScene = lazy(() => import("./pages/admin/behind-scenes/add"));
+const EditBehindScene = lazy(() => import("./pages/admin/behind-scenes/edit"));
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+
+// Fallback ระหว่างโหลด chunk ของหน้า Admin
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+  </div>
+);
+
 
 const queryClient = new QueryClient();
 
@@ -59,9 +70,12 @@ const App = () => (
           {/* ระบบ Toast แจ้งเตือน (2 ตัว: Shadcn Toaster + Sonner) */}
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+          <BrowserRouter
+            future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+          >
             {/* ScrollToTop — เลื่อนหน้าขึ้นบนสุดทุกครั้งที่เปลี่ยนหน้า */}
             <ScrollToTop />
+            <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* ===== Public Routes — ไม่ต้องล็อกอิน ===== */}
               <Route path="/" element={<Index />} />
@@ -90,13 +104,14 @@ const App = () => (
                 }
               />
               <Route
-                path="/admin/media"
+                path="/admin/about/edit"
                 element={
                   <ProtectedRoute>
-                    <AdminMediaManager />
+                    <EditAbout />
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/admin/software/edit/:id"
                 element={
@@ -162,6 +177,7 @@ const App = () => (
                 }
               />
             </Routes>
+            </Suspense>
           </BrowserRouter>
         </AuthProvider>
       </LanguageProvider>

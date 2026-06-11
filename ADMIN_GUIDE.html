@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คู่มือการใช้งานระบบ Admin — DSLanding</title>
+<style>
+  :root {
+    --primary: #de3163; --chocolate: #4a2c2a; --cream: #fdf6ee;
+    --ok: #16a34a; --warn: #d97706; --danger: #dc2626; --border: #e8ddd3;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Tahoma, sans-serif; margin: 0; background: var(--cream);
+    color: var(--chocolate); line-height: 1.75;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+  header {
+    background: linear-gradient(135deg, var(--primary), #b02050);
+    color: #fff; border-radius: 20px; padding: 32px 36px; margin-bottom: 32px;
+  }
+  header h1 { margin: 0 0 6px; font-size: 1.7rem; }
+  header p { margin: 0; opacity: .9; }
+  h2 {
+    font-size: 1.25rem; border-left: 5px solid var(--primary);
+    padding-left: 12px; margin: 40px 0 14px;
+  }
+  h3 { font-size: 1.05rem; margin: 22px 0 8px; }
+  .card {
+    background: #fff; border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px 22px; margin: 12px 0;
+  }
+  code, .url {
+    background: #f5ece2; border: 1px solid var(--border); border-radius: 6px;
+    padding: 2px 8px; font-family: Consolas, monospace; font-size: .92em; color: #9f1239;
+  }
+  pre {
+    background: #2d2026; color: #f4e8e0; border-radius: 10px; padding: 14px 18px;
+    overflow-x: auto; font-size: .88em; line-height: 1.6;
+  }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; }
+  th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; font-size: .95em; }
+  th { background: #f8efe5; }
+  .badge { display: inline-block; border-radius: 999px; padding: 1px 12px; font-size: .8em; font-weight: 600; color:#fff; }
+  .b-ok { background: var(--ok); } .b-warn { background: var(--warn); } .b-danger { background: var(--danger); }
+  .step { display: flex; gap: 14px; margin: 14px 0; align-items: flex-start; }
+  .step .n {
+    flex: 0 0 32px; height: 32px; border-radius: 50%; background: var(--primary);
+    color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700;
+  }
+  .note { border-left: 4px solid var(--warn); background: #fff8ec; padding: 10px 16px; border-radius: 0 10px 10px 0; margin: 12px 0; }
+  .danger { border-left-color: var(--danger); background: #fef2f2; }
+  .oknote { border-left-color: var(--ok); background: #f0fdf4; }
+  ul { padding-left: 22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>📘 คู่มือการใช้งานระบบ Admin — DSLanding</h1>
+  <p>เว็บ Portfolio + Supabase Self-hosted (Docker) · อัปเดตล่าสุด 11 มิ.ย. 2026</p>
+</header>
+
+<!-- ================================================== -->
+<h2>1. ภาพรวมระบบ</h2>
+<div class="card">
+  <table>
+    <tr><th>ส่วน</th><th>URL / ที่อยู่</th></tr>
+    <tr><td>เว็บไซต์ (ตอน dev)</td><td><span class="url">http://localhost:8080</span></td></tr>
+    <tr><td>หน้า Login ของ Admin</td><td><span class="url">http://localhost:8080/login</span></td></tr>
+    <tr><td>Supabase API (Kong)</td><td><span class="url">http://localhost:8000</span></td></tr>
+    <tr><td>Supabase Studio (จัดการ DB)</td><td><span class="url">http://localhost:8000</span> — login ด้วย Dashboard user/pass ใน <code>supabase/docker/.env</code></td></tr>
+  </table>
+  <p>บัญชี Admin ปัจจุบัน: <code>admin@dslab.com</code> (ถูกตั้ง role = admin ใน DB แล้ว)</p>
+</div>
+
+<!-- ================================================== -->
+<h2>2. ✅ Checklist ครั้งแรกหลังอัปเดตระบบ (สำคัญ — ต้องทำ!)</h2>
+<div class="note danger">
+  <strong>ระบบสิทธิ์เปลี่ยนใหม่:</strong> ตอนนี้การเขียนข้อมูล (เพิ่ม/แก้/ลบ) ทำได้เฉพาะบัญชีที่มี
+  role <code>admin</code> เท่านั้น และ role จะติดมากับ token <u>หลังล็อกอินใหม่</u>
+</div>
+
+<div class="step"><div class="n">1</div><div>
+  เปิด Supabase: <code>cd supabase/docker</code> แล้ว <code>docker compose up -d</code>
+  (เช็คว่า container <code>supabase-kong</code> รันอยู่ที่ port 8000 ด้วย
+  <code>docker ps</code>)
+</div></div>
+<div class="step"><div class="n">2</div><div>
+  รันเว็บ: <code>npm run dev</code> → เปิด <span class="url">http://localhost:8080</span>
+</div></div>
+<div class="step"><div class="n">3</div><div>
+  ถ้าเคยล็อกอินค้างไว้ → <strong>กด Logout ก่อน แล้ว Login ใหม่</strong> ที่
+  <span class="url">http://localhost:8080/login</span> ด้วย <code>admin@dslab.com</code>
+  (ถ้าไม่ทำ จะกดบันทึกแล้วขึ้น "Unauthorized")
+</div></div>
+<div class="step"><div class="n">4</div><div>
+  <strong>ทดสอบระบบ 1 รอบ</strong> (ส่วนนี้ผมทดสอบแทนไม่ได้ ต้องทำในเบราว์เซอร์จริง):
+  <ul>
+    <li>ไปหน้า Software → กดปุ่ม Add → กรอกชื่อ TH/EN → Save → ต้องขึ้น "Success"</li>
+    <li>กลับมาหน้า Software → ต้องเห็นโปรเจกต์ใหม่แสดงผล</li>
+    <li>ลองอัปโหลดรูปในฟอร์ม → ต้องอัปสำเร็จและรูปแสดง (ระบบ Storage เพิ่งถูกตั้งสิทธิ์ใหม่)</li>
+    <li>เปิดหน้าเว็บแบบ "ไม่ล็อกอิน" (Incognito) → ต้องเห็นข้อมูลปกติ แต่เข้า /admin/... ไม่ได้</li>
+  </ul>
+</div></div>
+
+<!-- ================================================== -->
+<h2>3. การเข้าสู่ระบบ (Login)</h2>
+<div class="card">
+  <div class="step"><div class="n">1</div><div>เข้า <span class="url">http://localhost:8080/login</span></div></div>
+  <div class="step"><div class="n">2</div><div>กรอกอีเมล <code>admin@dslab.com</code> + รหัสผ่าน</div></div>
+  <div class="step"><div class="n">3</div><div>ล็อกอินสำเร็จ → ปุ่ม Admin (เพิ่ม/แก้ไข) จะปรากฏบนหน้าเว็บ และเข้าเมนู <em>ตั้งค่าบริษัท</em> ได้จาก Navigation</div></div>
+  <div class="note">
+    บัญชีที่สมัครใหม่ทั่วไป <strong>ไม่ใช่ admin</strong> — ล็อกอินได้แต่เข้า /admin ไม่ได้ และเขียนข้อมูลไม่ได้
+    (ถูกบล็อกทั้งระดับหน้าจอและระดับฐานข้อมูล)
+  </div>
+</div>
+
+<h3>วิธีเพิ่มบัญชี Admin คนใหม่</h3>
+<div class="card">
+  <p>1) ให้คนนั้นสมัคร/สร้างบัญชีก่อน แล้วรันคำสั่งนี้ (เปลี่ยนอีเมล):</p>
+<pre>docker exec supabase-db psql -U postgres -d postgres -c \
+"UPDATE auth.users SET raw_app_meta_data = COALESCE(raw_app_meta_data,'{}'::jsonb) || '{\"role\":\"admin\"}'::jsonb WHERE email='new-admin@example.com';"</pre>
+  <p>2) ให้บัญชีนั้น <strong>logout → login ใหม่</strong> role จึงจะมีผล</p>
+</div>
+
+<!-- ================================================== -->
+<h2>4. แก้ไข / เพิ่มอะไรได้บ้าง (เมนู Admin ทั้งหมด)</h2>
+<div class="card">
+<table>
+  <tr><th>ส่วนข้อมูล</th><th>URL</th><th>เข้าจากไหน</th></tr>
+  <tr>
+    <td>🖥️ <strong>Software Projects</strong><br>(ชื่อ TH/EN, คำอธิบายสั้น/เต็ม TH/EN, กลุ่มเป้าหมาย TH/EN, ฟีเจอร์ TH/EN, หมวดหมู่, สถานะ, รูปปก, ลิงก์)</td>
+    <td><span class="url">/admin/software/add</span><br><span class="url">/admin/software/edit/:id</span></td>
+    <td>หน้า Software → ปุ่ม Add / ไอคอนดินสอบนการ์ด</td>
+  </tr>
+  <tr>
+    <td>🎬 <strong>Production Works</strong><br>(ชื่อ TH/EN, คำอธิบาย, หมวดหมู่, ประเภทสื่อ video/image, ลิงก์ YouTube/รูป, Thumbnail)</td>
+    <td><span class="url">/admin/production/add</span><br><span class="url">/admin/production/edit/:id</span></td>
+    <td>หน้า Production → ปุ่ม Add / ปุ่มแก้ไข</td>
+  </tr>
+  <tr>
+    <td>📸 <strong>Behind the Scenes</strong><br>(หัวข้อ TH/EN, คำอธิบาย, รูป, ลำดับการแสดง)</td>
+    <td><span class="url">/admin/behind-scenes/add</span><br><span class="url">/admin/behind-scenes/edit/:id</span></td>
+    <td>หน้า Production (ส่วน BTS)</td>
+  </tr>
+  <tr>
+    <td>🎥 <strong>อุปกรณ์ (Gear)</strong><br>(ชื่อ TH/EN, หมวด, ยี่ห้อ, รุ่น, รูป, สถานะพร้อมใช้)</td>
+    <td><span class="url">/admin/gear/add</span><br><span class="url">/admin/gear/edit/:id</span></td>
+    <td>หน้า Production / Gear Archive</td>
+  </tr>
+  <tr>
+    <td>🏢 <strong>ข้อมูลบริษัท</strong><br>(ชื่อ, About TH/EN, ที่อยู่ TH/EN, อีเมล/เบอร์, โซเชียลทุกช่อง, โลโก้, รูป Cover)</td>
+    <td><span class="url">/admin/company-info</span></td>
+    <td>Navigation → ปุ่ม "ตั้งค่าบริษัท" (เห็นเมื่อล็อกอิน)</td>
+  </tr>
+  <tr>
+    <td>👤 <strong>About (ประวัติ)</strong><br>(รูปโปรไฟล์, ไฟล์ CV PDF)</td>
+    <td><span class="url">/admin/about/edit</span></td>
+    <td>หน้า About</td>
+  </tr>
+</table>
+</div>
+
+<div class="note">
+  ❌ <strong>เมนู "จัดการไฟล์ / Media Manager" (<code>/admin/media</code>) ถูกถอดออกแล้ว</strong> —
+  การใส่รูป/วิดีโอของผลงานทำผ่านฟอร์ม Add/Edit Production โดยตรง (ช่อง Media URL + Thumbnail)
+</div>
+
+<!-- ================================================== -->
+<h2>5. ระบบความปลอดภัยที่ตั้งไว้ (สรุปสำหรับอ้างอิง)</h2>
+<div class="card">
+  <ul>
+    <li><span class="badge b-ok">DB</span> ทุกตารางเปิด RLS: <strong>คนทั่วไปอ่านได้อย่างเดียว</strong> — เพิ่ม/แก้/ลบได้เฉพาะ admin (ตรวจจาก token จริง ปลอมจากฝั่งเบราว์เซอร์ไม่ได้)</li>
+    <li><span class="badge b-ok">Storage</span> รูป/ไฟล์ใน bucket <code>images</code>, <code>landpages-media</code>: ทุกคนเปิดดูได้ แต่อัปโหลด/ลบได้เฉพาะ admin</li>
+    <li><span class="badge b-ok">หน้าเว็บ</span> เส้นทาง <code>/admin/*</code> ทั้งหมดเช็ค role admin — ไม่ใช่ admin จะถูกเด้งไปหน้า login</li>
+    <li><span class="badge b-warn">ไฟล์ SQL</span> การตั้งค่าทั้งหมดบันทึกไว้ใน <code>rls_policies.sql</code> และ <code>migrate_to_flat_schema.sql</code> (รัน DB ใหม่เมื่อไหร่ ใช้ 2 ไฟล์นี้ apply ซ้ำได้)</li>
+  </ul>
+</div>
+
+<!-- ================================================== -->
+<h2>6. ปัญหาที่อาจเจอ + วิธีแก้</h2>
+<div class="card">
+<table>
+  <tr><th>อาการ</th><th>สาเหตุ / วิธีแก้</th></tr>
+  <tr>
+    <td>กด Save แล้วขึ้น <strong>"Unauthorized"</strong></td>
+    <td>Token ยังไม่มี role admin → <strong>Logout แล้ว Login ใหม่</strong></td>
+  </tr>
+  <tr>
+    <td>อัปโหลดรูปไม่ได้</td>
+    <td>เช็คว่าล็อกอินเป็น admin + ไฟล์เป็นรูป (jpg/png/webp) ขนาดไม่เกิน 5MB</td>
+  </tr>
+  <tr>
+    <td>หน้าเว็บขึ้นว่าง / โหลดไม่จบ</td>
+    <td>Supabase ไม่ได้รัน → <code>docker compose up -d</code> ใน <code>supabase/docker</code> แล้วรีเฟรช</td>
+  </tr>
+  <tr>
+    <td>ลืมรหัสผ่าน admin</td>
+    <td>Reset ผ่าน Supabase Studio (<span class="url">http://localhost:8000</span> → Authentication → Users) <br>หมายเหตุ: ลิงก์อีเมล reset อาจชี้ไป localhost:3000 — ถ้าจะใช้ flow อีเมลให้แก้ <code>SITE_URL</code> ใน <code>supabase/docker/.env</code> เป็น <code>http://localhost:8080</code> แล้ว restart docker</td>
+  </tr>
+  <tr>
+    <td>เพิ่มหมวดหมู่ Software ใหม่ใน dropdown</td>
+    <td>หมวดอยู่ในตาราง <code>software_categories</code> — เพิ่มผ่าน Studio หรือ:<br>
+    <code>docker exec supabase-db psql -U postgres -d postgres -c "INSERT INTO software_categories (name) VALUES ('ชื่อหมวด');"</code></td>
+  </tr>
+</table>
+</div>
+
+<div class="note oknote">
+  <strong>เคล็ดลับ:</strong> ข้อมูลเก่าที่ย้ายมาจากระบบเดิม ช่องภาษาไทยบางช่องถูกเติมด้วยข้อความอังกฤษไว้ชั่วคราว
+  — เข้าไปกด Edit แต่ละรายการเพื่อใส่ภาษาไทยที่ถูกต้องได้เลย
+</div>
+
+</div>
+</body>
+</html>
