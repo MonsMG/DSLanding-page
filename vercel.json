@@ -1,3 +1,16 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "experimentalServices": {
+    "dslanding": {
+      "type": "web",
+      "routePrefix": "/",
+      "framework": "vite",
+      "buildCommand": "npm install && npm run build"
+    }
+  }
 }
